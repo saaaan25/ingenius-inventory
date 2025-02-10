@@ -1,10 +1,10 @@
-import purchasesData from '@/utils/data';
+import {purchasesData} from '@/utils';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const PurchaseContext = createContext();
 
 export const PurchaseProvider = ({ children }) => {
-  const [purchases, setPurchases] = useState([purchasesData]);
+  const [purchases, setPurchases] = useState(purchasesData);
 
   useEffect(() => {
     const fetchPurchases = async () => {
