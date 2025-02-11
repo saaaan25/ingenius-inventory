@@ -1,9 +1,11 @@
 import { ShoppingCart } from "lucide-react";
 import { CardDescription, CardTitle, Card, CardHeader } from "../ui/card";
+import { useNavigate } from "react-router-dom";
 
 export const PurchaseCard = ({ id, total_gastado }) => {
+  const navigate=useNavigate();
   return (
-    <Card className="w-full flex hover:cursor-pointer hover:bg-gray-50">
+    <Card className="w-full flex hover:cursor-pointer hover:bg-gray-50" onClick={()=>navigate(`/purchases/${id}`)}>
       <div className="flex items-center px-6">
         <ShoppingCart size={35}/>
       </div>
