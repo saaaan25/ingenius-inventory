@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import SideBar from './components/Sidebar'
 import { PurchaseProvider } from '@/providers/PurchaseProvider'
 import Request from './pages/Request'
+import { User,Purchase } from '@/pages';
 
 
 function App() {
@@ -25,7 +26,9 @@ function App() {
                         <Route path='/purchases' element={<Purchases/>}/>
                         <Route path='/deliveries' element={<Deliveries/>}/>
                         <Route path='/users' element={<Users/>}/>
+                        <Route path='/users/:id' element={<User/>}/>
                         <Route path='/requests/:id' element={<Request/>}/>
+                        <Route path='/purchases/:id' element={<Purchase/>}/>
                     </Route>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>

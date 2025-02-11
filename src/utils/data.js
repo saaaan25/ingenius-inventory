@@ -99,4 +99,46 @@ export const purchasesData = [
   },
 ];
 
-export default purchasesData;
+export const utilsData = [
+  {
+    id: 1,
+    nombre: 'Goma',
+  },
+  {
+    id: 2,
+    nombre: 'Silicona',
+  },
+  {
+    id: 3,
+    nombre: 'Block de cartulina blanca',
+  },
+  {
+    id: 4,
+    nombre: 'Block de hojas de colores',
+  },
+  {
+    id: 5,
+    nombre: 'Plastilina',
+  },  
+]
+
+export const purchaseFormData={
+  fecha: '2021-12-05',
+  detalle_compra: [
+    {
+      cantidad: 3,
+      precio_unitario: 20,
+      util: 1,
+    },
+    {
+      cantidad: 1,
+      precio_unitario: 5,
+      util: 3,
+    },
+    {
+      cantidad: 5,
+      precio_unitario: 75,
+      util: 4,
+    },
+  ],
+}
