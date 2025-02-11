@@ -43,6 +43,13 @@ body {
   background-color: #FAFAFA;
 }
 
+.bg-button {
+  background-color: transparent;
+}
+.bg-button:hover {
+  background-color: #272F36;
+}
+
 .border-primary_line {
   border-color: #272F36;
 }
@@ -61,4 +68,11 @@ body {
 
 .text-primary {
   color: #272F36;
+}
+
+.text-button{
+  color: #272F36;
+}
+.text-button:hover{
+  color: #FFFFFF;
 }

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const SidebarItem = ({ title, route, Icon }) => {
@@ -11,6 +12,12 @@ const SidebarItem = ({ title, route, Icon }) => {
             <p className="text-lg">{title}</p>
         </button>
     );
+}
+
+SidebarItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    route: PropTypes.string.isRequired,
+    Icon: PropTypes.element.isRequired
 }
  
 export default SidebarItem;
