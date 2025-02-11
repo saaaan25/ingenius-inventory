@@ -1,5 +1,5 @@
 import { AddButton } from "@/components/button";
-import { DatePurchasesSection, PurchaseForm } from "@/components/Purchase";
+import { DatePurchasesSection, PurchaseForm } from "@/components/purchase";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { usePurchase } from "@/hooks/usePurchase";
 const Purchases = () => {
@@ -11,8 +11,8 @@ const Purchases = () => {
         <a className="font-light text-routes text-sm" href="/purchases">
           Compras
         </a>
-        <div className="pl-5">
-          <div className="flex">
+        <div className="pl-5 w-full">
+          <div className="flex justify-between">
             <h1 className="font-semibold text-xl">Compras</h1>
             <DialogTrigger>
               <AddButton>Registrar compra</AddButton>
