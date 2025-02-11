@@ -66,6 +66,13 @@ body {
   color: #8B8B8B;
 }
 
+.text-routes_selected {
+  color: #8B8B8B;
+}
+.text-routes_selected:hover {
+  color: #535bf2;
+}
+
 .text-primary {
   color: #272F36;
 }
