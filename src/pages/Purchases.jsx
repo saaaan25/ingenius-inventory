@@ -14,7 +14,7 @@ const Purchases = () => {
         <div className="pl-5 w-full">
           <div className="flex justify-between">
             <h1 className="font-semibold text-xl">Compras</h1>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <AddButton>Registrar compra</AddButton>
             </DialogTrigger>
           </div>
