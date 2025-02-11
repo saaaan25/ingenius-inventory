@@ -10,9 +10,10 @@ import Purchases from './pages/Purchases'
 import Login from './pages/Login'
 import SideBar from './components/Sidebar'
 import { PurchaseProvider } from '@/providers/PurchaseProvider'
+import Request from './pages/Request'
+
 
 function App() {
-
     return (
         <PurchaseProvider>
             <Router>
@@ -24,11 +25,13 @@ function App() {
                         <Route path='/purchases' element={<Purchases/>}/>
                         <Route path='/deliveries' element={<Deliveries/>}/>
                         <Route path='/users' element={<Users/>}/>
+                        <Route path='/requests/:id' element={<Request/>}/>
                     </Route>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>
             </Router>
         </PurchaseProvider>
+
     )
 }
 
