@@ -1,12 +1,10 @@
 import { AddButton } from "@/components/button";
-import { DatePurchasesSection, PurchaseForm } from "@/components/purchase";
+import { DatePurchasesSection } from "@/components/purchase";
+import { RegisterPurchaseDialog} from "@/components/purchase/RegisterPurchaseDialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { usePurchase } from "@/hooks/usePurchase";
 const Purchases = () => {
-  const { purchasesGroupedByDate } = usePurchase();
-  console.log(purchasesGroupedByDate);
   return (
-    <Dialog>
+    <Dialog className="w-3-">
       <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
         <a className="font-light text-routes text-sm" href="/purchases">
           Compras
@@ -21,7 +19,7 @@ const Purchases = () => {
           <DatePurchasesSection />
         </div>
       </div>
-      <PurchaseForm />
+      <RegisterPurchaseDialog />
     </Dialog>
   );
 };

@@ -99,7 +99,7 @@ export const purchasesData = [
   },
 ];
 
-export const utilsData = [
+export const suppliesData = [
   {
     id: 1,
     nombre: 'Goma',
@@ -120,6 +120,7 @@ export const utilsData = [
     id: 5,
     nombre: 'Plastilina',
   },  
+  
 ]
 
 export const purchaseFormData={
