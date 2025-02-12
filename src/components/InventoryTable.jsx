@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { FaSearch, FaPlus, FaEdit } from 'react-icons/fa'; 
 import supplies from '../data-test/supplies.js';
+import { AddButton } from './button/AddButton.jsx';
+import { SearchSupplies } from './ui/SearchSupplies.jsx';
 
 const InventoryTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -12,39 +14,10 @@ const InventoryTable = () => {
     return (
         <div style={{ padding: '20px', width: '100%', overflowX: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', alignItems: 'center', width: '100%' }}>
-                <div style={{ position: 'relative', width: '40%' }}>
-                    <input
-                        type="text"
-                        placeholder="Buscar material"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{
-                            padding: '10px 40px 10px 10px',
-                            borderRadius: '5px',
-                            border: '1px solid #ddd',
-                            width: '100%',
-                            boxSizing: 'border-box'
-                        }}
-                    />
-                    <span style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
-                        <FaSearch color="#272F36" /> {/* Ícono de lupa */}
-                    </span>
-                </div>
-                <button style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#000',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    width: '200px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <FaPlus color="white" style={{ marginRight: '8px' }} /> {/* Ícono de agregar */}
-                    Agregar material
-                </button>
+            <SearchSupplies searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
+                Buscar Material
+            </SearchSupplies>
+                <AddButton>Agregar Material</AddButton> 
             </div>
             <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
                 <thead>
