@@ -6,7 +6,11 @@ import { DateFormItem } from "./DateFormItem";
 import { SuppliesFormItem } from "./SuppliesFormItem";
 import { AcceptButton, CancelButton } from "../button";
 
-export const PurchaseForm = ({ defaultPurchase }) => {
+export const PurchaseForm = ({
+  defaultPurchase,
+  onSubmit,
+  handleCloseDialog,
+}) => {
   const form = useForm({
     resolver: zodResolver(purchaseSchema),
     defaultValues: defaultPurchase || {
@@ -15,13 +19,9 @@ export const PurchaseForm = ({ defaultPurchase }) => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col h-full">
         <FormField
           control={form.control}
           name="fecha"
@@ -32,8 +32,12 @@ export const PurchaseForm = ({ defaultPurchase }) => {
           name="detalle_compra"
           render={({ field }) => <SuppliesFormItem field={field} form={form} />}
         />
-
-        <AcceptButton type="submit">Registar</AcceptButton>
+        <div className="flex justify-center gap-x-10 mt-auto">
+          <AcceptButton type="submit">Aceptar</AcceptButton>
+          <CancelButton onClick={() => handleCloseDialog()}>
+            Cancelar
+          </CancelButton>
+        </div>
       </form>
     </Form>
   );

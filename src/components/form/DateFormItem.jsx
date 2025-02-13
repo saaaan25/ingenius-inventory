@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { es } from "date-fns/locale";
 
 export const DateFormItem = ({ field }) => {
   return (
@@ -22,12 +23,12 @@ export const DateFormItem = ({ field }) => {
             <Button
               variant={"outline"}
               className={cn(
-                "w-[240px] pl-3 text-left font-normal",
+                "w-full pl-3 text-left font-normal",
                 !field.value && "text-muted-foreground"
               )}
             >
               {field.value ? (
-                format(field.value, "PPP")
+                format(field.value, "PPP",  { locale: es })
               ) : (
                 <span>Elige una fecha</span>
               )}
@@ -35,7 +36,7 @@ export const DateFormItem = ({ field }) => {
             </Button>
           </FormControl>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto p-0 z-50" align="end" side="bottom">
           <Calendar
             mode="single"
             selected={field.value}
@@ -44,6 +45,8 @@ export const DateFormItem = ({ field }) => {
               date > new Date() || date < new Date("1900-01-01")
             }
             initialFocus
+            locale={es}
+            className="bg-white border-zinc-200 border round-lg rounded"
           />
         </PopoverContent>
       </Popover>

@@ -5,21 +5,45 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  Dialog,
 } from "@/components/ui/dialog";
+import { postPurchaseApiMock,formatObjectFecha } from "@/utils";
+import { usePurchase } from "@/hooks";
+import { toast } from "sonner";
 
-export const RegisterPurchaseDialog = ({ defaultSupplies }) => {
+export const RegisterPurchaseDialog = ({ open, setOpen }) => {
+  const { setPurchases } = usePurchase();
+
+  function onSubmit(values) {
+    const formattedValues = formatObjectFecha(values);
+    console.log(values);
+    //post purchase to api
+
+    setPurchases((prevPurchases) => [
+      ...prevPurchases,
+      postPurchaseApiMock(formattedValues),
+    ]);
+    toast.success("Compra registrada correctamente");
+    handleCloseDialog();
+  }
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>
-          {defaultSupplies ? "Actualizar" : "Registrar"} compra
-        </DialogTitle>
-        <DialogDescription>
-          Por favor, {defaultSupplies ? "modifique" : "complete"} el siguiente formulario
-          para {defaultSupplies ? "actualizar" : "registrar"} su compra.
-        </DialogDescription>
-      </DialogHeader>
-      <PurchaseForm defaultSupplies={defaultSupplies} />
-    </DialogContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[725px] px-10 py-8 h-[80vh] flex flex-col gap-7">
+        <DialogHeader>
+          <DialogTitle>
+            <DialogDescription className="text-primary text-lg">
+              Registrar compra
+            </DialogDescription>
+          </DialogTitle>
+        </DialogHeader>
+        <PurchaseForm
+          onSubmit={onSubmit}
+          handleCloseDialog={handleCloseDialog}
+        />
+      </DialogContent>
+    </Dialog>
   );
 };
