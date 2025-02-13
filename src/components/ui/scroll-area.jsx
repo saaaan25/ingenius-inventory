@@ -1,33 +1,30 @@
-import * as React from "react"
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
+import * as React from "react";
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-function ScrollArea({
-  className,
-  children,
-  ...props
-}) {
+function ScrollArea({ className, children, ...props }) {
   return (
-    (<ScrollAreaPrimitive.Root data-slot="scroll-area" className={cn("relative", className)} {...props}>
+    <ScrollAreaPrimitive.Root
+      data-slot="scroll-area"
+      className={cn("relative", className)}
+      {...props}
+    >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="ring-zinc-950/10 dark:ring-zinc-950/20 dark:outline-ring/40 outline-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1 dark:ring-zinc-300/10 dark:dark:ring-zinc-300/20">
+        className="ring-zinc-950/10 dark:ring-zinc-950/20 dark:outline-ring/40 outline-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1 dark:dark:ring-zinc-300/20"
+      >
         {children}
       </ScrollAreaPrimitive.Viewport>
       <ScrollBar />
       <ScrollAreaPrimitive.Corner />
-    </ScrollAreaPrimitive.Root>)
+    </ScrollAreaPrimitive.Root>
   );
 }
 
-function ScrollBar({
-  className,
-  orientation = "vertical",
-  ...props
-}) {
+function ScrollBar({ className, orientation = "vertical", ...props }) {
   return (
-    (<ScrollAreaPrimitive.ScrollAreaScrollbar
+    <ScrollAreaPrimitive.ScrollAreaScrollbar
       data-slot="scroll-area-scrollbar"
       orientation={orientation}
       className={cn(
@@ -38,12 +35,14 @@ function ScrollBar({
           "h-2.5 flex-col border-t border-t-transparent",
         className
       )}
-      {...props}>
+      {...props}
+    >
       <ScrollAreaPrimitive.ScrollAreaThumb
         data-slot="scroll-area-thumb"
-        className="bg-zinc-200 relative flex-1 rounded-full dark:bg-zinc-800" />
-    </ScrollAreaPrimitive.ScrollAreaScrollbar>)
+        className="bg-zinc-200 relative flex-1 rounded-full dark:bg-zinc-800"
+      />
+    </ScrollAreaPrimitive.ScrollAreaScrollbar>
   );
 }
 
-export { ScrollArea, ScrollBar }
+export { ScrollArea, ScrollBar };

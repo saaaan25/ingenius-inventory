@@ -2,8 +2,8 @@ import { z } from "zod";
 
 const detalleCompraSchema = z.object({
   util: z.number(),
-  cantidad: z.number(),
-  precio_unitario: z.number(),
+  cantidad: z.number().min(1, "La cantidad debe ser al menos 1."),
+  precio_unitario: z.number().min(0, "El precio unitario debe ser al menos 0."),
 });
 
 const purchaseSchema = z.object({
