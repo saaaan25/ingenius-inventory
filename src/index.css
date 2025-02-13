@@ -4,7 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
@@ -84,7 +83,6 @@ body {
 .text-primary {
   color: #272F36;
 }
-
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
