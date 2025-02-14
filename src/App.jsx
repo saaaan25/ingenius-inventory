@@ -12,6 +12,7 @@ import SideBar from './components/Sidebar'
 import { PurchaseProvider } from '@/providers/PurchaseProvider'
 import Request from './pages/Request'
 import { User,Purchase } from '@/pages';
+import { Toaster } from 'sonner'
 
 
 function App() {
@@ -33,8 +34,9 @@ function App() {
                     <Route path='/login' element={<Login/>}/>
                 </Routes>
             </Router>
+            <Toaster/>
         </PurchaseProvider>
-
+        
     )
 }
 
