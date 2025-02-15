@@ -7,23 +7,19 @@ import {
   DialogDescription,
   Dialog,
 } from "@/components/ui/dialog";
-import { postPurchaseApiMock,formatObjectFecha } from "@/utils";
+import { formatObjectFecha } from "@/utils";
 import { usePurchases } from "@/hooks";
 import { toast } from "sonner";
 
-export const RegisterPurchaseDialog = ({ open, setOpen }) => {
+export const EditPurchaseDialog = ({ open, setOpen }) => {
   const { setPurchases } = usePurchases();
 
   function onSubmit(values) {
     const formattedValues = formatObjectFecha(values);
     console.log(values);
-    //post purchase to api
+    //put purchase to api
 
-    setPurchases((prevPurchases) => [
-      ...prevPurchases,
-      postPurchaseApiMock(formattedValues),
-    ]);
-    toast.success("Compra registrada correctamente");
+    toast.success("Edición registrada correctamente");
     handleCloseDialog();
   }
   const handleCloseDialog = () => {
@@ -35,14 +31,11 @@ export const RegisterPurchaseDialog = ({ open, setOpen }) => {
         <DialogHeader>
           <DialogTitle>
             <DialogDescription className="text-primary text-lg">
-              Registrar compra
+              Editar compra
             </DialogDescription>
           </DialogTitle>
         </DialogHeader>
-        <PurchaseForm
-          onSubmit={onSubmit}
-          handleCloseDialog={handleCloseDialog}
-        />
+        
       </DialogContent>
     </Dialog>
   );

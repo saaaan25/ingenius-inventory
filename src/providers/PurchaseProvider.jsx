@@ -1,20 +1,30 @@
-import {purchasesData} from '@/utils';
-import React, { createContext, useEffect, useState } from 'react';
-
+import { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { purchaseDetailData } from "@/utils";
 export const PurchaseContext = createContext();
 
 export const PurchaseProvider = ({ children }) => {
-  const [purchases, setPurchases] = useState(purchasesData);
+  const { id } = useParams(); 
+  const [purchase, setPurchase] = useState(null);
+  const [purchaseDetail, setPurchaseDetail] = useState(purchaseDetailData);
 
   useEffect(() => {
-    const fetchPurchases = async () => {
-      //fetch purchases api and setPurchases
+    const fetchPurchase = async () => {
+      //fetch and set purchase with param id 
     };
-    fetchPurchases();
-  }, []);
+    fetchPurchase();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchPurchaseDetail = async () => {
+      //fetch and set purchase with detalle_compra in purchaseDetail
+    };
+
+    fetchPurchaseDetail();
+  }, [purchase?.id]); 
 
   return (
-    <PurchaseContext.Provider value={{ purchases, setPurchases }}>
+    <PurchaseContext.Provider value={{ purchaseDetail, setPurchase }}>
       {children}
     </PurchaseContext.Provider>
   );

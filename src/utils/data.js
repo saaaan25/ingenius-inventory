@@ -49,6 +49,60 @@ export const purchaseDetailData = {
         nombre: "Block de cartulina blanca",
       },
     },
+    {
+      id: 6,
+      cantidad: 2,
+      precio_unitario: 150,
+      util: {
+        id: 5,
+        nombre: "Plastilina",
+      },
+    },
+    {
+      id: 7,
+      cantidad: 2,
+      precio_unitario: 50,
+      util: {
+        id: 3,
+        nombre: "Block de cartulina blanca",
+      },
+    },
+    {
+      id: 6,
+      cantidad: 2,
+      precio_unitario: 150,
+      util: {
+        id: 5,
+        nombre: "Plastilina",
+      },
+    },
+    {
+      id: 7,
+      cantidad: 2,
+      precio_unitario: 50,
+      util: {
+        id: 3,
+        nombre: "Block de cartulina blanca",
+      },
+    },
+    {
+      id: 6,
+      cantidad: 2,
+      precio_unitario: 150,
+      util: {
+        id: 5,
+        nombre: "Plastilina",
+      },
+    },
+    {
+      id: 7,
+      cantidad: 2,
+      precio_unitario: 50,
+      util: {
+        id: 3,
+        nombre: "Block de cartulina blanca",
+      },
+    },
   ],
 };
 
