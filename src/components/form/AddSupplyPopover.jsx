@@ -15,7 +15,7 @@ export const AddSupplyPopover = ({ field, form }) => {
   const [supplies, setSupplies] = useState([]);
   useEffect(() => {
     function fetchSupplies() {
-      // fetch supplies and set supplies
+      // fetch all supplies 
       setSupplies(suppliesData);
     }
     fetchSupplies();

@@ -7,15 +7,16 @@ import {
   DialogDescription,
   Dialog,
 } from "@/components/ui/dialog";
-import { formatObjectFecha } from "@/utils";
-import { usePurchases } from "@/hooks";
+import { formatFecha } from "@/utils";
+import { usePurchase, usePurchases } from "@/hooks";
 import { toast } from "sonner";
 
 export const EditPurchaseDialog = ({ open, setOpen }) => {
   const { setPurchases } = usePurchases();
+  const {purchaseDetail,setPurchase}=usePurchase();
 
   function onSubmit(values) {
-    const formattedValues = formatObjectFecha(values);
+    const formattedValues = {...values, fecha: formatFecha(values.fecha)};
     console.log(values);
     //put purchase to api
 
@@ -25,6 +26,7 @@ export const EditPurchaseDialog = ({ open, setOpen }) => {
   const handleCloseDialog = () => {
     setOpen(false);
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[725px] px-10 py-8 h-[85vh] flex flex-col gap-7">

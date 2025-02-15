@@ -7,7 +7,11 @@ import {
   DialogDescription,
   Dialog,
 } from "@/components/ui/dialog";
-import { postPurchaseApiMock,formatObjectFecha } from "@/utils";
+import {
+  postPurchaseApiMock,
+  formatFecha,
+  postPurchaseDetailApiMock,
+} from "@/utils";
 import { usePurchases } from "@/hooks";
 import { toast } from "sonner";
 
@@ -15,14 +19,23 @@ export const RegisterPurchaseDialog = ({ open, setOpen }) => {
   const { setPurchases } = usePurchases();
 
   function onSubmit(values) {
-    const formattedValues = formatObjectFecha(values);
-    console.log(values);
-    //post purchase to api
+    const formattedValues = { ...values, fecha: formatFecha(values.fecha) };
+    console.log(formattedValues);
 
-    setPurchases((prevPurchases) => [
-      ...prevPurchases,
-      postPurchaseApiMock(formattedValues),
-    ]);
+    //post purchase to api
+    const purchaseResponse = postPurchaseApiMock({
+      fecha: formattedValues.fecha,
+    });
+    //post detalles_compra to api
+    values.detalle_compra.forEach((detalle) => {
+      const detalleResponse = postPurchaseDetailApiMock({
+        compra: purchaseResponse.id,
+        detalle,
+      });
+    });
+    //fetch and set new purchase to state
+    setPurchases((prevPurchases) => [...prevPurchases, purchaseResponse]);
+
     toast.success("Compra registrada correctamente");
     handleCloseDialog();
   }

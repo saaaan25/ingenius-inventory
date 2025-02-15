@@ -21,18 +21,17 @@ export const groupPurchasesByDate = (purchases) => {
   }, []);
 };
 
-export const formatPurchaseDetail = (purchaseDetail) => {
+export const formatPurchase = (purchase,purchaseDetail) => {
   return {
-    ...purchaseDetail,
+    ...purchase,
     cantidad_total: getCantidadTotal(purchaseDetail),
-    bimestre: getBimestre(purchaseDetail),
-    fecha: getSpecificDate(purchaseDetail.fecha).fullDate,
+    bimestre: getBimestre(purchase),
+    fecha: getSpecificDate(purchase.fecha).fullDate,
   };
 };
 
-export const formatObjectFecha = (values) => {
-  return {
-    ...values,
-    fecha: format(new Date(values.fecha), "yyyy-MM-dd"),
-  };
+export const formatFecha = (fecha) => {
+  return (
+    format(new Date(fecha), "yyyy-MM-dd")
+  );
 }

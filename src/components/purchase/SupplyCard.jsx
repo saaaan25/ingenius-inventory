@@ -7,18 +7,19 @@ import {
   CardHeader,
 } from "../ui/card";
 
-export const SupplyCard = ({ supply }) => {
+export const SupplyCard = ({ purchaseDetailItem }) => {
   return (
+    purchaseDetailItem && 
     <Card className="w-full flex flex-col hover:cursor-pointer bg-button text-button py-4 px-6 gap-2">
       <div className="flex justify-between items-center font-normal text-base">
-        <CardTitle className="font-normal">{supply.util.nombre}</CardTitle>
-        <p>S/{supply.cantidad * supply.precio_unitario}</p>
+        <CardTitle className="font-normal">{purchaseDetailItem.util.nombre}</CardTitle>
+        <p>S/{purchaseDetailItem.cantidad * purchaseDetailItem.precio_unitario}</p>
       </div>
       <div className=" flex justify-between items-center text-routes text-sm">
         <div>
-          {supply.cantidad} {supply.cantidad == 1 ? "unidad" : "unidades"}
+          {purchaseDetailItem.cantidad} {purchaseDetailItem.cantidad == 1 ? "unidad" : "unidades"}
         </div>
-        <p>Precio unitario: {supply.precio_unitario}</p>
+        <p>Precio unitario: {purchaseDetailItem.precio_unitario}</p>
       </div>
     </Card>
   );

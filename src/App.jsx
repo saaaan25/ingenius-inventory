@@ -9,10 +9,11 @@ import Reports from "./pages/Reports";
 import Purchases from "./pages/Purchases";
 import Login from "./pages/Login";
 import SideBar from "./components/Sidebar";
-import { PurchasesProvider, PurchaseProvider } from "@/providers";
+import { PurchasesProvider} from "@/providers";
 import Request from "./pages/Request";
 import { User, Purchase } from "@/pages";
 import { Toaster } from "sonner";
+import { PurchaseProvider } from "@/providers";
 
 function App() {
   return (
@@ -23,28 +24,12 @@ function App() {
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/reports" element={<Reports />} />
-            <Route
-              path="/purchases"
-              element={
-                <PurchasesProvider>
-                  <Purchases />
-                </PurchasesProvider>
-              }
-            />
+            <Route path="/purchases" element={<Purchases />} />
             <Route path="/deliveries" element={<Deliveries />} />
             <Route path="/users" element={<Users />} />
             <Route path="/users/:id" element={<User />} />
             <Route path="/requests/:id" element={<Request />} />
-            <Route
-              path="/purchases/:id"
-              element={
-                <PurchasesProvider>
-                  <PurchaseProvider>
-                    <Purchase />
-                  </PurchaseProvider>
-                </PurchasesProvider>
-              }
-            />
+            <Route path="/purchases/:id" element={<PurchaseProvider><Purchase /></PurchaseProvider>} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
