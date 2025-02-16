@@ -6,7 +6,9 @@ const getStatsForRequest = () => {
     const solicitudes_rechazadas = solicitudes.filter(solicitud => solicitud.estado === "rechazado").length
 
     return {
-        
+        total_solicitudes,
+        solicitudes_aceptadas,
+        solicitudes_rechazadas
     }
 }
 

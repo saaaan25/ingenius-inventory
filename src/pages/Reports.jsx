@@ -5,6 +5,8 @@ import getStatsForRequest from "@/hooks/getStatsForRequests";
 const Reports = () => {
     getStatsForRequest()
     const title = ["Material utilizado en el bimestre", "Resumen de solicitudes"]
+    const { total_solicitudes, solicitudes_aceptadas, solicitudes_rechazadas } = getStatsForRequest()
+    console.log(total_solicitudes, solicitudes_aceptadas, solicitudes_rechazadas)
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
             <a className="font-light text-routes text-xs" href="/reports">Reportes</a>

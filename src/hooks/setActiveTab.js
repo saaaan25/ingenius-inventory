@@ -13,7 +13,11 @@ const useActiveTab = (options) => {
         updateFilteredRequests(); 
     }, [activeTab, options]);
 
-    return { activeTab, setActiveTab, filteredShowList };
+    return { 
+        activeTab, 
+        setActiveTab, 
+        filteredShowList 
+    };
 };
 
 export default useActiveTab;
