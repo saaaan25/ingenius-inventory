@@ -1,4 +1,4 @@
-import { PurchaseCard } from "@/components/purchase";
+import { PurchaseCard } from "@/components/purchases";
 import getSpecificDate from "@/hooks/getSpecificDate";
 
 export const DatePurchasesItem = ({ date, purchases }) => {

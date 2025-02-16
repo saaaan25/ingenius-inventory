@@ -26,31 +26,43 @@ export const purchasesData = [
   },
 ];
 
-export const purchaseDetailData = {
-  id: 5,
-  total_gastado: 300,
-  fecha: "2021-12-05",
-  detalle_compra: [
-    {
-      id: 6,
-      cantidad: 2,
-      precio_unitario: 150,
-      util: {
-        id: 5,
-        nombre: "Plastilina",
-      },
-    },
-    {
-      id: 7,
-      cantidad: 2,
-      precio_unitario: 50,
-      util: {
-        id: 3,
-        nombre: "Block de cartulina blanca",
-      },
-    },
-  ],
-};
+export const purchaseDetailData = [
+  {
+    id: 1,
+    cantidad: 2,
+    precio_unitario: 150,
+    util: 1,
+    compra: 1,
+  },
+  {
+    id: 2,
+    cantidad: 2,
+    precio_unitario: 50,
+    util: 2,
+    compra: 1,
+  },
+  {
+    id: 3,
+    cantidad: 2,
+    precio_unitario: 150,
+    util: 3,
+    compra: 1,
+  },
+  {
+    id: 4,
+    cantidad: 2,
+    precio_unitario: 50,
+    util: 1,
+    compra: 2,
+  },
+  {
+    id: 5,
+    cantidad: 2,
+    precio_unitario: 150,
+    util: 2,
+    compra: 2,
+  },
+]
 
 export const suppliesData = [
   {
@@ -116,23 +128,3 @@ export const suppliesData = [
   },
 ];
 
-export const purchaseFormData = {
-  fecha: "2021-12-05",
-  detalle_compra: [
-    {
-      cantidad: 3,
-      precio_unitario: 20,
-      util: 1,
-    },
-    {
-      cantidad: 1,
-      precio_unitario: 5,
-      util: 3,
-    },
-    {
-      cantidad: 5,
-      precio_unitario: 75,
-      util: 4,
-    },
-  ],
-};
