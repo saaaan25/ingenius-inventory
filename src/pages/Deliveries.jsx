@@ -17,7 +17,7 @@ const Deliveries = () => {
             <div className="flex flex-col w-full h-full p-6">
             <div className="grid grid-cols-3 gap-6">
                 {classes.map((classRoom, index) => (
-                    <ClassRoom key={index} grade={classRoom.grade} teacher={classRoom.teacher} />
+                    <ClassRoom key={index} nombre={classRoom.nombre} profesor={classRoom.profesor} />
                 ))}
             </div>
         </div>

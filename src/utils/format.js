@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { getCantidadTotal, getBimestre } from '@/utils/helpers';
+import { format } from 'date-fns';
 
 export const orderPurchasesByDate = (purchases) => {
   return purchases.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
@@ -9,7 +10,7 @@ export const groupPurchasesByDate = (purchases) => {
 
   return orderedPurchases.reduce((acc, purchase) => {
     const { fecha } = purchase;
-    const existingGroup = acc.find((group) => group.fecha === fecha);
+    const existingGroup = acc.find(group => group.fecha === fecha);
     if (existingGroup) {
       existingGroup.purchases.push(purchase);
     } else {
@@ -19,24 +20,17 @@ export const groupPurchasesByDate = (purchases) => {
   }, []);
 };
 
-export const postPurchaseApiMock = (values) => {
-  const id = Math.floor(Math.random() * 1000000);
-  const total_gastado = values.detalle_compra.reduce(
-    (total, item) => total + item.cantidad * item.precio_unitario,
-    0
-  );
-  const finalValues = {
-    ...values,
-    id,
-    total_gastado,
-  };
-  return finalValues;
-};
-
-export const formatObjectFecha = (values) => {
+export const formatPurchase = (purchase,purchaseDetail) => {
   return {
-    ...values,
-    fecha: format(new Date(values.fecha), "yyyy-MM-dd"),
+    ...purchase,
+    cantidad_total: getCantidadTotal(purchaseDetail),
+    bimestre: getBimestre(purchase),
+    fecha: purchase.fecha,
   };
 };
 
+export const formatFecha = (fecha) => {
+  return (
+    format(new Date(fecha), "yyyy-MM-dd")
+  );
+}

@@ -1,12 +1,10 @@
 const getSpecificDate = ( date ) => {
-
     let formatDate
 
     const semana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
     if(typeof date === "string") {
-        console.log(date)
         formatDate = new Date(date)
     }
 
