@@ -47,7 +47,7 @@ export const PurchaseProvider = ({ children}) => {
   }, [purchase?.id]); 
 
   return (
-    <PurchaseContext.Provider value={{ purchaseDetail, purchase, setPurchase, setPurchaseId, purchaseId }}>
+    <PurchaseContext.Provider value={{ purchaseDetail, setPurchaseDetail, purchase, setPurchase, setPurchaseId, purchaseId }}>
       {children}
     </PurchaseContext.Provider>
   );

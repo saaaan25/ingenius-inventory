@@ -30,10 +30,12 @@ export const RegisterPurchaseDialog = ({ open, setOpen }) => {
     values.detalle_compra.forEach((detalle) => {
       const detalleResponse = postPurchaseDetailApiMock({
         compra: purchaseResponse.id,
-        detalle,
+        precio_unitario: detalle.precio_unitario,
+        cantidad: detalle.cantidad,
+        util: detalle.util.id,
       });
     });
-    //fetch and set new purchase to state
+    //set new purchase to state
     setPurchases((prevPurchases) => [...prevPurchases, purchaseResponse]);
 
     toast.success("Compra registrada correctamente");

@@ -14,7 +14,7 @@ export const PurchaseForm = ({
   const form = useForm({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
-      fecha: defaultPurchase?.fecha || new Date(),
+      fecha: defaultPurchase?.fecha ? new Date(defaultPurchase.fecha): new Date(),
       detalle_compra: defaultPurchase?.detalle_compra || [],
     },
   });

@@ -3,14 +3,15 @@ import { PurchaseContext } from "@/providers";
 import { formatPurchase } from "@/utils";
 
 export const usePurchase = () => {
-  const { purchaseDetail, setPurchase, purchase, setPurchaseId, purchaseId } =
+  const { purchaseDetail, setPurchaseDetail, setPurchase, purchase, setPurchaseId, purchaseId } =
     useContext(PurchaseContext);
   if (!purchase) {
-    return { purchaseDetail, setPurchase, purchase, setPurchaseId, purchaseId };
+    return { purchaseDetail, setPurchaseDetail, setPurchase, purchase, setPurchaseId, purchaseId };
   }
 
   return {
     purchaseDetail,
+    setPurchaseDetail,
     setPurchase,
     purchase: formatPurchase(purchase, purchaseDetail),
     setPurchaseId,

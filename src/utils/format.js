@@ -1,5 +1,4 @@
 import { getCantidadTotal, getBimestre } from '@/utils/helpers';
-import getSpecificDate from '@/hooks/getSpecificDate';
 import { format } from 'date-fns';
 
 export const orderPurchasesByDate = (purchases) => {
@@ -26,7 +25,7 @@ export const formatPurchase = (purchase,purchaseDetail) => {
     ...purchase,
     cantidad_total: getCantidadTotal(purchaseDetail),
     bimestre: getBimestre(purchase),
-    fecha: getSpecificDate(purchase.fecha).fullDate,
+    fecha: purchase.fecha,
   };
 };
 

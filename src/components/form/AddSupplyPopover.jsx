@@ -15,7 +15,7 @@ export const AddSupplyPopover = ({ field, form }) => {
   const [supplies, setSupplies] = useState([]);
   useEffect(() => {
     function fetchSupplies() {
-      // fetch all supplies 
+      // fetch all supplies
       setSupplies(suppliesData);
     }
     fetchSupplies();
@@ -26,7 +26,9 @@ export const AddSupplyPopover = ({ field, form }) => {
         <CommandInput placeholder="Busca un útil..." />
 
         <CommandList>
-          <ScrollArea className={'[&>[data-radix-scroll-area-viewport]]:max-h-[200px]'}>
+          <ScrollArea
+            className={"[&>[data-radix-scroll-area-viewport]]:max-h-[200px]"}
+          >
             <CommandGroup>
               {supplies.map((supply) => (
                 <CommandItem
@@ -36,12 +38,11 @@ export const AddSupplyPopover = ({ field, form }) => {
                       (elem) => elem.util === supply.id
                     );
                     const updatedDetalleCompra = alreadySelected
-                      ? field.value.filter((elem) => elem.util !== supply.id)
+                      ? field.value.filter((elem) => elem.util.id !== supply.id)
                       : [
                           ...field.value,
                           {
-                            util: supply.id,
-                            nombre: supply.nombre,
+                            util: { id: supply.id, nombre: supply.nombre },
                             cantidad: 1,
                             precio_unitario: 0,
                           },
@@ -53,7 +54,7 @@ export const AddSupplyPopover = ({ field, form }) => {
                   <Check
                     className={cn(
                       "ml-auto",
-                      field.value.some((elem) => elem.util === supply.id)
+                      field.value.some((elem) => elem.util.id === supply.id)
                         ? "opacity-100"
                         : "opacity-0"
                     )}

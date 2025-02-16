@@ -1,5 +1,5 @@
 import { RegisterPurchaseButton } from "@/components/button";
-import { DatePurchasesSection } from "@/components/purchase";
+import { DatePurchasesSection } from "@/components/purchases";
 
 const Purchases = () => {
   return (

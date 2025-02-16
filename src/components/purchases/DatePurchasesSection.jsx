@@ -1,5 +1,5 @@
 import { usePurchases } from "@/hooks";
-import { DatePurchasesItem } from "@/components/purchase";
+import { DatePurchasesItem } from "@/components/purchases";
 
 export const DatePurchasesSection = () => {
   const {purchasesGroupedByDate}=usePurchases();
