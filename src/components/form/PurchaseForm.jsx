@@ -13,15 +13,18 @@ export const PurchaseForm = ({
 }) => {
   const form = useForm({
     resolver: zodResolver(purchaseSchema),
-    defaultValues: defaultPurchase || {
-      fecha: new Date(),
-      detalle_compra: [],
+    defaultValues: {
+      fecha: defaultPurchase?.fecha ? new Date(defaultPurchase.fecha): new Date(),
+      detalle_compra: defaultPurchase?.detalle_compra || [],
     },
   });
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col h-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 flex flex-col h-full"
+      >
         <FormField
           control={form.control}
           name="fecha"

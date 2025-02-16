@@ -32,7 +32,7 @@ export const SupplyFormCard = ({ index, fieldItem, form }) => {
 
   return (
     <div className="flex justify-between items-center border rounded-md border-zinc-200 px-4 py-2 bg-button text-button">
-      <div className="w-40">{fieldItem.nombre}</div>
+      <div className="w-40">{fieldItem.util.nombre}</div>
       <div className="flex-auto flex text-zinc-400 items-center ">
         <FormItem className="flex flex-1/2 justify-center px-4">
           <FormControl>
