@@ -3,7 +3,7 @@ import RequestItem from "./RequestItem";
 import getSpecificDate from "@/hooks/getSpecificDate";
 
 const RequestsGroup = ({ requests }) => {
-    const requestDate = getSpecificDate(requests[0].fecha_limite)
+    const requestDate = getSpecificDate(requests[0].fecha)
     
     return (
         <div className="flex flex-col w-full mt-2 gap-y-2">

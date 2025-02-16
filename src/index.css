@@ -52,7 +52,7 @@ body {
   background-color: transparent;
 }
 .bg-button:hover {
-  background-color: #272F36;
+  background-color: #f9fafb;
 }
 
 .border-primary_line {
@@ -90,7 +90,4 @@ body {
 }
 .text-button{
   color: #272F36;
-}
-.text-button:hover{
-  color: #FFFFFF;
 }

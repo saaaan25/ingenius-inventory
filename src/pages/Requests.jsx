@@ -1,4 +1,4 @@
-import requests from "../data-test/requests";
+import solicitudes from "../data-test/solicitud";
 import NavBar from "@/components/NavBar";
 import RequestsSection from "@/components/request/RequestsSection";
 import useActiveTab from "@/hooks/setActiveTab";
@@ -9,12 +9,12 @@ const Requests = () => {
         {
             id: "Pendientes",
             estado: "pendiente",
-            lista: requests.filter(request => request.estado === "pendiente")
+            lista: solicitudes.filter(request => request.estado === "pendiente")
         },
         {
             id: "Terminados",
             estado: "terminado",
-            lista: requests.filter(request => request.estado === "terminado")
+            lista: solicitudes.filter(request => request.estado != "pendiente")
         }
     ], [])
 

@@ -6,7 +6,8 @@ import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 const RequestItem = ({ request }) => {
     const navigate = useNavigate()
-    const author = users.find((user) => user.id === Number(request.idProfesor))
+    const author = users.find((user) => user.id === Number(request.usuario))
+    const estado_solicitud = request.estado.charAt(0).toUpperCase() + request.estado.slice(1).toLowerCase();
 
     const goToRequest = () => {
         navigate(`${request.id}`)
@@ -19,7 +20,7 @@ const RequestItem = ({ request }) => {
             </div>
             <CardHeader className="flex text-start pl-0">
                 <CardTitle>Solicitud N°{request.id}</CardTitle>
-                <CardDescription>{author.nombreCompleto}</CardDescription>
+                <CardDescription>{ request.estado != "pendiente" ? estado_solicitud : author.nombreCompleto }</CardDescription>
             </CardHeader>
         </Card>
     );

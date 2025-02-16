@@ -1,8 +1,8 @@
 const groupRequestsByDate = (requests) => {
     const requestsGroups = requests.reduce((acc, request) => {
-        if (!request.fecha_limite) return acc; 
+        if (!request.fecha) return acc; 
 
-        let sublist = acc.find(sub => sub.length > 0 && sub[0].fecha_limite === request.fecha_limite);
+        let sublist = acc.find(sub => sub.length > 0 && sub[0].fecha === request.fecha);
 
         if (sublist) {
             sublist.push(request);

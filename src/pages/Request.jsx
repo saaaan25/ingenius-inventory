@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import requests from "../data-test/requests";
+import solicitudes from "../data-test/solicitud";
 import { HiChevronRight } from "react-icons/hi";
 import getSpecificDate from "../hooks/getSpecificDate";
 import BackButton from "@/components/button/BackButton";
@@ -9,8 +9,8 @@ import { AcceptButton, CancelButton, EditButton } from "@/components/button";
 
 const Request = () => {
     const params = useParams()
-    const request = requests.find((item) => item.id === Number(params.id))
-    const requestDay = getSpecificDate(request.fecha_limite)
+    const request = solicitudes.find((item) => item.id === Number(params.id))
+    const requestDay = getSpecificDate(request.fecha)
     const supplies = getSuppliesByRequest(params.id)
 
     return (
@@ -28,7 +28,7 @@ const Request = () => {
                         <CancelButton>Cancelar</CancelButton>
                     </div>
                 </div>
-                <h1 className="font-semibold text-xl">Solicitud N° {request.id} - {request.grado}</h1>
+                <h1 className="font-semibold text-xl">Solicitud N° {request.id} - {request.aula}</h1>
                 <div>
                     <h2 className="text-routes text-sm">Fecha solicitada: {requestDay.fullDate}</h2>
                 </div>
