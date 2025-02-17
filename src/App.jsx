@@ -14,6 +14,7 @@ import Request from "./pages/Request";
 import { User, Purchase } from "@/pages";
 import { Toaster } from "sonner";
 import { PurchaseProvider } from "@/providers";
+import Classroom from "./pages/Classroom";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
             <Route path="/users/:id" element={<User />} />
             <Route path="/requests/:id" element={<Request />} />
             <Route path="/purchases/:id" element={<PurchaseProvider><Purchase /></PurchaseProvider>} />
+            <Route path="/inventory" element={<Deliveries />} />
+            <Route path="/classrooms/:id" element={<Classroom />} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
