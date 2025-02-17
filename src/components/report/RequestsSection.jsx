@@ -1,5 +1,6 @@
 import getStatsForRequest from "@/hooks/getStatsForRequests";
 import Container from "./Container";
+import RequestStats from "./RequestStats";
 
 const RequestsSection = () => {
     const title = "Resumen de solicitudes"
@@ -7,7 +8,7 @@ const RequestsSection = () => {
 
     return (
         <Container title={title}>
-            {total_solicitudes}
+            <RequestStats />
         </Container>
     );
 }

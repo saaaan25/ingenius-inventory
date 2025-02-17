@@ -10,7 +10,6 @@ const Reports = () => {
             <div className="pl-5 w-full flex flex-col items-start">
                 <h1 className="font-semibold text-xl">Reportes</h1>
                 <div className="w-full mt-7 flex flex-col gap-y-10">
-                    <MaterialSection />
                     <GeneralSection />
                     <RequestsSection />
                     <PurchasesSection />

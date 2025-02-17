@@ -6,7 +6,7 @@ const MaterialSection = () => {
 
     return (
         <Container title={title}>
-            ola
+            <MaterialStats />
         </Container>
     );
 }
