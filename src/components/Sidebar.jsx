@@ -43,16 +43,16 @@ const SideBar = () => {
 
     return (
         <div className='flex min-w-screen min-h-screen'>
-            <aside className='w-[250px] min-h-screen bg-primary flex flex-col items-start justify-start pt-20'>
+            <aside className='fixed w-[250px] min-h-screen bg-primary flex flex-col items-start justify-start pt-20 h-full'>
                 {pages.map((page, index) => (
                     <SidebarItem key={index} title={page.title} route={page.route} Icon={page.icon} />
                 ))}
-                <div className='w-full h-full p-6 flex place-items-end justify-end gap-x-3 text-white'>
+                <div className='w-full h-full p-6 flex items-end justify-end gap-x-3 text-white'>
                     <MdOutlineNotifications size={25}/> 
                     <BiUser size={25}/>
                 </div>
             </aside>
-            <main className='flex-1 px-10 py-3 overflow-auto'>
+            <main className='flex-1 px-10 py-3 overflow-auto ml-60 mr-4'>
                 <Outlet />
             </main>
         </div>

@@ -10,7 +10,7 @@ function Card({
     (<div
       data-slot="card"
       className={cn(
-        "bg-white text-zinc-950 rounded-xl border border-zinc-200 shadow-sm dark:bg-zinc-950 dark:text-zinc-50 dark:border-zinc-800",
+        "bg-white text-primary rounded-xl border border-zinc-200 shadow-sm dark:bg-zinc-950 dark:text-zinc-50 dark:border-zinc-800",
         className
       )}
       {...props} />)
@@ -24,7 +24,7 @@ function CardHeader({
   return (
     (<div
       data-slot="card-header"
-      className={cn("flex flex-col gap-1.5 p-6", className)}
+      className={cn("flex flex-col gap-1.5 p-4", className)}
       {...props} />)
   );
 }
@@ -57,7 +57,7 @@ function CardContent({
   className,
   ...props
 }) {
-  return (<div data-slot="card-content" className={cn("p-6 pt-0", className)} {...props} />);
+  return (<div data-slot="card-content" className={cn("p-4 pt-0", className)} {...props} />);
 }
 
 function CardFooter({
@@ -67,7 +67,7 @@ function CardFooter({
   return (
     (<div
       data-slot="card-footer"
-      className={cn("flex items-center p-6 pt-0", className)}
+      className={cn("flex items-center p-4 pt-0", className)}
       {...props} />)
   );
 }
