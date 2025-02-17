@@ -7,7 +7,7 @@ import detalle_entrega from "@/data-test/detalle_entrega"
 const getGeneralStats = () => {
     const getUtilesDisponibles = () => {
         let total = 0
-        supplies.map((supply) => total = total + supply.quantity)
+        supplies.map((supply) => total = total + supply.stock)
         return total
     }
 

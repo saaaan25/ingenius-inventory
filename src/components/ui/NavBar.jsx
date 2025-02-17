@@ -6,7 +6,7 @@ const NavBar = ({ options, active, setActive }) => {
     }
 
     return (
-        <div className="flex gap-x-3 text-sm"> 
+        <div className="flex gap-x-3"> 
             {options.map((option) => (
                 <NavTab key={option.id} option={option} active={option.id === active} onClick={() => selectTab(option.id)} />
             ))}

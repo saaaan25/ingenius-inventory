@@ -1,9 +1,12 @@
 import Container from "./Container";
+import MaterialStats from "./MaterialStats";
 
 const MaterialSection = () => {
-    return (
-        <Container title>
+    const title = "Material utilizado en el bimestre"
 
+    return (
+        <Container title={title}>
+            ola
         </Container>
     );
 }
