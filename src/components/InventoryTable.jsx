@@ -1,3 +1,4 @@
+// InventoryTable.jsx
 import { useState } from 'react';
 import { FaSearch, FaPlus, FaEdit } from 'react-icons/fa'; 
 import supplies from '../data-test/supplies.js';
@@ -8,7 +9,7 @@ const InventoryTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredSupplies = supplies.filter(supply =>
-        supply.name.toLowerCase().includes(searchTerm.toLowerCase())
+        supply.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -22,18 +23,18 @@ const InventoryTable = () => {
             <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
                 <thead>
                     <tr style={{ backgroundColor: '#f4f4f4' }}>
-                        <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Código</th>
+                        <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>ID</th>
                         <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Nombre</th>
-                        <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Cantidad</th>
+                        <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Stock</th>
                         <th style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}></th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredSupplies.map((supply, index) => (
                         <tr key={index}>
-                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.code}</td>
-                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.name}</td>
-                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.quantity}</td>
+                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.id}</td>
+                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.nombre}</td>
+                            <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>{supply.stock}</td>
                             <td style={{ padding: '10px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>
                                 <button style={{
                                     backgroundColor: 'transparent',
