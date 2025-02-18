@@ -65,7 +65,7 @@ export const putPurchaseDetailApiMock = ({
 };
 
 //user api mocks
-export const postUserApiMock = ({ nombre, apellido, email, rol }) => {
+export const postUserApiMock = ({ nombre, apellido, email, rol, imagen, contrasena }) => {
   const id = Math.floor(Math.random() * 1000000);
   const finalValues = {
     nombre,
@@ -73,22 +73,30 @@ export const postUserApiMock = ({ nombre, apellido, email, rol }) => {
     email,
     rol,
     id,
+    imagen,
+    contrasena,
   };
   return finalValues;
 };
 export const getUsersApiMock=()=>{
   return usersData;
 }
-export const putUserApiMock = ({ id, nombre, apellido, email, rol }) => {
+export const putUserApiMock = ({ id, nombre, apellido, email, rol,imagen, contrasena }) => {
   const finalValues = {
     nombre,
     apellido,
     email,
     rol,
     id,
+    imagen,
+    contrasena
   };
   return finalValues;
 };
+
+export const deleteUserApiMock = (userId) => {
+  return userId;
+}
 
 //supply api mocks
 export const getSupplyApiMock=(utilId)=> {
