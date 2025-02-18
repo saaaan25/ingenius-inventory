@@ -6,12 +6,24 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card.jsx";
 import suppliesList from "../data-test/supplies.js"; // Importa supplies
+import { students } from "../data-test/students.js"; // Importa lista de alumnos
 import NavBar from "@/components/ui/NavBar"; // Importa el NavBar
+import StudentCard from "@/components/ui/studentCard.jsx"; // Componente para mostrar alumnos
 
 const Classroom = () => {
     const params = useParams();
     const classroom = classes.find((item) => item.id === Number(params.id));
     const supplies = lista_detalles.filter((item) => item.lista_utiles === classroom.id);
+
+    const [studentsList, setStudentsList] = useState(students.filter(student => student.aula_id === classroom.id));
+
+    const handleDeleteStudent = (studentId) => {
+        const updatedList = studentsList.filter(student => student.id !== studentId);
+        setStudentsList(updatedList);
+
+        // Aquí puedes actualizar el archivo de data-test si lo necesitas
+        // Guardar cambios en students.js, simulando una actualización de datos.
+    };
 
     // Opciones para el NavBar
     const options = useMemo(() => [
@@ -42,14 +54,25 @@ const Classroom = () => {
             id: "Alumnos",
             component: (
                 <div className="w-full mt-4">
-                    {}
                     <p className="flex self-start font-black mt-10 mb-4">
-                        Sección en blanco
+                        Lista de alumnos
                     </p>
+                    <ScrollArea className="h-150 w-full rounded-md">
+                        <div className="flex flex-col gap-y-2">
+                            {studentsList.map((student, index) => (
+                                <StudentCard 
+                                    key={student.id} 
+                                    student={student} 
+                                    index={index + 1}
+                                    onDelete={() => handleDeleteStudent(student.id)} 
+                                />
+                            ))}
+                        </div>
+                    </ScrollArea>
                 </div>
             ),
         },
-    ], [supplies]);
+    ], [supplies, studentsList]);
 
     // Estado para la pestaña activa
     const [activeTab, setActiveTab] = useState(options[0].id);
