@@ -7,16 +7,14 @@ import {
   DialogDescription,
   Dialog,
 } from "@/components/ui/dialog";
-import { usePurchases } from "@/hooks";
-import { formatFecha } from "@/utils";
+import { useUsers } from "@/hooks";
 
-export const RegisterPurchaseDialog = ({ open, setOpen }) => {
-  const { createPurchase} = usePurchases();
+export const RegisterUserDialog = ({ open, setOpen }) => {
+  const { createUser } = useUsers();
 
   function onSubmit(values) {
-    const formattedValues = { ...values, fecha: formatFecha(values.fecha) };
-    console.log(formattedValues);
-    createPurchase(formattedValues);
+    console.log(values);
+    createUser(values);
     handleCloseDialog();
   }
   const handleCloseDialog = () => {
@@ -28,14 +26,11 @@ export const RegisterPurchaseDialog = ({ open, setOpen }) => {
         <DialogHeader>
           <DialogTitle>
             <DialogDescription className="text-primary text-lg">
-              Registrar compra
+              Registrar usuario
             </DialogDescription>
           </DialogTitle>
         </DialogHeader>
-        <PurchaseForm
-          onSubmit={onSubmit}
-          handleCloseDialog={handleCloseDialog}
-        />
+        
       </DialogContent>
     </Dialog>
   );

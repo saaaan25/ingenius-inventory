@@ -1,4 +1,4 @@
 export * from "./DatePurchasesItem";
-export * from "./DatePurchasesSection";
+export * from "./DatePurchasesList";
 export * from "./PurchaseCard";
 export * from "./RegisterPurchaseDialog";

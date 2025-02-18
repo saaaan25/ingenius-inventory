@@ -2,8 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
 import { purchaseSchema } from "@/utils";
-import { DateFormItem } from "./DateFormItem";
-import { SuppliesFormItem } from "./SuppliesFormItem";
+import { DateFormItem } from "../form/DateFormItem";
+import { SuppliesFormItem } from "../form/SuppliesFormItem";
 import { AcceptButton, CancelButton } from "../button";
 
 export const PurchaseForm = ({
@@ -14,6 +14,7 @@ export const PurchaseForm = ({
   const form = useForm({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
+      id: defaultPurchase?.id || undefined,
       fecha: defaultPurchase?.fecha ? new Date(defaultPurchase.fecha): new Date(),
       detalle_compra: defaultPurchase?.detalle_compra || [],
     },
