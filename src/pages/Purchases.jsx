@@ -1,5 +1,5 @@
 import { RegisterPurchaseButton } from "@/components/button";
-import { DatePurchasesSection } from "@/components/purchases";
+import { DatePurchasesList } from "@/components/purchases";
 
 const Purchases = () => {
   return (
@@ -12,7 +12,7 @@ const Purchases = () => {
           <h1 className="font-semibold text-xl">Compras</h1>
           <RegisterPurchaseButton />
         </div>
-        <DatePurchasesSection />
+        <DatePurchasesList />
       </div>
     </div>
   );

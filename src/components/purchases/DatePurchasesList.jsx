@@ -1,10 +1,11 @@
 import { usePurchases } from "@/hooks";
 import { DatePurchasesItem } from "@/components/purchases";
+import { groupPurchasesByDate } from "@/utils";
 
-export const DatePurchasesSection = () => {
-  const {purchasesGroupedByDate}=usePurchases();
+export const DatePurchasesList = () => {
+  const {purchases}=usePurchases();
   return (
-    purchasesGroupedByDate.map(({fecha, purchases}) => (
+    groupPurchasesByDate(purchases).map(({fecha, purchases}) => (
     <DatePurchasesItem key={fecha} date={fecha} purchases={purchases} />  
   )))
 }
