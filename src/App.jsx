@@ -14,6 +14,7 @@ import Request from "./pages/Request";
 import { Purchase } from "@/pages";
 import { Toaster } from "sonner";
 import { PurchaseProvider, UsersProvider } from "@/providers";
+import Classroom from "./pages/Classroom";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
                   </PurchaseProvider>
                 }
               />
+            <Route path="/inventory" element={<Deliveries />} />
+            <Route path="/classrooms/:id" element={<Classroom />} />
             </Route>
             <Route path="/login" element={<Login />} />
           </Routes>

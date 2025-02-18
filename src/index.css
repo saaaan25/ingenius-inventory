@@ -1,11 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-@import "tailwindcss";
 
 :root {
   font-family: "Montserrat", sans-serif;
@@ -54,7 +52,7 @@ body {
   background-color: transparent;
 }
 .bg-button:hover {
-  background-color: #272F36;
+  background-color: #f9fafb;
 }
 
 .border-primary_line {
@@ -92,7 +90,4 @@ body {
 }
 .text-button{
   color: #272F36;
-}
-.text-button:hover{
-  color: #FFFFFF;
 }
