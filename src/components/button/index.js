@@ -5,3 +5,5 @@ export * from './EditButton';
 export * from './RegisterPurchaseButton';
 export * from './EditPurchaseButton';
 export * from './RegisterUserButton';
+export * from './EditUserButton';
+export * from './DeleteUserButton';

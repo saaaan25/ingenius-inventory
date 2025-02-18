@@ -2,7 +2,6 @@ import React from 'react'
 import { UserCard } from '.'
 
 export const RoleUsersItem = ({rol,users}) => {
-  console.log(rol);
   return (
     <div>
       <p>{rol}</p>
