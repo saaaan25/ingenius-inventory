@@ -20,6 +20,19 @@ export const groupPurchasesByDate = (purchases) => {
   }, []);
 };
 
+export const groupUsersByRole = (users) => {
+  return users.reduce((acc, user) => {
+    const { rol } = user;
+    const existingGroup = acc.find(group => group.rol === rol);
+    if (existingGroup) {
+      existingGroup.users.push(user);
+    } else {
+      acc.push({ rol, users: [user] });
+    }
+    return acc;
+  }, []);
+}
+
 export const formatPurchase = (purchase,purchaseDetail) => {
   return {
     ...purchase,

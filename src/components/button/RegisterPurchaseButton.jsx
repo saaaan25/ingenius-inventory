@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AddButton } from '@/components/button';
-import { RegisterPurchaseDialog } from '../purchases/RegisterPurchaseDialog';
+import { RegisterPurchaseDialog } from '@/components/purchases';
 
 export const RegisterPurchaseButton = () => {
   const [open, setOpen] = useState(false);
