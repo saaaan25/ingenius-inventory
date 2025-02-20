@@ -2,7 +2,7 @@ import detalle_solicitud from "@/data-test/detalle_solicitud";
 import solicitudes from "@/data-test/solicitud";
 import supplies from "@/data-test/supplies";
 
-const getMaterialsByTeacher = (id) => {
+const getMaterials = () => {
     let materiales = supplies
 
     materiales = materiales.map((material) => ({
@@ -11,7 +11,7 @@ const getMaterialsByTeacher = (id) => {
     }))
 
     solicitudes.map((solicitud) => {
-        if(solicitud.estado === "aceptado" && solicitud.usuario === id){
+        if(solicitud.estado === "aceptado"){
             detalle_solicitud.map((detalle) => {
                 if(detalle.solicitud === solicitud.id) {
                     materiales.map((material) => {
@@ -27,4 +27,4 @@ const getMaterialsByTeacher = (id) => {
     return materiales
 };
 
-export default getMaterialsByTeacher;
+export default getMaterials;

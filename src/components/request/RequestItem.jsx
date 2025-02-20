@@ -20,7 +20,7 @@ const RequestItem = ({ request }) => {
             </div>
             <CardHeader className="flex text-start pl-0">
                 <CardTitle>Solicitud N°{request.id}</CardTitle>
-                <CardDescription>{ request.estado != "pendiente" ? estado_solicitud : author.nombreCompleto }</CardDescription>
+                <CardDescription>{ request.estado != "pendiente" ? estado_solicitud : author.nombre + " " + author.apellido }</CardDescription>
             </CardHeader>
         </Card>
     );

@@ -1,26 +1,28 @@
 import PropTypes from "prop-types";
 
-const MaterialTable = ({ materials, header_1,header_2 }) => {
+const MaterialTable = ({ materials, header_1 = "Material",header_2 = "Cantidad" }) => {
     return (
-        <table className="border-collapse w-full border border-gray-300">
+        <table className="w-full border-t border-b border-tertiary_line">
             <thead>
                 <tr className="bg-gray-200">
-                    <th className="border p-2">{header_1}</th>
-                    <th className="border p-2">{header_2}</th>
+                    <th className="border-t border-b border-secondary_line p-2">{header_1}</th>
+                    <th className="border-t border-b border-secondary_line p-2">{header_2}</th>
                 </tr>
             </thead>
             <tbody>
-                {materials.length > 0 ? (
-                    materials.map((material) => (
-                        <tr key={material.id} className="text-center">
-                            <td className="border p-2">{material.name}</td>
-                            <td className="border p-2">{material.stock}</td>
-                        </tr>
-                    ))
+                {materials.filter(material => material.stock > 0).length > 0 ? (
+                    materials
+                        .filter(material => material.stock > 0) 
+                        .map((material) => (
+                            <tr key={material.id} className="text-center">
+                                <td className="border-t border-b border-tertiary_line p-2">{material.nombre}</td>
+                                <td className="border-t border-b border-tertiary_line p-2">{material.stock}</td>
+                            </tr>
+                        ))
                 ) : (
                     <tr>
-                        <td colSpan="3" className="border p-2 text-center text-gray-500">
-                            No hay materiales disponibles
+                        <td colSpan="3" className="border-t border-b border-gray-300 p-2 text-center text-gray-500">
+                            No se utilizó materiales
                         </td>
                     </tr>
                 )}

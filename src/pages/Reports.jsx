@@ -1,4 +1,5 @@
 import GeneralSection from "@/components/report/GeneralSection";
+import MaterialSection from "@/components/report/MaterialSection";
 import PurchasesSection from "@/components/report/PurchasesSection";
 import RequestsSection from "@/components/report/RequestsSection";
 
@@ -12,6 +13,7 @@ const Reports = () => {
                     <GeneralSection />
                     <RequestsSection />
                     <PurchasesSection />
+                    <MaterialSection />
                 </div>
             </div>
         </div>

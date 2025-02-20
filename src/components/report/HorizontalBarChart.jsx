@@ -5,7 +5,7 @@ const HorizontalBarChart = ({ data }) => {
     console.log('Data received:', data)
 
     return (
-        <ResponsiveContainer width="100%" height={150}>
+        <ResponsiveContainer width="100%" height={180}>
             <BarChart data={data} layout="vertical">
                 <XAxis type="number" />
                 <YAxis dataKey="name" type="category" width={80} className="text-sm"/>
