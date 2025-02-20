@@ -9,7 +9,7 @@ const PageRoute = ({ page1, page2 }) => {
                 (
                     <div className="flex w-full items-center text-routes">
                         <HiChevronRight />
-                        <a className="font-light text-routes_selected text-sm" href={page2.route}>{page2.name}</a>
+                        <a className="font-light text-routes_selected text-sm" href={`${page1.route}${page2.route}`}>{page2.name}</a>
                     </div>
                 ) 
             }
