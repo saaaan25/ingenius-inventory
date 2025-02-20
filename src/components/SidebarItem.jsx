@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const SidebarItem = ({ title, route, Icon }) => {
     const navigate = useNavigate();
     const location = useLocation(); 
-    const isActive = location.pathname === route;
+    const isActive = location.pathname.startsWith(route);
     const goToPage = () => {
         navigate(route)
     }
