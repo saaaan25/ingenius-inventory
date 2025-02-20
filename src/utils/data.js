@@ -1,3 +1,5 @@
+export const roles=["administrador","docente","encargado"];
+
 export const purchasesData = [
   {
     id: 1,
@@ -62,7 +64,7 @@ export const purchaseDetailData = [
     util: 2,
     compra: 2,
   },
-]
+];
 
 export const suppliesData = [
   {
@@ -128,3 +130,105 @@ export const suppliesData = [
   },
 ];
 
+export const usersData = [
+  {
+    id: 1,
+    nombre: "Juan",
+    apellido: "Perez",
+    email: "juan@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "administrador",
+  },
+  {
+    id: 2,
+    nombre: "Maria",
+    apellido: "Gomez",
+    email: "maria@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "docente",
+  },
+  {
+    id: 3,
+    nombre: "Carlos",
+    apellido: "Lopez",
+    email: "carlos@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "encargado",
+  },
+  {
+    id: 4,
+    nombre: "Ana",
+    apellido: "Martinez",
+    email: "ana@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "administrador",
+  },
+  {
+    id: 5,
+    nombre: "Luis",
+    apellido: "Garcia",
+    email: "luis@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "docente",
+  },
+  {
+    id: 6,
+    nombre: "Sofia",
+    apellido: "Rodriguez",
+    email: "sofia@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "encargado",
+  },
+  {
+    id: 7,
+    nombre: "Miguel",
+    apellido: "Hernandez",
+    email: "miguel@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "administrador",
+  },
+  {
+    id: 8,
+    nombre: "Laura",
+    apellido: "Fernandez",
+    email: "laura@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "docente",
+  },
+  {
+    id: 9,
+    nombre: "David",
+    apellido: "Ruiz",
+    email: "david@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "encargado",
+  },
+  {
+    id: 10,
+    nombre: "Isabel",
+    apellido: "Diaz",
+    email: "isabel@gmail.com",
+    contrasena: "123456",
+    imagen:
+      "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+    rol: "administrador",
+  },
+];

@@ -9,14 +9,18 @@ import { PopoverContent } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { suppliesData } from "@/utils";
+import { getSuppliesApiMock} from "@/utils";
 import { useEffect, useState } from "react";
 export const AddSupplyPopover = ({ field, form }) => {
   const [supplies, setSupplies] = useState([]);
   useEffect(() => {
     function fetchSupplies() {
-      // fetch all supplies
-      setSupplies(suppliesData);
+      try {
+        const suppliesResponse = getSuppliesApiMock();
+        setSupplies(suppliesResponse);
+      } catch (e) {
+        console.log(e);
+      }
     }
     fetchSupplies();
   }, []);
@@ -35,7 +39,7 @@ export const AddSupplyPopover = ({ field, form }) => {
                   key={supply.id}
                   onSelect={() => {
                     const alreadySelected = field.value.some(
-                      (elem) => elem.util === supply.id
+                      (elem) => elem.util.id === supply.id
                     );
                     const updatedDetalleCompra = alreadySelected
                       ? field.value.filter((elem) => elem.util.id !== supply.id)
