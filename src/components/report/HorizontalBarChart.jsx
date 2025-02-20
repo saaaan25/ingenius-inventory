@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const HorizontalBarChart = ({ data }) => {
-    console.log('Data received:', data)
-
     return (
         <ResponsiveContainer width="100%" height={180}>
             <BarChart data={data} layout="vertical">

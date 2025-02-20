@@ -10,7 +10,6 @@ const RequestStats = () => {
         { name: "Materiales", aceptado: solicitudes_aceptadas * 100 / (total), rechazado: solicitudes_rechazadas * 100 / (total) }
     ];
 
-    console.log(data)
     return (
         <HorizontalBarChart data={data} />
     );

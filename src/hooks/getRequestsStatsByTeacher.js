@@ -29,7 +29,6 @@ const getRequestsStatsByTeacher = (id) => {
 
     const materiales_solicitados_profesor = getMaterialsByTeacher().materiales_solicitados_profesor
     const materiales_aceptados_profesor = getMaterialsByTeacher().materiales_aceptados_profesor
-    console.log(materiales_solicitados_profesor, materiales_aceptados_profesor)
 
     return {
         solicitudes_profesor,
