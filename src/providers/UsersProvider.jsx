@@ -42,6 +42,7 @@ export const UsersProvider = ({children}) => {
         email: user.email,
         rol: user.rol,
         imagen: user.imagen,
+        contrasena: user.contrasena,
       });
       setUsers((prevUsers) => prevUsers.map((u) => (u.id === user.id ? userResponse : u)));
       toast.success("Usuario actualizado con éxito");
