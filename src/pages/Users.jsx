@@ -10,7 +10,7 @@ const Users = () => {
           Usuarios
         </a>
         <div className="pl-5 w-full h-full">
-          <div className="flex">
+          <div className="flex justify-between">
             <h1 className="font-semibold text-xl">Usuarios</h1>
             <RegisterUserButton />
           </div>

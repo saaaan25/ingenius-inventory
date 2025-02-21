@@ -7,7 +7,7 @@ export const EditUserButton = () => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <div onClick={() => setOpen(true)}>
+      <div className="cursor-pointer"onClick={() => setOpen(true)}>
         <Pencil />
       </div>
       <EditUserDialog open={open} setOpen={setOpen} />

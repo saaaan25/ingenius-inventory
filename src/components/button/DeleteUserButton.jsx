@@ -7,7 +7,7 @@ export const DeleteUserButton = () => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <div onClick={() => setOpen(true)}>
+      <div className="cursor-pointer" onClick={() => setOpen(true)}>
       <Trash2 />
       </div>
       <DeleteUserDialog open={open} setOpen={setOpen} />

@@ -18,7 +18,7 @@ export const EditUserDialog = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[725px] px-10 py-8 h-[85vh] flex flex-col gap-7">
+      <DialogContent className="sm:max-w-[725px] px-10 py-8  flex flex-col gap-7">
         <DialogHeader>
           <DialogTitle>
             <DialogDescription className="text-primary text-lg">
