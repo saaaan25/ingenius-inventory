@@ -1,4 +1,4 @@
-import { getPurchaseApiMock, purchasesData } from "@/utils";
+import { getPurchasesApiMock, purchasesData } from "@/utils";
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -19,7 +19,7 @@ export const PurchasesProvider = ({ children }) => {
 
   const loadPurchases = async () => {
     try {
-      const purchases = getPurchaseApiMock();
+      const purchases = getPurchasesApiMock();
       setPurchases(purchases);
     } catch (error) {
       console.log(error);

@@ -12,7 +12,12 @@ import SideBar from "./components/Sidebar";
 import Request from "./pages/Request";
 import { Purchase } from "@/pages";
 import { Toaster } from "sonner";
-import { PurchaseProvider, UsersProvider, AuthProvider, PurchasesProvider} from "@/providers";
+import {
+  PurchaseProvider,
+  UsersProvider,
+  AuthProvider,
+  PurchasesProvider,
+} from "@/providers";
 import Classroom from "./pages/Classroom";
 
 function App() {
@@ -30,14 +35,7 @@ function App() {
                 <Route path="/deliveries" element={<Deliveries />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/requests/:id" element={<Request />} />
-                <Route
-                  path="/purchases/:id"
-                  element={
-                    <PurchaseProvider>
-                      <Purchase />
-                    </PurchaseProvider>
-                  }
-                />
+                <Route path="/purchases/:id" element={<Purchase />} />
                 <Route path="/inventory" element={<Deliveries />} />
                 <Route path="/classrooms/:id" element={<Classroom />} />
               </Route>

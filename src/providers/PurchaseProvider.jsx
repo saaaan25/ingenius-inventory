@@ -1,12 +1,15 @@
 import { createContext, useEffect, useState } from "react";
-import { getPurchaseDetailByPurchaseIdApiMock, getSupplyApiMock } from "@/utils";
+import {
+  getPurchaseDetailByPurchaseIdApiMock,
+  getSupplyApiMock,
+} from "@/utils";
 import { usePurchases } from "@/hooks";
 export const PurchaseContext = createContext();
 
-export const PurchaseProvider = ({ children }) => {
+export const PurchaseProvider = ({ children, idParam }) => {
+  const [purchaseId, setPurchaseId] = useState(idParam);
   const [purchase, setPurchase] = useState(null);
   const [purchaseDetail, setPurchaseDetail] = useState(null);
-  const [purchaseId, setPurchaseId] = useState(null);
   const { purchases } = usePurchases();
 
   useEffect(() => {

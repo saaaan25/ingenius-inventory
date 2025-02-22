@@ -1,7 +1,7 @@
 import { purchasesData, purchaseDetailData, suppliesData, usersData } from "./data";
 
 //purchase api mocks
-export const getPurchaseApiMock = () => {
+export const getPurchasesApiMock = () => {
   return purchasesData;
 };
 
