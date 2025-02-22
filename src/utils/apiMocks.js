@@ -5,8 +5,8 @@ export const getPurchasesApiMock = () => {
   return purchasesData;
 };
 
-export const getPurchaseDetailByPurchaseIdApiMock = (purchaseId) => {
-  return purchaseDetailData.filter((detail) => detail.compra === purchaseId);
+export const getPurchaseApiMock = (purchaseId) => {
+  return purchasesData.find((purchase) => purchase.id == purchaseId) || null;
 };
 
 export const postPurchaseApiMock = ({ fecha }) => {
@@ -17,7 +17,27 @@ export const postPurchaseApiMock = ({ fecha }) => {
     id,
     total_gastado,
   };
+  purchasesData.push(finalValues);
   return finalValues;
+};
+
+export const putPurchaseApiMock = ({ id, fecha }) => {
+  const total_gastado = Math.floor(Math.random() * 1000000);
+  const finalValues = {
+    fecha,
+    id,
+    total_gastado,
+  };
+  const index = purchasesData.findIndex((purchase) => purchase.id === id);
+  if (index !== -1) {
+    purchasesData[index] = finalValues;
+  }
+  return finalValues;
+};
+
+//purchase detail api mocks
+export const getPurchaseDetailByPurchaseIdApiMock = (purchaseId) => {
+  return purchaseDetailData.filter((detail) => detail.compra === purchaseId);
 };
 
 export const postPurchaseDetailApiMock = ({
@@ -34,16 +54,7 @@ export const postPurchaseDetailApiMock = ({
     cantidad,
     id,
   };
-  return finalValues;
-};
-
-export const putPurchaseApiMock = ({ id, fecha }) => {
-  const total_gastado = Math.floor(Math.random() * 1000000);
-  const finalValues = {
-    fecha,
-    id,
-    total_gastado,
-  };
+  purchaseDetailData.push(finalValues);
   return finalValues;
 };
 
@@ -61,7 +72,20 @@ export const putPurchaseDetailApiMock = ({
     cantidad,
     id,
   };
+  console.log(finalValues);
+  const index = purchaseDetailData.findIndex((detail) => detail.id == id);
+  if (index) {
+    purchaseDetailData[index] = finalValues ;
+  }
   return finalValues;
+};
+
+export const deletePurchaseDetailApiMock = (detailId) => {
+  const index = purchaseDetailData.findIndex((detail) => detail.id === detailId);
+  if (index !== -1) {
+    purchaseDetailData.splice(index, 1);
+  }
+  return purchaseDetailData;
 };
 
 //user api mocks
@@ -76,12 +100,15 @@ export const postUserApiMock = ({ nombre, apellido, email, rol, imagen, contrase
     imagen,
     contrasena,
   };
+  usersData.push(finalValues);
   return finalValues;
 };
-export const getUsersApiMock=()=>{
+
+export const getUsersApiMock = () => {
   return usersData;
-}
-export const putUserApiMock = ({ id, nombre, apellido, email, rol,imagen, contrasena }) => {
+};
+
+export const putUserApiMock = ({ id, nombre, apellido, email, rol, imagen, contrasena }) => {
   const finalValues = {
     nombre,
     apellido,
@@ -89,20 +116,28 @@ export const putUserApiMock = ({ id, nombre, apellido, email, rol,imagen, contra
     rol,
     id,
     imagen,
-    contrasena
+    contrasena,
   };
+  const index = usersData.findIndex((user) => user.id === id);
+  if (index !== -1) {
+    usersData[index] = { finalValues };
+  }
   return finalValues;
 };
 
 export const deleteUserApiMock = (userId) => {
-  return userId;
-}
+  const index = usersData.findIndex((user) => user.id === userId);
+  if (index !== -1) {
+    usersData.splice(index, 1);
+  }
+  return usersData;
+};
 
 //supply api mocks
-export const getSupplyApiMock=(utilId)=> {
-   return suppliesData.find((supply) => supply.id === utilId) || null;
+export const getSupplyApiMock = (utilId) => {
+  return suppliesData.find((supply) => supply.id === utilId) || null;
 };
 
 export const getSuppliesApiMock = () => {
   return suppliesData;
-}
+};

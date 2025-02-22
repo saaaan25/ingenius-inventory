@@ -4,8 +4,6 @@ import { toast } from "sonner";
 import {
   postPurchaseApiMock,
   postPurchaseDetailApiMock,
-  putPurchaseApiMock,
-  putPurchaseDetailApiMock,
 } from "@/utils";
 
 export const PurchasesContext = createContext();
@@ -51,38 +49,11 @@ export const PurchasesProvider = ({ children }) => {
     );
   };
 
-  const updatePurchase = (purchase) => {
-    try {
-      const purchaseResponse = putPurchaseApiMock({
-        id: purchase.id,
-        fecha: purchase.fecha,
-      });
-      updatePurchaseDetail(purchaseResponse.id, purchase.detalle_compra);
-      setPurchases((prev) =>
-        prev.map((p) => (p.id === purchaseResponse.id ? purchaseResponse : p))
-      );
-      toast.success("Compra editada correctamente");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error al editar la compra");
-    }
-  };
-
-  const updatePurchaseDetail = (purchaseId, purchaseDetail) => {
-    purchaseDetail.map((detalle) =>
-      putPurchaseDetailApiMock({
-        id: detalle.id,
-        compra: purchaseId,
-        precio_unitario: detalle.precio_unitario,
-        cantidad: detalle.cantidad,
-        util: detalle.util.id,
-      })
-    );
-  };
+  
 
   return (
     <PurchasesContext.Provider
-      value={{ purchases, updatePurchase, createPurchase }}
+      value={{ purchases, createPurchase }}
     >
       {children}
     </PurchasesContext.Provider>

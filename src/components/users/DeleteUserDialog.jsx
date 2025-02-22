@@ -6,12 +6,11 @@ import {
   DialogDescription,
   Dialog,
 } from "@/components/ui/dialog";
-import { useUser, useUsers } from "@/hooks";
+import {  useUsers } from "@/hooks";
 import { AcceptButton, CancelButton } from "../button";
 
 export const DeleteUserDialog = ({ open, setOpen }) => {
-  const { selectedUser } = useUser();
-  const { deleteUser } = useUsers();
+  const { deleteUser,selectedUser } = useUsers();
 
   const handleCloseDialog = () => {
     setOpen(false);

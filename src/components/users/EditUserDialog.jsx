@@ -1,11 +1,10 @@
 import React from "react";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
-import { useUsers, useUser } from "@/hooks";
+import { useUsers } from "@/hooks";
 import { UserForm } from "@/components/form";
 
 export const EditUserDialog = ({ open, setOpen }) => {
-  const {updateUser} = useUsers();
-  const {selectedUser} = useUser();
+  const {updateUser, selectedUser} = useUsers();
 
   function onSubmit(values) {
     console.log(values);
