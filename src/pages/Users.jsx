@@ -1,10 +1,10 @@
 import { RegisterUserButton } from "@/components/button";
 import { RoleUsersList } from "@/components/users";
-import { UserProvider } from "@/providers";
+import { UsersProvider } from "@/providers";
 
 const Users = () => {
   return (
-    <UserProvider>
+    <UsersProvider>
       <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
         <a className="font-light text-routes text-sm" href="/users">
           Usuarios
@@ -17,7 +17,7 @@ const Users = () => {
           <RoleUsersList />
         </div>
       </div>
-    </UserProvider>
+    </UsersProvider>
   );
 };
 

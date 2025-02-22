@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DeleteUserButton, EditUserButton } from "../button";
-import { useUser } from "@/hooks";
+import { useUsers } from "@/hooks";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const UserCard = (user) => {
-  const { setSelectedUser } = useUser();
+  const { setSelectedUser } = useUsers();
   return (
     <Card className="flex w-full justify-between bg-button py-1  px-5">
       <div className="flex flex-row gap-5">
