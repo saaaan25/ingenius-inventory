@@ -1,13 +1,17 @@
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SidebarItem = ({ title, route, Icon }) => {
     const navigate = useNavigate();
+    const location = useLocation(); 
+    const isActive = location.pathname.startsWith(route);
     const goToPage = () => {
         navigate(route)
     }
+
     return (
-        <button onClick={goToPage} className="bg-selected text-white py-4 pl-10 w-full flex items-center gap-x-3">
+        <button onClick={goToPage} className={`text-white py-4 pl-10 w-full flex items-center gap-x-3
+                                                ${isActive ? "bg-tertiary" : "bg-selected"}`}>
             <Icon size={25}/>
             <p className="text-lg">{title}</p>
         </button>

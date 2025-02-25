@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import solicitudes from "../data-test/solicitud";
-import { HiChevronRight } from "react-icons/hi";
 import getSpecificDate from "../hooks/getSpecificDate";
 import BackButton from "@/components/button/BackButton";
 import getSuppliesByRequest from "@/hooks/getSuppliesByRequest";
 import SupplyItem from "@/components/SupplyItem";
 import { AcceptButton, CancelButton, EditButton } from "@/components/button";
+import PageRoute from "@/components/PageRoute";
 
 const Request = () => {
     const params = useParams()
@@ -13,13 +13,20 @@ const Request = () => {
     const requestDay = getSpecificDate(request.fecha)
     const supplies = getSuppliesByRequest(params.id)
 
+    const page = [
+        {
+            name: "Solicitudes",
+            route: "/requests"
+        },
+        {
+            name: `Solicitud N° ${params.id}`,
+            route: `/${params.id}`
+        }
+    ]
+
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3 pb-4">
-            <div className="flex items-center text-routes">
-                <a className="font-light text-routes_selected text-sm" href="/requests">Solicitudes</a>
-                <HiChevronRight />
-                <a className="font-light text-routes_selected text-sm" href={params.id}>Solicitud N° {request.id}</a>
-            </div>
+            <PageRoute page1={page[0]} page2={page[1]} />
             <div className="pl-5 w-full h-full flex flex-col items-start">
                 <div className="mt-2 mb-4 flex justify-between w-full">
                     <BackButton/> 
