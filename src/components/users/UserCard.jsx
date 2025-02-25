@@ -1,28 +1,30 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DeleteUserButton, EditUserButton } from "../button";
-import { useUser } from "@/hooks";
+import { useUsers } from "@/hooks";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const UserCard = (user) => {
-  const {setSelectedUser} = useUser();
+  const { setSelectedUser } = useUsers();
   return (
-    <div className="flex w-full">
-      <div className="flex">
-        <Avatar className="rounded-sm size-28">
-          <AvatarImage src={user.imagen} alt={user.nombre} className="bg-cover" />
+    <Card className="flex w-full justify-between bg-button py-1  px-5">
+      <div className="flex flex-row gap-5">
+        <Avatar className="rounded-sm w-15 h-15 my-auto">
+          <AvatarImage src={user.imagen} alt={user.nombre} className="object-cover w-full h-full" />
           <AvatarFallback>{user.nombre}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
-          <div>
+        <CardHeader className="flex flex-col pl-0 text-start">
+          <CardTitle>
             <span>{user.nombre}</span>
+            <span> </span>
             <span>{user.apellido}</span>
-          </div>
-          <p>{user.email}</p>
-        </div>
+          </CardTitle>
+          <CardDescription>{user.email}</CardDescription>
+        </CardHeader>
       </div>
-      <div className="flex" onClick={() => setSelectedUser(user)}>
+      <div className="flex items-center gap-2" onClick={() => setSelectedUser(user)}>
         <EditUserButton />
         <DeleteUserButton />
       </div>
-    </div>
+    </Card>
   );
 };

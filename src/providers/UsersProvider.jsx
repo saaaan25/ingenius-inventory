@@ -6,6 +6,7 @@ export const UsersContext = createContext();
 
 export const UsersProvider = ({children}) => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     loadUsers();
@@ -42,6 +43,7 @@ export const UsersProvider = ({children}) => {
         email: user.email,
         rol: user.rol,
         imagen: user.imagen,
+        contrasena: user.contrasena,
       });
       setUsers((prevUsers) => prevUsers.map((u) => (u.id === user.id ? userResponse : u)));
       toast.success("Usuario actualizado con éxito");
@@ -65,7 +67,7 @@ export const UsersProvider = ({children}) => {
   }
 
   return (
-    <UsersContext.Provider value={{ users, setUsers , createUser, updateUser, deleteUser }}>
+    <UsersContext.Provider value={{ users, setUsers , createUser, updateUser, deleteUser, selectedUser, setSelectedUser}}>
       {children}
     </UsersContext.Provider>
   )

@@ -130,7 +130,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
         />
         <div className="flex justify-center gap-x-10 mt-auto">
           <AcceptButton type="submit">Aceptar</AcceptButton>
-          <CancelButton onClick={() => handleCloseDialog()}>
+          <CancelButton type="button" onClick={() => handleCloseDialog()}>
             Cancelar
           </CancelButton>
         </div>

@@ -8,10 +8,10 @@ import {
   Dialog,
 } from "@/components/ui/dialog";
 import { formatFecha } from "@/utils";
-import { usePurchase, usePurchases } from "@/hooks";
+import { usePurchase } from "@/hooks";
 
 export const EditPurchaseDialog = ({ open, setOpen }) => {
-  const {updatePurchase} = usePurchases();
+  const {updatePurchase} = usePurchase();
   const {purchase,purchaseDetail}=usePurchase();
 
   function onSubmit(values) {

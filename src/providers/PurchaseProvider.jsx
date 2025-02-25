@@ -1,18 +1,26 @@
 import { createContext, useEffect, useState } from "react";
-import { getPurchaseDetailByPurchaseIdApiMock, getSupplyApiMock } from "@/utils";
-import { usePurchases } from "@/hooks";
+import {
+  getPurchaseApiMock,
+  getPurchaseDetailByPurchaseIdApiMock,
+  getSupplyApiMock,
+  putPurchaseApiMock,
+  putPurchaseDetailApiMock,
+  postPurchaseDetailApiMock,
+  deletePurchaseDetailApiMock
+} from "@/utils";
+import { toast } from "sonner";
+
 export const PurchaseContext = createContext();
 
-export const PurchaseProvider = ({ children }) => {
+export const PurchaseProvider = ({ children, idParam }) => {
+  const [purchaseId, setPurchaseId] = useState(idParam);
   const [purchase, setPurchase] = useState(null);
   const [purchaseDetail, setPurchaseDetail] = useState(null);
-  const [purchaseId, setPurchaseId] = useState(null);
-  const { purchases } = usePurchases();
 
   useEffect(() => {
     if (!purchaseId) return;
     loadPurchase(purchaseId);
-  }, [purchaseId, purchases]);
+  }, [purchaseId]);
 
   useEffect(() => {
     if (!purchase?.id) return;
@@ -20,18 +28,17 @@ export const PurchaseProvider = ({ children }) => {
   }, [purchase]);
 
   const loadPurchase = (purchaseId) => {
-    const foundPurchase =
-      purchases.find((p) => p.id === parseInt(purchaseId)) || null;
-    if (foundPurchase) {
-      console.log("Setting purchase:", foundPurchase);
+    try {
+      const foundPurchase = getPurchaseApiMock(purchaseId);
       setPurchase(foundPurchase);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const loadPurchaseDetail = (purchaseId) => {
     try {
       const details = fetchPurchaseDetailByPurchaseId(purchaseId);
-      console.log("Setting purchase detail:", details);
       setPurchaseDetail(details);
     } catch (error) {
       console.log(error);
@@ -46,6 +53,48 @@ export const PurchaseProvider = ({ children }) => {
     }));
   };
 
+  const updatePurchase = (purchase) => {
+    try {
+      const purchaseResponse = putPurchaseApiMock({
+        id: purchase.id,
+        fecha: purchase.fecha,
+      });
+      updatePurchaseDetail(purchaseResponse.id, purchase.detalle_compra);
+      setPurchase(purchaseResponse);
+      toast.success("Compra editada correctamente");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error al editar la compra");
+    }
+  };
+
+  const updatePurchaseDetail = (purchaseId, newDetails) => {
+    const detailsToDelete = purchaseDetail.filter(
+      (currentDetail) => !newDetails.some((newDetail) => newDetail.id === currentDetail.id)
+    );
+    detailsToDelete.forEach((detail) => {
+      deletePurchaseDetailApiMock(detail.id);
+    });
+    newDetails.forEach((detalle) => {
+      if (detalle.id) {
+        putPurchaseDetailApiMock({
+          id: detalle.id,
+          compra: purchaseId,
+          precio_unitario: detalle.precio_unitario,
+          cantidad: detalle.cantidad,
+          util: detalle.util.id,
+        });
+      } else {
+        postPurchaseDetailApiMock({
+          compra: purchaseId,
+          precio_unitario: detalle.precio_unitario,
+          cantidad: detalle.cantidad,
+          util: detalle.util.id,
+        });
+      }
+    });
+  };
+
   return (
     <PurchaseContext.Provider
       value={{
@@ -54,6 +103,7 @@ export const PurchaseProvider = ({ children }) => {
         setPurchase,
         setPurchaseId,
         purchaseId,
+        updatePurchase,
       }}
     >
       {children}
