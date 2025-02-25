@@ -31,7 +31,7 @@ const MaterialSection = () => {
     return (
         <div className="w-full p-4 flex flex-col">
             <div className="w-full flex justify-between">
-                <h2 className="font-bold mb-4 flex justify-start w-full">Materiales por Profesor</h2>
+                <h2 className="font-bold mb-4 flex justify-start w-full">Materiales por profesor</h2>
                 <Dropdown options={profesores} onChange={handleSelectChange} selectedValue={selectedTeacher}/>
             </div>
             <div className="mt-4 w-full flex justify-center">
