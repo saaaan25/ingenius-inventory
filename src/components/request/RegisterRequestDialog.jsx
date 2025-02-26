@@ -1,8 +1,8 @@
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
-import AddRequestForm from "@/components/form/RequestForm";
 import PropTypes from "prop-types";
 import detalle_solicitud from "@/data-test/detalle_solicitud";
 import { useState } from "react";
+import RequestForm from "@/components/form/RequestForm";
 
 const RegisterRequestDialog = ({ open, setOpen, setSolicitudes, solicitudes }) => {
     const [detalleSolicitud, setDetalleSolicitud] = useState(detalle_solicitud);
@@ -17,7 +17,7 @@ const RegisterRequestDialog = ({ open, setOpen, setSolicitudes, solicitudes }) =
                         </DialogDescription>
                     </DialogTitle>
                 </DialogHeader>
-                <AddRequestForm 
+                <RequestForm
                     setSolicitudes={setSolicitudes} 
                     solicitudes={solicitudes} 
                     setDetalleSolicitud={setDetalleSolicitud}

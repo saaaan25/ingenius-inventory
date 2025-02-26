@@ -6,7 +6,7 @@ import TextInputFormItem from "./TextInputFormItem";
 import { DateFormRequestItem } from "./DateFormRequestItem";
 import { SuppliesRequestItem } from "./SuppliesRequestItem";
 
-const AddRequestForm = ({ setSolicitudes, solicitudes, setDetalleSolicitud, detalleSolicitud, handleCloseDialog }) => {
+const RequestForm = ({ setSolicitudes, solicitudes, setDetalleSolicitud, detalleSolicitud, handleCloseDialog }) => {
     const form = useForm({
         defaultValues: {
             usuario: 103,
@@ -85,7 +85,7 @@ const AddRequestForm = ({ setSolicitudes, solicitudes, setDetalleSolicitud, deta
     );
 };
 
-AddRequestForm.propTypes = {
+RequestForm.propTypes = {
     setSolicitudes: PropTypes.func.isRequired,
     solicitudes: PropTypes.array.isRequired,
     setDetalleSolicitud: PropTypes.func.isRequired,
@@ -93,4 +93,4 @@ AddRequestForm.propTypes = {
     handleCloseDialog: PropTypes.func.isRequired,
 };
 
-export default AddRequestForm;
+export default RequestForm;
