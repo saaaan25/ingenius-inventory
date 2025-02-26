@@ -1,3 +1,4 @@
+// Classroom.jsx
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { classes } from "../data-test/class.js";
@@ -17,23 +18,25 @@ const Classroom = () => {
         setStudentsList(prevList => prevList.filter(student => student.id !== studentId));
     };
 
+    const handleAddStudent = (newStudent) => {
+        setStudentsList(prevList => [...prevList, { ...newStudent, aula_id: classroom.id }]);
+    };
+
     const options = useMemo(() => [
         { id: "Lista de útiles", component: <SuppliesList supplies={supplies} /> },
-        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} /> }
+        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} /> }
     ], [supplies, studentsList]);
 
     const [activeTab, setActiveTab] = useState(options[0].id);
 
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
-            {/* Header con NavBar incluido */}
             <ClassroomHeader 
                 classroom={classroom} 
                 options={options} 
                 activeTab={activeTab} 
                 setActiveTab={setActiveTab} 
             />
-            {/* Contenido de la pestaña activa */}
             <div className="pl-5 w-full">{options.find(option => option.id === activeTab)?.component}</div>
         </div>
     );
