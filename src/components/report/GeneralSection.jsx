@@ -27,7 +27,7 @@ const GeneralSection = () => {
     return (
         <div className="flex flex-col gap-y-7">
             <h2 className="font-bold flex items-start">Resumen general</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-3 px-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-3 px-10">
                 {resumen_general.map((item) => (
                     <SummaryItem key={item.details} Icon={item.Icon} data={item.data} details={item.details} />
                 ))}
