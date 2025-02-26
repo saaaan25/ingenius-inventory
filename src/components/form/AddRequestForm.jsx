@@ -9,11 +9,11 @@ import { SuppliesRequestItem } from "./SuppliesRequestItem";
 const AddRequestForm = ({ setSolicitudes, solicitudes, setDetalleSolicitud, detalleSolicitud, handleCloseDialog }) => {
     const form = useForm({
         defaultValues: {
-        usuario: 103,
-        aula: "",
-        fecha: new Date().toISOString().split("T")[0], 
-        justificacion: "",
-        detalle_solicitud: [],
+            usuario: 103,
+            aula: "",
+            fecha: new Date().toISOString().split("T")[0], 
+            justificacion: "",
+            detalle_solicitud: [],
         },
     });
 
