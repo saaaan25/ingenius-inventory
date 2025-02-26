@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import {
   getPurchaseApiMock,
-  getPurchaseDetailByPurchaseIdApiMock,
   getSupplyApiMock,
   putPurchaseApiMock,
   putPurchaseDetailApiMock,
   postPurchaseDetailApiMock,
-  deletePurchaseDetailApiMock
+  deletePurchaseDetailApiMock,
+  getPurchasesDetailApiMock,
 } from "@/utils";
 import { toast } from "sonner";
 
@@ -27,39 +27,45 @@ export const PurchaseProvider = ({ children, idParam }) => {
     loadPurchaseDetail(purchase.id);
   }, [purchase]);
 
-  const loadPurchase = (purchaseId) => {
+  const loadPurchase = async (purchaseId) => {
     try {
-      const foundPurchase = getPurchaseApiMock(purchaseId);
+      const foundPurchase = await getPurchaseApiMock(purchaseId);
       setPurchase(foundPurchase);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const loadPurchaseDetail = (purchaseId) => {
+  const loadPurchaseDetail = async (purchaseId) => {
     try {
-      const details = fetchPurchaseDetailByPurchaseId(purchaseId);
+      const details = await getPurchaseDetailByPurchaseId(purchaseId);
       setPurchaseDetail(details);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fetchPurchaseDetailByPurchaseId = (purchaseId) => {
-    const details = getPurchaseDetailByPurchaseIdApiMock(purchaseId);
-    return details.map((detail) => ({
-      ...detail,
-      util: getSupplyApiMock(detail.util),
-    }));
+  const getPurchaseDetailByPurchaseId = async (purchaseId) => {
+    const details = await getPurchasesDetailApiMock();
+    const details_filtered = details.filter(
+      (detail) => detail.purchase_id === purchaseId
+    );
+    const details_with_util = await Promise.all(
+      details_filtered.map(async (detail) => ({
+        ...detail,
+        util: await getSupplyApiMock(detail.util_id),
+      }))
+    );
+    return details_with_util;
   };
 
-  const updatePurchase = (purchase) => {
+  const updatePurchase = async (purchase) => {
     try {
-      const purchaseResponse = putPurchaseApiMock({
+      await updatePurchaseDetail(purchase.id, purchase.purchase_detail);
+      const purchaseResponse = await putPurchaseApiMock({
         id: purchase.id,
-        fecha: purchase.fecha,
+        date: purchase.date,
       });
-      updatePurchaseDetail(purchaseResponse.id, purchase.detalle_compra);
       setPurchase(purchaseResponse);
       toast.success("Compra editada correctamente");
     } catch (error) {
@@ -68,31 +74,34 @@ export const PurchaseProvider = ({ children, idParam }) => {
     }
   };
 
-  const updatePurchaseDetail = (purchaseId, newDetails) => {
+  const updatePurchaseDetail = async (purchaseId, newDetails) => {
     const detailsToDelete = purchaseDetail.filter(
-      (currentDetail) => !newDetails.some((newDetail) => newDetail.id === currentDetail.id)
+      (currentDetail) =>
+        !newDetails.some((newDetail) => newDetail.id === currentDetail.id)
     );
-    detailsToDelete.forEach((detail) => {
-      deletePurchaseDetailApiMock(detail.id);
-    });
-    newDetails.forEach((detalle) => {
-      if (detalle.id) {
-        putPurchaseDetailApiMock({
-          id: detalle.id,
-          compra: purchaseId,
-          precio_unitario: detalle.precio_unitario,
-          cantidad: detalle.cantidad,
-          util: detalle.util.id,
-        });
-      } else {
-        postPurchaseDetailApiMock({
-          compra: purchaseId,
-          precio_unitario: detalle.precio_unitario,
-          cantidad: detalle.cantidad,
-          util: detalle.util.id,
-        });
-      }
-    });
+    await Promise.all(
+      detailsToDelete.map((detail) => deletePurchaseDetailApiMock(detail.id))
+    );
+    await Promise.all(
+      newDetails.map((detalle) => {
+        if (detalle.id) {
+          return putPurchaseDetailApiMock({
+            id: detalle.id,
+            purchase_id: purchaseId,
+            unit_price: detalle.unit_price,
+            quantity: detalle.quantity,
+            util_id: detalle.util.id,
+          });
+        } else {
+          return postPurchaseDetailApiMock({
+            purchase_id: purchaseId,
+            unit_price: detalle.unit_price,
+            quantity: detalle.quantity,
+            util_id: detalle.util.id,
+          });
+        }
+      })
+    );
   };
 
   return (

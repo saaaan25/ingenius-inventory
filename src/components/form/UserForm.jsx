@@ -24,12 +24,12 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
     resolver: zodResolver(userSchema),
     defaultValues: {
       id: defaultUser?.id || undefined,
-      nombre: defaultUser?.nombre || "",
-      apellido: defaultUser?.apellido || "",
+      name: defaultUser?.name || "",
+      last_name: defaultUser?.last_name || "",
       email: defaultUser?.email || "",
-      contrasena: defaultUser?.contrasena || "",
-      imagen: defaultUser?.imagen || "",
-      rol: defaultUser?.rol || "administrador",
+      password: defaultUser?.password || "",
+      photo_url: defaultUser?.photo_url || "",
+      role: defaultUser?.role || "administrador",
     },
   });
 
@@ -40,7 +40,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
         className="space-y-8 flex flex-col h-full"
       >
         <FormField
-          name="nombre"
+          name="name"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -53,7 +53,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
           )}
         />
         <FormField
-          name="apellido"
+          name="last_name"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -79,7 +79,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
           )}
         />
         <FormField
-          name="contrasena"
+          name="password"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -92,7 +92,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
           )}
         />
         <FormField
-          name="imagen"
+          name="photo_url"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -105,7 +105,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
           )}
         />
         <FormField
-          name="rol"
+          name="role"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -130,7 +130,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
         />
         <div className="flex justify-center gap-x-10 mt-auto">
           <AcceptButton type="submit">Aceptar</AcceptButton>
-          <CancelButton type="button" onClick={() => handleCloseDialog()}>
+          <CancelButton type="button"onClick={() => handleCloseDialog()}>
             Cancelar
           </CancelButton>
         </div>

@@ -15,7 +15,7 @@ export const EditPurchaseDialog = ({ open, setOpen }) => {
   const {purchase,purchaseDetail}=usePurchase();
 
   function onSubmit(values) {
-    const formattedValues = {...values, fecha: formatFecha(values.fecha)};
+    const formattedValues = {...values, date: formatFecha(values.date)};
     console.log(formattedValues);
     updatePurchase(formattedValues);
     handleCloseDialog();
@@ -34,7 +34,7 @@ export const EditPurchaseDialog = ({ open, setOpen }) => {
             </DialogDescription>
           </DialogTitle>
         </DialogHeader>
-        <PurchaseForm onSubmit={onSubmit} handleCloseDialog={handleCloseDialog} defaultPurchase={{...purchase,detalle_compra:purchaseDetail}} />
+        <PurchaseForm onSubmit={onSubmit} handleCloseDialog={handleCloseDialog} defaultPurchase={{...purchase,purchase_detail:purchaseDetail}} />
       </DialogContent>
     </Dialog>
   );

@@ -12,27 +12,37 @@ import SideBar from "./components/Sidebar";
 import Request from "./pages/Request";
 import { Purchase } from "@/pages";
 import { Toaster } from "sonner";
-import { AuthProvider, PurchasesProvider } from "@/providers";
+import { AuthProvider } from "@/providers";
+import { PrivateRoute } from "./components/PrivateRoute";
 import Classroom from "./pages/Classroom";
+import { Navigate } from "react-router-dom";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<SideBar />}>
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/requests" element={<Requests />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/purchases" element={<Purchases />} />
-            <Route path="/deliveries" element={<Deliveries />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/requests/:id" element={<Request />} />
-            <Route path="/purchases/:id" element={<Purchase />} />
-            <Route path="/inventory" element={<Deliveries />} />
-            <Route path="/classrooms/:id" element={<Classroom />} />
-          </Route>
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <SideBar />
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<Navigate to="/inventory" />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="requests" element={<Requests />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="purchases" element={<Purchases />} />
+            <Route path="deliveries" element={<Deliveries />} />
+            <Route path="users" element={<Users />} />
+            <Route path="requests/:id" element={<Request />} />
+            <Route path="purchases/:id" element={<Purchase />} />
+            <Route path="classrooms/:id" element={<Classroom />} />
+            <Route path="*" element={<Navigate to="/inventory" />} />
+          </Route>
         </Routes>
       </Router>
       <Toaster />

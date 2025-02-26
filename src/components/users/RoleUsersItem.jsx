@@ -7,10 +7,10 @@ const roleMap = {
   administrador: 'Administradores',
 };
 
-export const RoleUsersItem = ({ rol, users }) => {
+export const RoleUsersItem = ({ role, users }) => {
   return (
     <div className='mt-5'>
-      <p className='text-start font-extrabold'>{roleMap[rol]}</p>
+      <p className='text-start font-extrabold'>{roleMap[role]}</p>
       <div className='w-full flex flex-col gap-y-2 mt-2'>
         {users.map((user, index) => (
           <UserCard key={index} {...user} />

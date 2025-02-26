@@ -9,8 +9,7 @@ export const DatePurchasesItem = ({ date, purchases }) => {
         {purchases.map((purchase) => (
           <PurchaseCard
             key={purchase.id}
-            id={purchase.id}
-            total_gastado={purchase.total_gastado}
+            {...purchase}
           />
         ))}
       </div>
