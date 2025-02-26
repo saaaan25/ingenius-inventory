@@ -1,34 +1,33 @@
 import { purchasesData, purchaseDetailData, suppliesData, usersData } from "./data";
 
 //purchase api mocks
-export const getPurchasesApiMock = () => {
+export const getPurchasesApiMock = async () => {
   return purchasesData;
 };
 
-export const getPurchaseApiMock = (purchaseId) => {
+export const getPurchaseApiMock = async (purchaseId) => {
   return purchasesData.find((purchase) => purchase.id == purchaseId) || null;
 };
 
-export const postPurchaseApiMock = ({ fecha }) => {
+export const postPurchaseApiMock = async (purchase) => {
   const id = Math.floor(Math.random() * 1000000);
-  const total_gastado = Math.floor(Math.random() * 1000000);
+  const total_spent = Math.floor(Math.random() * 1000000);
   const finalValues = {
-    fecha,
+    ...purchase,
     id,
-    total_gastado,
+    total_spent,
   };
   purchasesData.push(finalValues);
   return finalValues;
 };
 
-export const putPurchaseApiMock = ({ id, fecha }) => {
-  const total_gastado = Math.floor(Math.random() * 1000000);
+export const putPurchaseApiMock = async (newPurchase) => {
+  const total_spent = Math.floor(Math.random() * 1000000);
   const finalValues = {
-    fecha,
-    id,
-    total_gastado,
+    ...newPurchase,
+    total_spent,
   };
-  const index = purchasesData.findIndex((purchase) => purchase.id === id);
+  const index = purchasesData.findIndex((purchase) => purchase.id === newPurchase.id);
   if (index !== -1) {
     purchasesData[index] = finalValues;
   }
@@ -36,51 +35,32 @@ export const putPurchaseApiMock = ({ id, fecha }) => {
 };
 
 //purchase detail api mocks
-export const getPurchaseDetailByPurchaseIdApiMock = (purchaseId) => {
-  return purchaseDetailData.filter((detail) => detail.compra === purchaseId);
+export const getPurchasesDetailApiMock = async () => {
+  return purchaseDetailData;
 };
 
-export const postPurchaseDetailApiMock = ({
-  compra,
-  util,
-  cantidad,
-  precio_unitario,
-}) => {
+export const postPurchaseDetailApiMock = async (purchase) => {
+  console .log(purchase);
   const id = Math.floor(Math.random() * 1000000);
   const finalValues = {
-    precio_unitario,
-    compra,
-    util,
-    cantidad,
+    ...purchase,
     id,
   };
   purchaseDetailData.push(finalValues);
+  console.log(purchaseDetailData);
   return finalValues;
 };
 
-export const putPurchaseDetailApiMock = ({
-  compra,
-  util,
-  cantidad,
-  precio_unitario,
-  id,
-}) => {
-  const finalValues = {
-    precio_unitario,
-    compra,
-    util,
-    cantidad,
-    id,
-  };
-  console.log(finalValues);
-  const index = purchaseDetailData.findIndex((detail) => detail.id == id);
-  if (index) {
-    purchaseDetailData[index] = finalValues ;
+export const putPurchaseDetailApiMock = async(purchase) => {
+  const index = purchaseDetailData.findIndex((detail) => detail.id == purchase.id);
+  if (index!== -1) {
+    purchaseDetailData[index] = purchase; 
+    
   }
-  return finalValues;
+  return purchase;
 };
 
-export const deletePurchaseDetailApiMock = (detailId) => {
+export const deletePurchaseDetailApiMock = async(detailId) => {
   const index = purchaseDetailData.findIndex((detail) => detail.id === detailId);
   if (index !== -1) {
     purchaseDetailData.splice(index, 1);
@@ -89,43 +69,29 @@ export const deletePurchaseDetailApiMock = (detailId) => {
 };
 
 //user api mocks
-export const postUserApiMock = ({ nombre, apellido, email, rol, imagen, contrasena }) => {
+export const postUserApiMock = async (user) => {
   const id = Math.floor(Math.random() * 1000000);
   const finalValues = {
-    nombre,
-    apellido,
-    email,
-    rol,
+    ...user,
     id,
-    imagen,
-    contrasena,
   };
   usersData.push(finalValues);
   return finalValues;
 };
 
-export const getUsersApiMock = () => {
+export const getUsersApiMock = async() => {
   return usersData;
 };
 
-export const putUserApiMock = ({ id, nombre, apellido, email, rol, imagen, contrasena }) => {
-  const finalValues = {
-    nombre,
-    apellido,
-    email,
-    rol,
-    id,
-    imagen,
-    contrasena,
-  };
-  const index = usersData.findIndex((user) => user.id === id);
+export const putUserApiMock = async(newUser) => {
+  const index = usersData.findIndex((user) => user.id === newUser.id);
   if (index !== -1) {
-    usersData[index] = { finalValues };
+    usersData[index] = newUser ;
   }
-  return finalValues;
+  return newUser;
 };
 
-export const deleteUserApiMock = (userId) => {
+export const deleteUserApiMock = async(userId) => {
   const index = usersData.findIndex((user) => user.id === userId);
   if (index !== -1) {
     usersData.splice(index, 1);
@@ -134,10 +100,10 @@ export const deleteUserApiMock = (userId) => {
 };
 
 //supply api mocks
-export const getSupplyApiMock = (utilId) => {
+export const getSupplyApiMock = async(utilId) => {
   return suppliesData.find((supply) => supply.id === utilId) || null;
 };
 
-export const getSuppliesApiMock = () => {
+export const getSuppliesApiMock = async() => {
   return suppliesData;
 };

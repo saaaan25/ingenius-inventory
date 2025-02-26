@@ -3,9 +3,14 @@ import { DatePurchasesItem } from "@/components/purchases";
 import { groupPurchasesByDate } from "@/utils";
 
 export const DatePurchasesList = () => {
-  const {purchases}=usePurchases();
+  const { purchases } = usePurchases();
   return (
-    groupPurchasesByDate(purchases).map(({fecha, purchases}) => (
-    <DatePurchasesItem key={fecha} date={fecha} purchases={purchases} />  
-  )))
-}
+    purchases && (
+      <>
+        {groupPurchasesByDate(purchases).map(({ date, purchases }) => (
+          <DatePurchasesItem key={date} date={date} purchases={purchases} />
+        ))}
+      </>
+    )
+  );
+};

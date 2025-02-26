@@ -17,19 +17,20 @@ export const PurchasesProvider = ({ children }) => {
 
   const loadPurchases = async () => {
     try {
-      const purchases = getPurchasesApiMock();
+      const purchases = await getPurchasesApiMock();
       setPurchases(purchases);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const createPurchase = (purchase) => {
+  const createPurchase = async (purchase) => {
     try {
-      const purchaseResponse = postPurchaseApiMock({
-        fecha: purchase.fecha,
+      const purchaseResponse =await postPurchaseApiMock({
+        date: purchase.date,
+        user_id: purchase.user_id,
       });
-      createPurchaseDetail(purchaseResponse.id, purchase.detalle_compra);
+      await createPurchaseDetail(purchaseResponse.id, purchase.purchase_detail);
       setPurchases((prevPurchases) => [...prevPurchases, purchaseResponse]);
       toast.success("Compra registrada correctamente");
     } catch (error) {
@@ -38,13 +39,13 @@ export const PurchasesProvider = ({ children }) => {
     }
   };
 
-  const createPurchaseDetail = (purchaseId, purchaseDetail) => {
+  const createPurchaseDetail =async (purchaseId, purchaseDetail) => {
     purchaseDetail.map((detalle) =>
       postPurchaseDetailApiMock({
-        compra: purchaseId,
-        precio_unitario: detalle.precio_unitario,
-        cantidad: detalle.cantidad,
-        util: detalle.util.id,
+        purchase_id: purchaseId,
+        unit_price: detalle.unit_price,
+        quantity: detalle.quantity,
+        util_id: detalle.util.id,
       })
     );
   };

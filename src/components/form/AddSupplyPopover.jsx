@@ -14,9 +14,9 @@ import { useEffect, useState } from "react";
 export const AddSupplyPopover = ({ field, form }) => {
   const [supplies, setSupplies] = useState([]);
   useEffect(() => {
-    function fetchSupplies() {
+    async function fetchSupplies() {
       try {
-        const suppliesResponse = getSuppliesApiMock();
+        const suppliesResponse = await getSuppliesApiMock();
         setSupplies(suppliesResponse);
       } catch (e) {
         console.log(e);
@@ -46,15 +46,15 @@ export const AddSupplyPopover = ({ field, form }) => {
                       : [
                           ...field.value,
                           {
-                            util: { id: supply.id, nombre: supply.nombre },
-                            cantidad: 1,
-                            precio_unitario: 0,
+                            util: supply,
+                            quantity: 1,
+                            unit_price: 0,
                           },
                         ];
-                    form.setValue("detalle_compra", updatedDetalleCompra);
+                    form.setValue("purchase_detail", updatedDetalleCompra);
                   }}
                 >
-                  {supply.nombre}
+                  {supply.name}
                   <Check
                     className={cn(
                       "ml-auto",

@@ -29,8 +29,8 @@ export const DeleteUserDialog = ({ open, setOpen }) => {
             <DialogDescription className="text-primary text-lg text-center mt-8">
               ¿Estás seguro que deseas eliminar el siguiente usuario: <br />
               <span className="font-semibold">
-                {selectedUser.rol} - {selectedUser.nombre}{" "}
-                {selectedUser.apellido} ?
+                {selectedUser.role} - {selectedUser.name}{" "}
+                {selectedUser.last_name} ?
               </span>
             </DialogDescription>
           </DialogHeader>

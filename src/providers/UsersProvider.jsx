@@ -14,7 +14,7 @@ export const UsersProvider = ({children}) => {
 
   const loadUsers = async () => {
     try{
-      const usersResponse=getUsersApiMock()
+      const usersResponse=await getUsersApiMock()
       setUsers(usersResponse);
     }
     catch(error){
@@ -22,9 +22,9 @@ export const UsersProvider = ({children}) => {
     }
   };
 
-  const createUser = (newUser) => {
+  const createUser = async (newUser) => {
     try{
-      const userResponse = postUserApiMock(newUser);
+      const userResponse = await postUserApiMock(newUser);
       setUsers([...users, userResponse]);
       toast.success("Usuario registrado con éxito");
     }
@@ -34,17 +34,9 @@ export const UsersProvider = ({children}) => {
     }
   }
 
-  const updateUser = (user) => {
+  const updateUser = async (user) => {
     try{
-      const userResponse = putUserApiMock({
-        id: user.id,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        email: user.email,
-        rol: user.rol,
-        imagen: user.imagen,
-        contrasena: user.contrasena,
-      });
+      const userResponse = await putUserApiMock(user);
       setUsers((prevUsers) => prevUsers.map((u) => (u.id === user.id ? userResponse : u)));
       toast.success("Usuario actualizado con éxito");
     }
@@ -54,9 +46,9 @@ export const UsersProvider = ({children}) => {
     }
   }
 
-  const deleteUser =(userId)=>{
+  const deleteUser = async (userId)=>{
     try{
-      deleteUserApiMock(userId);
+      await deleteUserApiMock(userId);
       setUsers((prevUsers) => prevUsers.filter((u) => u.id !== userId));
       toast.success("Usuario eliminado con éxito");
     }
