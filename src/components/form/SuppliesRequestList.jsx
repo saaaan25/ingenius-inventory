@@ -1,5 +1,5 @@
-import { SupplyFormCard } from ".";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SupplyRequestFormCard } from "./SupplyRequestFormCard";
 
 export const SuppliesRequestList = ({ field, form }) => {
   return (
@@ -7,7 +7,7 @@ export const SuppliesRequestList = ({ field, form }) => {
       <div className="text-sm flex flex-col gap-1.5">
         {field.value && field.value.length > 0 ? (
           field.value.map((fieldItem, index) => (
-            <SupplyFormCard
+            <SupplyRequestFormCard
               key={index}
               index={index}
               form={form}
