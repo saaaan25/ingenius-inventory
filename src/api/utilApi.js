@@ -13,7 +13,7 @@ export const createUtil = async (util) => {
 }
 
 export const updateUtil = async (util) => {
-  const {data}= await api.put(utilEndpoint, util);
+  const {data}= await api.patch(utilEndpoint, util);
   return data;
 }
 

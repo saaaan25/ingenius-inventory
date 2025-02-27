@@ -13,7 +13,7 @@ export const createUtilsDelivery = async (utilsDelivery) => {
 }
 
 export const updateUtilsDelivery = async (utilsDelivery) => {
-  const {data}= await api.put(utilsDeliveryEndpoint, utilsDelivery);
+  const {data}= await api.patch(utilsDeliveryEndpoint, utilsDelivery);
   return data;
 }
 
