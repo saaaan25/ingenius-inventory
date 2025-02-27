@@ -4,14 +4,17 @@ import getSpecificDate from "../hooks/getSpecificDate";
 import BackButton from "@/components/button/BackButton";
 import getSuppliesByRequest from "@/hooks/getSuppliesByRequest";
 import SupplyItem from "@/components/SupplyItem";
-import { AcceptButton, CancelButton, EditButton } from "@/components/button";
+import { AcceptButton, CancelButton } from "@/components/button";
 import PageRoute from "@/components/PageRoute";
+import EditRequestButton from "@/components/button/EditRequestButton";
+import { useState } from "react";
 
 const Request = () => {
     const params = useParams()
     const request = solicitudes.find((item) => item.id === Number(params.id))
     const requestDay = getSpecificDate(request.fecha)
     const supplies = getSuppliesByRequest(params.id)
+    const [solicitudesList, setSolicitudesList] = useState(solicitudes);
 
     const page = [
         {
@@ -55,9 +58,7 @@ const Request = () => {
                     
                 </div>
                 <div className="h-full w-full flex items-end justify-center">
-                    <EditButton>
-                        Editar solicitud
-                    </EditButton>
+                    <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
                 </div>
             </div>
         </div>
