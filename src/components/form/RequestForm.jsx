@@ -5,6 +5,8 @@ import { AcceptButton, CancelButton } from "../button";
 import TextInputFormItem from "./TextInputFormItem";
 import { DateFormRequestItem } from "./DateFormRequestItem";
 import SuppliesRequestItem from "./SuppliesRequestItem";
+import { createRequest } from "@/api/requestApi";
+import { createRequestDetail } from "@/api/requestDetailApi";
 
 const RequestForm = ({ 
     setSolicitudes, 
@@ -16,10 +18,11 @@ const RequestForm = ({
 }) => {
     const form = useForm({
         defaultValues: initialData || {
-            usuario: 103,
-            aula: "",
-            fecha: new Date().toISOString().split("T")[0], 
-            justificacion: "",
+            justification: "",
+            fecha: new Date().toISOString(), 
+            status: "",
+            user: "",
+            classroom: "",
             detalle_solicitud: [],
         },
     });
@@ -61,7 +64,6 @@ const RequestForm = ({
             const newRequestId = solicitudes.length + 1;
     
             const newRequest = {
-                id: newRequestId,
                 usuario: data.usuario,
                 aula: data.aula,
                 fecha: data.fecha,
@@ -70,6 +72,7 @@ const RequestForm = ({
             };
     
             setSolicitudes((prev) => [...prev, newRequest]);
+            createRequest(newRequest)
     
             const newDetalleSolicitud = data.detalle_solicitud.map((detalle, index) => ({
                 id: detalleSolicitud.length + index + 1,
@@ -79,6 +82,10 @@ const RequestForm = ({
             }));
     
             setDetalleSolicitud((prev) => [...prev, ...newDetalleSolicitud]);
+
+            newDetalleSolicitud.map((detalle) => {
+                createRequestDetail(detalle)
+            })
     
             console.log("Nueva solicitud añadida:", newRequest);
             console.log("Nuevo detalle de solicitud añadido:", newDetalleSolicitud);
