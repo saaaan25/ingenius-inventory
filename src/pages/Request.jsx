@@ -8,6 +8,7 @@ import { AcceptButton, CancelButton } from "@/components/button";
 import PageRoute from "@/components/PageRoute";
 import EditRequestButton from "@/components/button/EditRequestButton";
 import { useState } from "react";
+import RoleBasedAccess from "@/components/RoleBasedAccess";
 
 const Request = () => {
     const params = useParams()
@@ -58,7 +59,9 @@ const Request = () => {
                     
                 </div>
                 <div className="h-full w-full flex items-end justify-center">
-                    <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
+                    <RoleBasedAccess allowedRoles={["profesor", "encargado"]}>
+                        <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
+                    </RoleBasedAccess>   
                 </div>
             </div>
         </div>
