@@ -13,6 +13,7 @@ const Classroom = () => {
     const classroom = classes.find((item) => item.classroom_id === Number(params.id));
 
     const [suppliesClassroom, setSuppliesClassroom] = useState(getSuppliesByClassroom(classroom.utils_list));
+    console.log(suppliesClassroom)
     const [studentsList, setStudentsList] = useState(students.filter(student => student.classroom_id === classroom.classroom_id));
 
     const handleDeleteStudent = (studentId) => {

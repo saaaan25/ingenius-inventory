@@ -1,10 +1,20 @@
 import { Card } from "@/components/ui/card.jsx";
 import { HiX } from "react-icons/hi"; // Icono de eliminación
 import PropTypes from "prop-types";
+import { useStudentDeliveries } from "@/hooks/getStudentDeliveries";
 
 const StudentCard = ({ student, index, onDelete }) => {
+    const { tipoEntrega, totalEntregado, porcentajeEntregado } = useStudentDeliveries(student.student_id);
+
+    const handleClick = () => {
+        console.log(`El estudiante entregó: ${tipoEntrega}`);
+        console.log(`Total entregado: ${totalEntregado}`);
+        console.log(`Porcentaje completado: ${porcentajeEntregado}%`);
+    }
+    
+    
     return (
-        <Card className="w-full flex justify-between items-center bg-button text-button py-4 px-6">
+        <Card className="w-full flex justify-between items-center bg-button text-button py-4 px-6" onClick={handleClick}>
             <span className="ml-5 font-bold text-base">{index}</span>
             <div className="flex-1 ml-70 text-left">
                 <span className="font-normal text-base">
