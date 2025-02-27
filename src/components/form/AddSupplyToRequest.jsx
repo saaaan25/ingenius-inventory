@@ -9,15 +9,15 @@ import {
   import { ScrollArea } from "@/components/ui/scroll-area";
   import { Check } from "lucide-react";
   import { cn } from "@/lib/utils";
-  import { getSuppliesApiMock } from "@/utils";
   import { useEffect, useState } from "react";
+import { getUtils } from "@/api";
   
   export const AddSupplyToRequest = ({ field, form }) => {
     const [supplies, setSupplies] = useState([]);
   
     useEffect(() => {
       try {
-        const suppliesResponse = getSuppliesApiMock();
+        const suppliesResponse = getUtils();
         setSupplies(suppliesResponse);
       } catch (e) {
         console.error("Error fetching supplies:", e);

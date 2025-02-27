@@ -27,7 +27,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
       name: defaultUser?.name || "",
       last_name: defaultUser?.last_name || "",
       email: defaultUser?.email || "",
-      password: defaultUser?.password || "",
+      password: "",
       photo_url: defaultUser?.photo_url || "",
       role: defaultUser?.role || "administrador",
     },
@@ -78,7 +78,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
             </FormItem>
           )}
         />
-        <FormField
+        {!defaultUser&&<FormField
           name="password"
           control={form.control}
           render={({ field }) => (
@@ -90,7 +90,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        />}
         <FormField
           name="photo_url"
           control={form.control}

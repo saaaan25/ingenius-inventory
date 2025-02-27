@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import {
   getPurchaseApiMock,
-  getSupplyApiMock,
   putPurchaseApiMock,
   putPurchaseDetailApiMock,
   postPurchaseDetailApiMock,
@@ -9,6 +8,7 @@ import {
   getPurchasesDetailApiMock,
 } from "@/utils";
 import { toast } from "sonner";
+import { getUtil } from "@/api";
 
 export const PurchaseContext = createContext();
 
@@ -53,7 +53,7 @@ export const PurchaseProvider = ({ children, idParam }) => {
     const details_with_util = await Promise.all(
       details_filtered.map(async (detail) => ({
         ...detail,
-        util: await getSupplyApiMock(detail.util_id),
+        util: await getUtil(detail.util_id),
       }))
     );
     return details_with_util;

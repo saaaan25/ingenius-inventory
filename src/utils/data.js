@@ -80,53 +80,53 @@ export const suppliesData = [
   {
     id: 2,
     name: "Silicona",
-    stock:10
+    stock:15
   },
   {
     id: 3,
     name: "Block de cartulina blanca",
-    stock:10
+    stock:26
   },
   {
     id: 4,
     name: "Block de hojas de colores",
-    stock:10
+    stock:1
   },
   {
     id: 5,
     name: "Plastilina",
-    stock:10
+    stock:78
   },
 
   {
     id: 6,
     name: "Tijeras",
-    stock:10
+    stock:31
   },
   {
     id: 7,
     name: "Pegamento en barra",
-    stock:10
+    stock:22
   },
   {
     id: 8,
     name: "Lápiz",
-    stock:10
+    stock:19
   },
   {
     id: 9,
     name: "Bolígrafo",
-    stock:10
+    stock:4
   },
   {
     id: 10,
     name: "Cuaderno",
-    stock:10
+    stock:6
   },
   {
     id: 11,
     name: "Regla",
-    stock:10
+    stock:2
   },
   {
     id: 12,
@@ -136,17 +136,17 @@ export const suppliesData = [
   {
     id: 13,
     name: "Papel bond",
-    stock:10
+    stock:15
   },
   {
     id: 14,
     name: "Papel crepé",
-    stock:10
+    stock:21
   },
   {
     id: 15,
     name: "Papel celofán",
-    stock:10
+    stock:5
   },
 ];
 

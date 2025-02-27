@@ -98,12 +98,3 @@ export const deleteUserApiMock = async(userId) => {
   }
   return usersData;
 };
-
-//supply api mocks
-export const getSupplyApiMock = async(utilId) => {
-  return suppliesData.find((supply) => supply.id === utilId) || null;
-};
-
-export const getSuppliesApiMock = async() => {
-  return suppliesData;
-};
