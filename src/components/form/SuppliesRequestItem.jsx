@@ -2,9 +2,9 @@ import { FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/f
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { SuppliesRequestList } from "./SuppliesRequestList";
 import { AddSupplyToRequest } from "./AddSupplyToRequest";
 import PropTypes from "prop-types";
+import SuppliesRequestList from "./SuppliesRequestList";
 
 const SuppliesRequestItem = ({ field, form }) => {
     return (
