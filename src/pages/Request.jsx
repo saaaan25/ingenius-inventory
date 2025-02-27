@@ -12,10 +12,14 @@ import RoleBasedAccess from "@/components/RoleBasedAccess";
 
 const Request = () => {
     const params = useParams()
-    const request = solicitudes.find((item) => item.id === Number(params.id))
-    const requestDay = getSpecificDate(request.fecha)
-    const supplies = getSuppliesByRequest(params.id)
     const [solicitudesList, setSolicitudesList] = useState(solicitudes);
+
+    const [request, setRequest] = useState(
+        solicitudesList.find((item) => item.id === Number(params.id))
+    );
+
+    const supplies = getSuppliesByRequest(params.id)
+    const requestDay = getSpecificDate(request.fecha)
 
     const page = [
         {
@@ -28,6 +32,16 @@ const Request = () => {
         }
     ]
 
+    const handleStatus = (status) => {
+        const updatedRequest = { ...request, estado: status };
+        setRequest(updatedRequest);
+
+        setSolicitudesList((prevList) =>
+            prevList.map((req) => (req.id === request.id ? updatedRequest : req))
+        );
+        console.log(updatedRequest)
+    }
+
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3 pb-4">
             <PageRoute page1={page[0]} page2={page[1]} />
@@ -35,8 +49,11 @@ const Request = () => {
                 <div className="mt-2 mb-4 flex justify-between w-full">
                     <BackButton/> 
                     <div className="flex gap-x-3">
-                        <AcceptButton>Aceptar</AcceptButton>
-                        <CancelButton>Cancelar</CancelButton>
+                        <RoleBasedAccess allowedRoles={["administrador", "encargado"]}>
+                            <AcceptButton onClick={() => handleStatus("aceptado")}>Aceptar</AcceptButton>
+                            <CancelButton onClick={() => handleStatus("rechazado")}>Rechazar</CancelButton>
+                        </RoleBasedAccess>
+                        
                     </div>
                 </div>
                 <h1 className="font-semibold text-xl">Solicitud N° {request.id} - {request.aula}</h1>
@@ -59,7 +76,7 @@ const Request = () => {
                     
                 </div>
                 <div className="h-full w-full flex items-end justify-center">
-                    <RoleBasedAccess allowedRoles={["profesor", "encargado"]}>
+                    <RoleBasedAccess allowedRoles={["profesor", "administrador"]}>
                         <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
                     </RoleBasedAccess>   
                 </div>

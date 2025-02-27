@@ -2,30 +2,31 @@
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { classes } from "../data-test/class.js";
-import { lista_detalles } from "../data-test/detalleLista.js";
 import { students } from "../data-test/students.js";
 import ClassroomHeader from "../components/deliveries/ClassroomHeader";
 import StudentList from "../components/deliveries/StudentList";
 import SuppliesList from "../components/deliveries/SuppliesList";
+import getSuppliesByClassroom from "@/hooks/getSuppliesByClassroom.js";
 
 const Classroom = () => {
     const params = useParams();
-    const classroom = classes.find((item) => item.id === Number(params.id));
-    const supplies = lista_detalles.filter((item) => item.lista_utiles === classroom.id);
-    const [studentsList, setStudentsList] = useState(students.filter(student => student.aula_id === classroom.id));
+    const classroom = classes.find((item) => item.classroom_id === Number(params.id));
+
+    const [suppliesClassroom, setSuppliesClassroom] = useState(getSuppliesByClassroom(classroom.utils_list));
+    const [studentsList, setStudentsList] = useState(students.filter(student => student.classroom_id === classroom.classroom_id));
 
     const handleDeleteStudent = (studentId) => {
-        setStudentsList(prevList => prevList.filter(student => student.id !== studentId));
+        setStudentsList(prevList => prevList.filter(student => student.student_id !== studentId));
     };
 
     const handleAddStudent = (newStudent) => {
-        setStudentsList(prevList => [...prevList, { ...newStudent, aula_id: classroom.id }]);
+        setStudentsList(prevList => [...prevList, { ...newStudent, classroom_id: classroom.classroom_id }]);
     };
 
     const options = useMemo(() => [
-        { id: "Lista de útiles", component: <SuppliesList supplies={supplies} /> },
+        { id: "Lista de útiles", component: <SuppliesList supplies={suppliesClassroom} /> },
         { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} /> }
-    ], [supplies, studentsList]);
+    ], [suppliesClassroom, studentsList]);
 
     const [activeTab, setActiveTab] = useState(options[0].id);
 

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import StudentCard from "@/components/ui/studentCard.jsx";
+import StudentCard from "@/components/deliveries/StudentCard.jsx";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AddButton } from "@/components/button/AddButton.jsx";
 import StudentForm from "@/components/form/StudentForm";
+import PropTypes from "prop-types";
 
 const StudentList = ({ studentsList, onDeleteStudent, onAddStudent }) => {
     const [open, setOpen] = useState(false);
@@ -23,10 +24,10 @@ const StudentList = ({ studentsList, onDeleteStudent, onAddStudent }) => {
                 <div className="flex flex-col gap-y-2">
                     {studentsList.map((student, index) => (
                         <StudentCard 
-                            key={student.id} 
+                            key={student.student_id} 
                             student={student} 
                             index={index + 1}
-                            onDelete={() => onDeleteStudent(student.id)} 
+                            onDelete={() => onDeleteStudent(student.student_id)} 
                         />
                     ))}
                 </div>
@@ -42,6 +43,12 @@ const StudentList = ({ studentsList, onDeleteStudent, onAddStudent }) => {
             </Dialog>
         </div>
     );
+};
+
+StudentList.propTypes = {
+    studentsList: PropTypes.array.isRequired,
+    onDeleteStudent: PropTypes.func.isRequired,
+    onAddStudent: PropTypes.func.isRequired
 };
 
 export default StudentList;

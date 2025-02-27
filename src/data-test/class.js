@@ -1,39 +1,33 @@
 // class.js
 export const classes = [
     {
-        id: 1,
-        nombre: "1° Primaria",
-        profesor: "Profesor 1",
-        lista_utiles: 1
+        classroom_id: 1,
+        name: "1° Primaria",
+        utils_list: 1
     },
     {
-        id: 2,
-        nombre: "2° Primaria",
-        profesor: "Profesor 2",
-        lista_utiles: 2
+        classroom_id: 2,
+        name: "2° Primaria",
+        utils_list: 2
     },
     {
-        id: 3,
-        nombre: "3° Primaria",
-        profesor: "Profesor 3",
-        lista_utiles: 3
+        classroom_id: 3,
+        name: "3° Primaria",
+        utils_list: 3
     },
     {
-        id: 4,
-        nombre: "4° Primaria",
-        profesor: "Profesor 4",
-        lista_utiles: 4
+        classroom_id: 4,
+        name: "4° Primaria",
+        utils_list: 4
     },
     {
-        id: 5,
-        nombre: "5° Primaria",
-        profesor: "Profesor 5",
-        lista_utiles: 5
+        classroom_id: 5,
+        name: "5° Primaria",
+        utils_list: 5
     },
     {
-        id: 6,
-        nombre: "6° Primaria",
-        profesor: "Profesor 6",
-        lista_utiles: 6
+        classroom_id: 6,
+        name: "6° Primaria",
+        utils_list: 6
     }
 ];
