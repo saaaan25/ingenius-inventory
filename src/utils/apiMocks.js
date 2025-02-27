@@ -1,4 +1,4 @@
-import { purchasesData, purchaseDetailData, suppliesData, usersData } from "./data";
+import { purchasesData, purchaseDetailData} from "./data";
 
 //purchase api mocks
 export const getPurchasesApiMock = async () => {
@@ -66,35 +66,4 @@ export const deletePurchaseDetailApiMock = async(detailId) => {
     purchaseDetailData.splice(index, 1);
   }
   return purchaseDetailData;
-};
-
-//user api mocks
-export const postUserApiMock = async (user) => {
-  const id = Math.floor(Math.random() * 1000000);
-  const finalValues = {
-    ...user,
-    id,
-  };
-  usersData.push(finalValues);
-  return finalValues;
-};
-
-export const getUsersApiMock = async() => {
-  return usersData;
-};
-
-export const putUserApiMock = async(newUser) => {
-  const index = usersData.findIndex((user) => user.id === newUser.id);
-  if (index !== -1) {
-    usersData[index] = newUser ;
-  }
-  return newUser;
-};
-
-export const deleteUserApiMock = async(userId) => {
-  const index = usersData.findIndex((user) => user.id === userId);
-  if (index !== -1) {
-    usersData.splice(index, 1);
-  }
-  return usersData;
 };

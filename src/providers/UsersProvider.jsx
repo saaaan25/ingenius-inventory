@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { postUserApiMock, putUserApiMock, getUsersApiMock, deleteUserApiMock } from '@/utils';
+import { createUser as createUserApi, getUsers as getUsersApi,updateUser as updateUserApi, deleteUser as deleteUserApi } from '@/api';
 
 export const UsersContext = createContext();
 
@@ -14,7 +14,7 @@ export const UsersProvider = ({children}) => {
 
   const loadUsers = async () => {
     try{
-      const usersResponse=await getUsersApiMock()
+      const usersResponse=await getUsersApi();
       setUsers(usersResponse);
     }
     catch(error){
@@ -24,7 +24,7 @@ export const UsersProvider = ({children}) => {
 
   const createUser = async (newUser) => {
     try{
-      const userResponse = await postUserApiMock(newUser);
+      const userResponse = await createUserApi(newUser);
       setUsers([...users, userResponse]);
       toast.success("Usuario registrado con éxito");
     }
@@ -36,7 +36,7 @@ export const UsersProvider = ({children}) => {
 
   const updateUser = async (user) => {
     try{
-      const userResponse = await putUserApiMock(user);
+      const userResponse = await updateUserApi(user);
       setUsers((prevUsers) => prevUsers.map((u) => (u.id === user.id ? userResponse : u)));
       toast.success("Usuario actualizado con éxito");
     }
@@ -48,7 +48,7 @@ export const UsersProvider = ({children}) => {
 
   const deleteUser = async (userId)=>{
     try{
-      await deleteUserApiMock(userId);
+      await deleteUserApi(userId);
       setUsers((prevUsers) => prevUsers.filter((u) => u.id !== userId));
       toast.success("Usuario eliminado con éxito");
     }
