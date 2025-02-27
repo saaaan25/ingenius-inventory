@@ -1,7 +1,8 @@
 import { createContext, useEffect } from "react";
-import { usePersistedState} from "@/hooks";
+import { usePersistedState } from "@/hooks";
 import { login as apiLogin, register as apiRegister, api } from "@/api";
 import { toast } from "sonner";
+import { useLayoutEffect } from "react";
 
 export const AuthContext = createContext();
 
@@ -9,15 +10,15 @@ export function AuthProvider({ children }) {
   const [user, setUser] = usePersistedState("authUser", null);
   const [token, setToken] = usePersistedState("authToken", null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const requestInterceptor = setupAuthInterceptor();
-    return () => api.interceptors.request.eject(requestInterceptor);
-  }, [token]);
-
-  useEffect(() => {
     const responseInterceptor = setupErrorHandlingInterceptor();
-    return () => api.interceptors.response.eject(responseInterceptor);
-  }, []);
+
+    return () => {
+      api.interceptors.request.eject(requestInterceptor);
+      api.interceptors.response.eject(responseInterceptor);
+    };
+  }, [token]);
 
   const setupAuthInterceptor = () => {
     return api.interceptors.request.use(
@@ -41,13 +42,7 @@ export function AuthProvider({ children }) {
         }
 
         const { status } = error.response;
-
-        if (status === 401) {
-          toast.error("Sesión expirada. Inicia sesión nuevamente.");
-          logout();
-        } else if (status === 403) {
-          toast.error("No tienes permisos para esta acción.");
-        } else if (status === 500) {
+        if (status === 500) {
           toast.error("Error en el servidor. Inténtalo más tarde.");
         }
 
@@ -84,6 +79,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setToken(null);
     setUser(null);
+    toast.success("Cierre de sesión exitoso");
   };
 
   return (

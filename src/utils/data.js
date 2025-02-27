@@ -3,232 +3,252 @@ export const roles=["administrador","docente","encargado"];
 export const purchasesData = [
   {
     id: 1,
-    total_gastado: 100,
-    fecha: "2021-12-01",
+    total_spent: 100,
+    date: "2021-12-01",
+    user_id: 1,
   },
   {
     id: 2,
-    total_gastado: 200,
-    fecha: "2021-12-02",
+    total_spent: 200,
+    date: "2021-12-02",
+    user_id: 1,
   },
   {
     id: 3,
-    total_gastado: 150,
-    fecha: "2021-12-03",
+    total_spent: 150,
+    date: "2021-12-03",
+    user_id: 1,
   },
   {
     id: 4,
-    total_gastado: 75,
-    fecha: "2021-12-05",
+    total_spent: 75,
+    date: "2021-12-05",
+    user_id: 1,
   },
   {
     id: 5,
-    total_gastado: 300,
-    fecha: "2021-12-05",
+    total_spent: 300,
+    date: "2021-12-05",
+    user_id: 1,
   },
 ];
 
 export const purchaseDetailData = [
   {
     id: 1,
-    cantidad: 2,
-    precio_unitario: 150,
-    util: 1,
-    compra: 1,
+    quantity: 2,
+    unit_price: 150,
+    util_id: 1,
+    purchase_id: 1,
   },
   {
     id: 2,
-    cantidad: 2,
-    precio_unitario: 50,
-    util: 2,
-    compra: 1,
+    quantity: 2,
+    unit_price: 50,
+    util_id: 2,
+    purchase_id: 1,
   },
   {
     id: 3,
-    cantidad: 2,
-    precio_unitario: 150,
-    util: 3,
-    compra: 1,
+    quantity: 2,
+    unit_price: 150,
+    util_id: 3,
+    purchase_id: 1,
   },
   {
     id: 4,
-    cantidad: 2,
-    precio_unitario: 50,
-    util: 1,
-    compra: 2,
+    quantity: 2,
+    unit_price: 50,
+    util_id: 1,
+    purchase_id: 2,
   },
   {
     id: 5,
-    cantidad: 2,
-    precio_unitario: 150,
-    util: 2,
-    compra: 2,
+    quantity: 2,
+    unit_price: 150,
+    util_id: 2,
+    purchase_id: 2,
   },
 ];
 
 export const suppliesData = [
   {
     id: 1,
-    nombre: "Goma",
+    name: "Goma",
+    stock:10
   },
   {
     id: 2,
-    nombre: "Silicona",
+    name: "Silicona",
+    stock:10
   },
   {
     id: 3,
-    nombre: "Block de cartulina blanca",
+    name: "Block de cartulina blanca",
+    stock:10
   },
   {
     id: 4,
-    nombre: "Block de hojas de colores",
+    name: "Block de hojas de colores",
+    stock:10
   },
   {
     id: 5,
-    nombre: "Plastilina",
+    name: "Plastilina",
+    stock:10
   },
 
   {
     id: 6,
-    nombre: "Tijeras",
+    name: "Tijeras",
+    stock:10
   },
   {
     id: 7,
-    nombre: "Pegamento en barra",
+    name: "Pegamento en barra",
+    stock:10
   },
   {
     id: 8,
-    nombre: "Lápiz",
+    name: "Lápiz",
+    stock:10
   },
   {
     id: 9,
-    nombre: "Bolígrafo",
+    name: "Bolígrafo",
+    stock:10
   },
   {
     id: 10,
-    nombre: "Cuaderno",
+    name: "Cuaderno",
+    stock:10
   },
   {
     id: 11,
-    nombre: "Regla",
+    name: "Regla",
+    stock:10
   },
   {
     id: 12,
-    nombre: "Compás",
+    name: "Compás",
+    stock:10
   },
   {
     id: 13,
-    nombre: "Papel bond",
+    name: "Papel bond",
+    stock:10
   },
   {
     id: 14,
-    nombre: "Papel crepé",
+    name: "Papel crepé",
+    stock:10
   },
   {
     id: 15,
-    nombre: "Papel celofán",
+    name: "Papel celofán",
+    stock:10
   },
 ];
 
 export const usersData = [
   {
     id: 1,
-    nombre: "Juan",
-    apellido: "Perez",
+    name: "Juan",
+    last_name: "Perez",
     email: "juan@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "administrador",
+    role: "administrador",
   },
   {
     id: 2,
-    nombre: "Maria",
-    apellido: "Gomez",
+    name: "Maria",
+    last_name: "Gomez",
     email: "maria@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "docente",
+    role: "docente",
   },
   {
     id: 3,
-    nombre: "Carlos",
-    apellido: "Lopez",
+    name: "Carlos",
+    last_name: "Lopez",
     email: "carlos@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "encargado",
+    role: "encargado",
   },
   {
     id: 4,
-    nombre: "Ana",
-    apellido: "Martinez",
+    name: "Ana",
+    last_name: "Martinez",
     email: "ana@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "administrador",
+    role: "administrador",
   },
   {
     id: 5,
-    nombre: "Luis",
-    apellido: "Garcia",
+    name: "Luis",
+    last_name: "Garcia",
     email: "luis@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "docente",
+    role: "docente",
   },
   {
     id: 6,
-    nombre: "Sofia",
-    apellido: "Rodriguez",
+    name: "Sofia",
+    last_name: "Rodriguez",
     email: "sofia@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "encargado",
+    role: "encargado",
   },
   {
     id: 7,
-    nombre: "Miguel",
-    apellido: "Hernandez",
+    name: "Miguel",
+    last_name: "Hernandez",
     email: "miguel@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "administrador",
+    role: "administrador",
   },
   {
     id: 8,
-    nombre: "Laura",
-    apellido: "Fernandez",
+    name: "Laura",
+    last_name: "Fernandez",
     email: "laura@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "docente",
+    role: "docente",
   },
   {
     id: 9,
-    nombre: "David",
-    apellido: "Ruiz",
+    name: "David",
+    last_name: "Ruiz",
     email: "david@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "encargado",
+    role: "encargado",
   },
   {
     id: 10,
-    nombre: "Isabel",
-    apellido: "Diaz",
+    name: "Isabel",
+    last_name: "Diaz",
     email: "isabel@gmail.com",
-    contrasena: "123456",
-    imagen:
+    password: "123456",
+    photo_url:
       "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
-    rol: "administrador",
+    role: "administrador",
   },
 ];

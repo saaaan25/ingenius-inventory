@@ -18,7 +18,7 @@ export const PurchaseHeaderSection = () => {
         </div>
         <h1 className="font-semibold text-xl">Compra N° {purchase.id}</h1>
         <div>
-          <h2 className="text-routes">Fecha: {purchase.fecha}</h2>
+          <h2 className="text-routes">Fecha: {purchase.date}</h2>
         </div>
       </>
     )

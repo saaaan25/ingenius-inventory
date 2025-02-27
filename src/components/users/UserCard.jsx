@@ -9,14 +9,14 @@ export const UserCard = (user) => {
     <Card className="flex w-full justify-between bg-button py-1  px-5">
       <div className="flex flex-row gap-5">
         <Avatar className="rounded-sm w-15 h-15 my-auto">
-          <AvatarImage src={user.imagen} alt={user.nombre} className="object-cover w-full h-full" />
-          <AvatarFallback>{user.nombre}</AvatarFallback>
+          <AvatarImage src={user.photo_url} alt={user.name} className="object-cover w-full h-full" />
+          <AvatarFallback>{user.name}</AvatarFallback>
         </Avatar>
         <CardHeader className="flex flex-col pl-0 text-start">
           <CardTitle>
-            <span>{user.nombre}</span>
+            <span>{user.name}</span>
             <span> </span>
-            <span>{user.apellido}</span>
+            <span>{user.last_name}</span>
           </CardTitle>
           <CardDescription>{user.email}</CardDescription>
         </CardHeader>

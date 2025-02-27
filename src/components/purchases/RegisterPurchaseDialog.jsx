@@ -14,7 +14,7 @@ export const RegisterPurchaseDialog = ({ open, setOpen }) => {
   const { createPurchase} = usePurchases();
 
   function onSubmit(values) {
-    const formattedValues = { ...values, fecha: formatFecha(values.fecha) };
+    const formattedValues = { ...values, date: formatFecha(values.date) };
     console.log(formattedValues);
     createPurchase(formattedValues);
     handleCloseDialog();

@@ -15,8 +15,8 @@ export const PurchaseForm = ({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
       id: defaultPurchase?.id || undefined,
-      fecha: defaultPurchase?.fecha ? new Date(defaultPurchase.fecha): new Date(),
-      detalle_compra: defaultPurchase?.detalle_compra || [],
+      date: defaultPurchase?.date ? new Date(defaultPurchase.date): new Date(),
+      purchase_detail: defaultPurchase?.purchase_detail || [],
     },
   });
 
@@ -28,12 +28,12 @@ export const PurchaseForm = ({
       >
         <FormField
           control={form.control}
-          name="fecha"
+          name="date"
           render={({ field }) => <DateFormItem field={field} />}
         />
         <FormField
           control={form.control}
-          name="detalle_compra"
+          name="purchase_detail"
           render={({ field }) => <SuppliesFormItem field={field} form={form} />}
         />
         <div className="flex justify-center gap-x-10 mt-auto">
