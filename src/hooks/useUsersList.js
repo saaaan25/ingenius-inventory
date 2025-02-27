@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUsers, createUser, updateUser, deleteUser, getUser } from "@/api/userApi";
 
-export const useUsers = () => {
+export const useUsersList = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

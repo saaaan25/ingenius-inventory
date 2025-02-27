@@ -2,33 +2,15 @@ import solicitudesData from "../data-test/solicitud";
 import NavBar from "@/components/ui/NavBar";
 import RequestsSection from "@/components/request/RequestsSection";
 import useActiveTab from "@/hooks/setActiveTab";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import PageRoute from "@/components/PageRoute";
 import AddRequestButton from "@/components/button/AddRequestButton";
-import { useAuth } from "@/hooks";
-import { getUsers } from "@/api/userApi";
 
 const Requests = () => {
     const page = {
         name: "Solicitudes",
         route: "/requests"
     }
-
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const data = await getUsers();
-                setUsers(data);
-            } catch (error) {
-                console.error("Error al obtener usuarios:", error);
-            }
-        };
-        fetchUsers();
-    }, []);
-
-    console.log(users)
 
     const [solicitudes, setSolicitudes] = useState(solicitudesData);
 
