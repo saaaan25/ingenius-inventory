@@ -13,7 +13,7 @@ export const createStudent = async (student) => {
 }
 
 export const updateStudent = async (student) => {
-  const {data}= await api.put(studentEndpoint, student);
+  const {data}= await api.patch(studentEndpoint, student);
   return data;
 }
 
