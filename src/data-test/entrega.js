@@ -1,18 +1,18 @@
 const entregas = [
     {
-        id: 1,
-        alumno: 301,
-        estado: 0.6
+        delivery_id: 1,
+        student_id: 101,
+        status: 0.6
     },
     {
-        id: 2,
-        alumno: 302,
-        estado: 0.9
+        delivery_id: 2,
+        student_id: 102,
+        status: 0.9
     },
     {
-        id: 3,
-        alumno: 303,
-        estado: 1
+        delivery_id: 3,
+        student_id: 103,
+        status: 1
     }
 ];
 
