@@ -13,7 +13,7 @@ export const createRequest = async (request) => {
 }
 
 export const updateRequest = async (request) => {
-  const {data}= await api.put(requestEndpoint, request);
+  const {data}= await api.patch(requestEndpoint, request);
   return data;
 }
 

@@ -13,7 +13,7 @@ export const createListDetail = async (listDetail) => {
 }
 
 export const updateListDetail = async (listDetail) => {
-  const {data}= await api.put(listDetailEndpoint, listDetail);
+  const {data}= await api.patch(listDetailEndpoint, listDetail);
   return data;
 }
 
