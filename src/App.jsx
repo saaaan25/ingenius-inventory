@@ -20,7 +20,7 @@ import { Navigate } from "react-router-dom";
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/app">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
