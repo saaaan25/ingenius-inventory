@@ -3,27 +3,35 @@ import util_nuevo from "@/data-test/util_nuevo"
 import requests_nuevo from "@/data-test/solicitud_nuevo"
 import request_details_nuevo from "@/data-test/detalle_solicitud_nuevo"
 import { entrega_dinero } from "@/data-test/entregaDinero"
-import { getUtils } from "@/api"
+import { getPurchases, getUtils } from "@/api"
 import { useState } from "react"
+import { getRequestDetails } from "@/api/requestDetailApi"
+import { getRequests } from "@/api/requestApi"
 
 const useGeneralStats = () => {
     const [utils, setUtils] = useState([])
-    const [purchases, setPurchase] = useState([])
+    const [purchases, setPurchases] = useState([])
     const [requests, setRequests] = useState([])
     const [requestsDetails, setRequestsDetails] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
 
     const fetchData = async () => {
+        setLoading(true)
         try {
             const utilsData = await getUtils();
-            const utilsData = await getUtils();
-            const utilsData = await getUtils();
-            const utilsData = await getUtils();
-            setClassrooms(classroomsData);
+            const purchasesData = await getPurchases();
+            const requestsData = await getRequests();
+            const requestsDetailsData = await getRequestDetails();
+            setUtils(utilsData);
+            setPurchases(purchasesData);
+            setRequests(requestsData);
+            setRequestsDetails(requestsDetailsData);
         } catch (err) {
-            setError(err); // Guardar el error en el estado
+            setError(err); 
             console.error("Error al obtener los salones:", err);
         } finally {
-            setLoading(false); // Desactivar el estado de carga
+            setLoading(false); 
         }
     };
 
