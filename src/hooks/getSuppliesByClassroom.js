@@ -7,7 +7,7 @@ const getSuppliesByClassroom = (listaId) => {
         .map(detalle => {
             const util = util_nuevo.find(util => util.util_id === detalle.util) || {};
             return {
-                id: detalle.util,
+                util_id: detalle.util,
                 name: util.name || "Desconocido",
                 quantity: detalle.quantity
             };
