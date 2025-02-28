@@ -13,7 +13,7 @@ export const createClassroom = async (classroom) => {
 }
 
 export const updateClassroom = async (classroom) => {
-  const {data}= await api.patch(classroomEndpoint, classroom);
+  const {data}= await api.patch(`${classroomEndpoint}/${classroom.classroom_id}`, classroom);
   return data;
 }
 

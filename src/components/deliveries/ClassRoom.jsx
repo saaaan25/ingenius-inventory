@@ -1,18 +1,45 @@
 import PropTypes from 'prop-types';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import users from '../../data-test/users.js';
+import { useEffect, useState } from 'react';
+import { getUser } from '@/api/userApi.js';
 
-const ClassRoom = ({ id, nombre, profesorId, color, onDelete, onEdit }) => {
+const ClassRoom = ({ id, nombre, profesorId, classRoom, color, onDelete, onEdit }) => {
     const navigate = useNavigate();
     const [showPopover, setShowPopover] = useState(false);
+    const [nombreProfesor, setNombreProfesor] = useState("Cargando...");
+    console.log(classRoom.user_id)
+    console.log(id)
+    console.log(profesorId)
+    console.log
 
-    const profesor = users.find(user => user.id === profesorId && user.rol === "profesor");
-    const nombreProfesor = profesor ? `${profesor.nombre} ${profesor.apellido}` : "Sin asignar";
+    useEffect(() => {
+        const fetchProfesor = async () => {
+            if (!profesorId.id) {
+                setNombreProfesor("Sin asignar");
+                return;
+            }
+            
+            try {
+                const profesor = await getUser(profesorId.id);
+                console.log(profesor)
+                if (profesor.role === "profesor") {
+                    console.log("si es")
+                    setNombreProfesor(`${profesor.name} ${profesor.last_name}`);
+                } else {
+                    setNombreProfesor("Sin asignar");
+                }
+            } catch (error) {
+                console.error("Error al obtener el profesor:", error);
+                setNombreProfesor("Sin asignar");
+            }
+        };
+
+        fetchProfesor();
+    }, [profesorId]);
 
     const goToClassroom = () => {
-        navigate(`/classrooms/${id}`);
+        navigate(`/classrooms/${classRoom.classroom_id}`);
     };
 
     return (
@@ -43,7 +70,7 @@ const ClassRoom = ({ id, nombre, profesorId, color, onDelete, onEdit }) => {
                         onClick={(e) => {
                             e.stopPropagation();
                             setShowPopover(false);
-                            onEdit(id);
+                            onEdit(classRoom.id);
                         }}
                     >
                         Editar
@@ -53,7 +80,7 @@ const ClassRoom = ({ id, nombre, profesorId, color, onDelete, onEdit }) => {
                         onClick={(e) => {
                             e.stopPropagation();
                             setShowPopover(false);
-                            onDelete(id);
+                            onDelete(classRoom.id);
                         }}
                     >
                         Eliminar
@@ -68,6 +95,7 @@ ClassRoom.propTypes = {
     id: PropTypes.any.isRequired,
     nombre: PropTypes.string.isRequired,
     profesorId: PropTypes.number.isRequired,
+    classRoom: PropTypes.object.isRequired,
     color: PropTypes.string.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
