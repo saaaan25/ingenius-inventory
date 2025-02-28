@@ -5,6 +5,7 @@ import useActiveTab from "@/hooks/setActiveTab";
 import { useMemo, useState } from "react";
 import PageRoute from "@/components/PageRoute";
 import AddRequestButton from "@/components/button/AddRequestButton";
+import RoleBasedAccess from "@/components/RoleBasedAccess";
 
 const Requests = () => {
     const page = {
@@ -36,7 +37,9 @@ const Requests = () => {
             <div className="pl-5 w-full flex flex-col items-start">
                 <div className="w-full flex justify-between">
                     <h1 className="font-semibold text-xl mb-2">Solicitudes</h1> 
-                    <AddRequestButton setSolicitudes={setSolicitudes} solicitudes={solicitudes}/>
+                    <RoleBasedAccess allowedRoles={["profesor"]}>
+                        <AddRequestButton setSolicitudes={setSolicitudes} solicitudes={solicitudes}/>
+                    </RoleBasedAccess>
                 </div>
                 <NavBar options={options} active={activeTab} setActive={setActiveTab}/>
                 <RequestsSection requests={filteredShowList} />
