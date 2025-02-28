@@ -1,15 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-import {
-  getPurchaseApiMock,
-  getSupplyApiMock,
-  putPurchaseApiMock,
-  putPurchaseDetailApiMock,
-  postPurchaseDetailApiMock,
-  deletePurchaseDetailApiMock,
-  getPurchasesDetailApiMock,
-} from "@/utils";
+import { formatPurchaseDetail, getTotalSpent } from "@/utils";
 import { toast } from "sonner";
-
+import {
+  updatePurchase as updatePurchaseApi,
+  updatePurchaseDetail as updatePurchaseDetailApi,
+  deletePurchaseDetail as deletePurchaseDetailApi,
+  createPurchaseDetail as createPurchaseDetailApi,
+  getPurchase,
+  getPurchaseDetails,
+} from "@/api";
 export const PurchaseContext = createContext();
 
 export const PurchaseProvider = ({ children, idParam }) => {
@@ -29,7 +28,7 @@ export const PurchaseProvider = ({ children, idParam }) => {
 
   const loadPurchase = async (purchaseId) => {
     try {
-      const foundPurchase = await getPurchaseApiMock(purchaseId);
+      const foundPurchase = await getPurchase(purchaseId);
       setPurchase(foundPurchase);
     } catch (error) {
       console.log(error);
@@ -39,32 +38,28 @@ export const PurchaseProvider = ({ children, idParam }) => {
   const loadPurchaseDetail = async (purchaseId) => {
     try {
       const details = await getPurchaseDetailByPurchaseId(purchaseId);
-      setPurchaseDetail(details);
+      const formattedDetails = formatPurchaseDetail(details);
+      setPurchaseDetail(formattedDetails);
     } catch (error) {
       console.log(error);
     }
   };
 
   const getPurchaseDetailByPurchaseId = async (purchaseId) => {
-    const details = await getPurchasesDetailApiMock();
+    const details = await getPurchaseDetails();
     const details_filtered = details.filter(
-      (detail) => detail.purchase_id === purchaseId
+      (detail) => detail.purchase.id === purchaseId
     );
-    const details_with_util = await Promise.all(
-      details_filtered.map(async (detail) => ({
-        ...detail,
-        util: await getSupplyApiMock(detail.util_id),
-      }))
-    );
-    return details_with_util;
+    return details_filtered;
   };
 
   const updatePurchase = async (purchase) => {
     try {
       await updatePurchaseDetail(purchase.id, purchase.purchase_detail);
-      const purchaseResponse = await putPurchaseApiMock({
+      const purchaseResponse = await updatePurchaseApi({
         id: purchase.id,
         date: purchase.date,
+        total_spent: getTotalSpent(purchase.purchase_detail),
       });
       setPurchase(purchaseResponse);
       toast.success("Compra editada correctamente");
@@ -80,12 +75,12 @@ export const PurchaseProvider = ({ children, idParam }) => {
         !newDetails.some((newDetail) => newDetail.id === currentDetail.id)
     );
     await Promise.all(
-      detailsToDelete.map((detail) => deletePurchaseDetailApiMock(detail.id))
+      detailsToDelete.map((detail) => deletePurchaseDetailApi(detail.id))
     );
     await Promise.all(
       newDetails.map((detalle) => {
         if (detalle.id) {
-          return putPurchaseDetailApiMock({
+          return updatePurchaseDetailApi({
             id: detalle.id,
             purchase_id: purchaseId,
             unit_price: detalle.unit_price,
@@ -93,7 +88,7 @@ export const PurchaseProvider = ({ children, idParam }) => {
             util_id: detalle.util.id,
           });
         } else {
-          return postPurchaseDetailApiMock({
+          return createPurchaseDetailApi({
             purchase_id: purchaseId,
             unit_price: detalle.unit_price,
             quantity: detalle.quantity,

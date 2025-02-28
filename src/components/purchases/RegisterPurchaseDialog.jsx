@@ -8,13 +8,13 @@ import {
   Dialog,
 } from "@/components/ui/dialog";
 import { usePurchases } from "@/hooks";
-import { formatFecha } from "@/utils";
+
 
 export const RegisterPurchaseDialog = ({ open, setOpen }) => {
   const { createPurchase} = usePurchases();
 
   function onSubmit(values) {
-    const formattedValues = { ...values, date: formatFecha(values.date) };
+    const formattedValues = { ...values, date: values.date };
     console.log(formattedValues);
     createPurchase(formattedValues);
     handleCloseDialog();
