@@ -8,25 +8,52 @@ import PageRoute from "@/components/PageRoute";
 import EditRequestButton from "@/components/button/EditRequestButton";
 import { useEffect, useState } from "react";
 import RoleBasedAccess from "@/components/RoleBasedAccess";
-import requests_nuevo from "@/data-test/solicitud_nuevo";
+import { getRequest, getRequests } from "@/api/requestApi";
 
 const Request = () => {
-    const params = useParams()
-    const [solicitudesList, setSolicitudesList] = useState(requests_nuevo);
-    console.log(solicitudesList, setSolicitudesList)
-
-    const [request, setRequest] = useState(
-        solicitudesList.find((item) => item.request_id == params.id)
-    );
+    const { id } = useParams();
+    const [request, setRequest] = useState({});  
+    const [requests, setRequests] = useState([]);
+    const [dataReady, setDataReady] = useState(false);
 
     useEffect(() => {
-        const updatedRequest = solicitudesList.find((item) => item.request_id == params.id);
-        setRequest(updatedRequest);
-    }, [solicitudesList, params.id]);
+        if (!id) return;
+    
+        const fetchData = async () => {
+            try {
+                const requestData = await getRequest(id);
+                const requestsData = await getRequests();
+    
+                if (requestData) {
+                    setRequest(requestData);
+                }
+                if (requestsData) {
+                    setRequests(requestsData);
+                }
+    
+                setDataReady(true); // Solo marcar como listo después de obtener los datos correctamente
+            } catch (error) {
+                console.error("Error al obtener los datos:", error);
+            }
+        };
+    
+        fetchData();
+    }, [id]);
 
-    console.log(solicitudesList, setSolicitudesList)
+    if (!dataReady) {
+        return <p className="text-center mt-10">Cargando solicitud...</p>;
+    }
 
-    const supplies = getSuppliesByRequest(params.id)
+    if (!request) {
+        return <p className="text-center mt-10">No se encontró la solicitud.</p>;
+    }
+
+    console.log("Request data:", request);
+      
+    console.log(request)
+    console.log(requests)
+
+    const supplies = getSuppliesByRequest(id)
     const requestDay = getSpecificDate(request.date)
 
     const page = [
@@ -35,8 +62,8 @@ const Request = () => {
             route: "/requests"
         },
         {
-            name: `Solicitud N° ${params.id}`,
-            route: `/${params.id}`
+            name: `Solicitud N° ${id}`,
+            route: `/${id}`
         }
     ]
 
@@ -44,7 +71,7 @@ const Request = () => {
         const updatedRequest = { ...request, status: status };
         setRequest(updatedRequest);
 
-        setSolicitudesList((prevList) =>
+        setRequests((prevList) =>
             prevList.map((req) => (req.request_id === request.request_id ? updatedRequest : req))
         );
         console.log(updatedRequest)
@@ -93,7 +120,7 @@ const Request = () => {
                 </div>
                 <div className="h-full w-full flex items-end justify-center">
                     <RoleBasedAccess allowedRoles={["profesor"]}>
-                        <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
+                        <EditRequestButton solicitud={request} solicitudes={requests} setSolicitudes={setRequests}/>
                     </RoleBasedAccess>   
                 </div>
             </div>
