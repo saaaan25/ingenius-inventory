@@ -10,15 +10,15 @@ import {
   import { Check } from "lucide-react";
   import { cn } from "@/lib/utils";
   import { useEffect, useState } from "react";
-import { getUtils } from "@/api";
+import supplies from "@/data-test/supplies";
   
   export const AddSupplyToRequest = ({ field, form }) => {
-    const [supplies, setSupplies] = useState([]);
+    const [suppliesList, setSuppliesList] = useState([]);
   
     useEffect(() => {
       try {
-        const suppliesResponse = getUtils();
-        setSupplies(suppliesResponse);
+        const suppliesResponse = supplies
+        setSuppliesList(suppliesResponse);
       } catch (e) {
         console.error("Error fetching supplies:", e);
       }
@@ -34,8 +34,8 @@ import { getUtils } from "@/api";
               className={"[&>[data-radix-scroll-area-viewport]]:max-h-[200px]"}
             >
               <CommandGroup>
-                {supplies.map((supply) => {
-                  const currentValue = field.value || []; // Evita errores si es undefined
+                {suppliesList.map((supply) => {
+                  const currentValue = field.value || []; 
                   const alreadySelected = currentValue.some(
                     (elem) => elem.util.id === supply.id
                   );
@@ -52,7 +52,7 @@ import { getUtils } from "@/api";
                               ...currentValue,
                               {
                                 util: { id: supply.id, nombre: supply.nombre },
-                                cantidad: 1, // Se inicializa en 1
+                                cantidad: 1, 
                               },
                             ];
                         form.setValue("detalle_solicitud", updatedDetalleSolicitud);

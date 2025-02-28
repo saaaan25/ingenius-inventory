@@ -1,38 +1,43 @@
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import NavBar from "@/components/ui/NavBar";
+import PageRoute from "../PageRoute";
+import BackButton from "../button/BackButton";
+import PropTypes from "prop-types";
 
 const ClassroomHeader = ({ classroom, options, activeTab, setActiveTab }) => {
+    const page = [
+        {
+            name: "Salones",
+            route: "/deliveries"
+        },
+        {
+            name: classroom.name,
+            route: `/${classroom.classroom_id}`
+        }
+    ]
+
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
-            {/* Navegación de rutas */}
-            <div className="  flex items-center text-routes">
-                <a className="font-light text-routes_selected text-sm" href="/deliveries">Salones</a>
-                <HiChevronRight />
-                <a className="font-light text-routes_selected text-sm" href={`/classrooms/${classroom.id}`}>
-                    {classroom.nombre}
-                </a>
-            </div>
+            <PageRoute page1={page[0]} page2={page[1]} />
 
-            {/* Botón de retroceso */}
             <div className="pl-5 mt-2 mb-4">
-                <button className="flex text-routes_selected items-center" onClick={() => window.history.back()}>
-                    <HiChevronLeft />
-                    <p className="text-sm">Volver</p>
-                </button> 
+                <BackButton/>
             </div>
 
             <div className="pl-5 flex flex-col w-full h-full items-start justify-start gap-y-3">
-                <h1 className="font-semibold text-xl">{classroom.nombre}</h1>
-                <h2 className="text-routes mt-2">Docente: {classroom.profesor}</h2>
+                <h1 className="font-semibold text-xl">{classroom.name}</h1>
+                <h2 className="text-routes mt-2">Docente: ola</h2>
 
-                {/* NavBar dentro del header */}
                 <NavBar options={options} active={activeTab} setActive={setActiveTab} />
             </div>
-
-            {/* Título y docente */}
-            
         </div>
     );
+};
+
+ClassroomHeader.propTypes = {
+    classroom: PropTypes.object.isRequired,
+    options: PropTypes.array.isRequired,
+    activeTab: PropTypes.any.isRequired,
+    setActiveTab: PropTypes.func.isRequired
 };
 
 export default ClassroomHeader;

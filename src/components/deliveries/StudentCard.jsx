@@ -5,18 +5,14 @@ import PropTypes from "prop-types";
 const StudentCard = ({ student, index, onDelete }) => {
     return (
         <Card className="w-full flex justify-between items-center bg-button text-button py-4 px-6">
-            {/* Muestra el número del estudiante basado en el índice (comienza en 1) */}
             <span className="ml-5 font-bold text-base">{index}</span>
-
-            {/* Contenedor para el nombre con espacio adecuado entre el índice y el nombre */}
             <div className="flex-1 ml-70 text-left">
                 <span className="font-normal text-base">
-                    {student.nombre} {student.apellido}
+                    {student.name} {student.last_name}
                 </span>
             </div>
 
-            {/* Botón de eliminación */}
-            <button onClick={() => onDelete(student.id)} className="text-black hover:text-red-700">
+            <button onClick={() => onDelete(student.student_id)} className="text-black hover:text-red-700">
                 <HiX />
             </button>
         </Card>
@@ -27,11 +23,11 @@ const StudentCard = ({ student, index, onDelete }) => {
 
 StudentCard.propTypes = {
     student: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        nombre: PropTypes.string.isRequired,
-        apellido: PropTypes.string.isRequired,
+        student_id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        last_name: PropTypes.string.isRequired,
     }).isRequired,
-    index: PropTypes.number.isRequired, // Índice para el número del estudiante
+    index: PropTypes.number.isRequired,
     onDelete: PropTypes.func.isRequired,
 };
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const ClassRoom = ({ id, nombre, profesor }) => {
+const ClassRoom = ({ id, nombre }) => {
     const navigate = useNavigate();
 
     const goToClassroom = () => {
@@ -17,13 +17,18 @@ const ClassRoom = ({ id, nombre, profesor }) => {
         >
             <div>
                 <h2 className="text-lg font-semibold">{nombre}</h2>
-                <p className="text-sm text-gray-600">{profesor}</p>
+                <p className="text-sm text-gray-600">ola</p>
             </div>
             <div className="absolute top-4 right-4 cursor-pointer">
                 <FaEllipsisV />
             </div>
         </div>
     );
+};
+
+ClassRoom.propTypes = {
+    id: PropTypes.any.isRequired,
+    nombre: PropTypes.string.isRequired,
 };
 
 export default ClassRoom;
