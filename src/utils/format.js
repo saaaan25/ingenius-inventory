@@ -8,12 +8,12 @@ export const groupPurchasesByDate = (purchases) => {
   const orderedPurchases = orderPurchasesByDate(purchases);
 
   return orderedPurchases.reduce((acc, purchase) => {
-    const { date } = purchase;
-    const existingGroup = acc.find(group => group.date === date);
+    const datePart = format(new Date(purchase.date), 'yyyy-MM-dd');
+    const existingGroup = acc.find(group => group.date === datePart);
     if (existingGroup) {
       existingGroup.purchases.push(purchase);
     } else {
-      acc.push({ date, purchases: [purchase] });
+      acc.push({ date: datePart, purchases: [purchase] });
     }
     return acc;
   }, []);
