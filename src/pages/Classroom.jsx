@@ -26,8 +26,8 @@ const Classroom = () => {
     };
 
     const options = useMemo(() => [
-        { id: "Lista de útiles", component: <SuppliesList supplies={suppliesClassroom} setSupplies={setSuppliesClassroom} /> },
-        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} /> }
+        { id: "Lista de útiles", component: <SuppliesList supplies={suppliesClassroom} /> },
+        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} listId={classroom.utils_list} /> }
     ], [suppliesClassroom, studentsList]);
     
 

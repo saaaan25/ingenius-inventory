@@ -1,12 +1,13 @@
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
 import PropTypes from "prop-types";
-import detalle_solicitud from "@/data-test/detalle_solicitud";
 import { useState } from "react";
 import RequestForm from "@/components/form/RequestForm";
+import request_details_nuevo from "@/data-test/detalle_solicitud_nuevo";
 
 const RegisterRequestDialog = ({ open, setOpen, setSolicitudes, solicitudes }) => {
-    const [detalleSolicitud, setDetalleSolicitud] = useState(detalle_solicitud);
-
+    const [detalleSolicitud, setDetalleSolicitud] = useState(request_details_nuevo);
+    console.log(solicitudes, setSolicitudes)
+    
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[725px] px-10 py-8 h-[85vh] flex flex-col gap-7">

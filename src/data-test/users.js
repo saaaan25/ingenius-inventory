@@ -50,3 +50,106 @@ const users = [
 ];
 
 export default users;
+
+export const usersData = [
+    {
+      id: 101,
+      name: "Juan",
+      last_name: "Perez",
+      email: "juan@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "administrador",
+    },
+    {
+      id: 103,
+      name: "Maria",
+      last_name: "Gomez",
+      email: "maria@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "profesor",
+    },
+    {
+      id: 102,
+      name: "Carlos",
+      last_name: "Lopez",
+      email: "carlos@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "encargado",
+    },
+    {
+      id: 105,
+      name: "Ana",
+      last_name: "Martinez",
+      email: "ana@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "administrador",
+    },
+    {
+      id: 104,
+      name: "Luis",
+      last_name: "Garcia",
+      email: "luis@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "profesor",
+    },
+    {
+      id: 106,
+      name: "Sofia",
+      last_name: "Rodriguez",
+      email: "sofia@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "encargado",
+    },
+    {
+      id: 107,
+      name: "Miguel",
+      last_name: "Hernandez",
+      email: "miguel@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "administrador",
+    },
+    {
+      id: 108,
+      name: "Laura",
+      last_name: "Fernandez",
+      email: "laura@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "profesor",
+    },
+    {
+      id: 109,
+      name: "David",
+      last_name: "Ruiz",
+      email: "david@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "encargado",
+    },
+    {
+      id: 110,
+      name: "Isabel",
+      last_name: "Diaz",
+      email: "isabel@gmail.com",
+      password: "123456",
+      photo_url:
+        "https://www.clinicas-veterpet.com/wp-content/uploads/2024/02/blog-veterpet-edad-gatitos.jpg",
+      role: "administrador",
+    },
+  ];

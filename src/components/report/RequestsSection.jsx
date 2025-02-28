@@ -3,9 +3,9 @@ import Container from "../ui/Container";
 import RequestStats from "./RequestStats";
 import StatItem from "./StatItem";
 import getRequestsStatsByTeacher from "@/hooks/getRequestsStatsByTeacher";
-import users from "@/data-test/users";
 import { useState } from "react";
 import Dropdown from "../ui/Dropdown";
+import { usersData } from "@/data-test/users";
 
 const RequestsSection = () => {
     const title = "Resumen de solicitudes"
@@ -20,9 +20,9 @@ const RequestsSection = () => {
     const [resume, setResume] = useState(defaultResume);
     const [selectedTeacher, setSelectedTeacher] = useState("default");
 
-    let profesores = users.filter(user => user.rol === "profesor").map(profesor => ({
+    let profesores = usersData.filter(user => user.role === "profesor").map(profesor => ({
         id: profesor.id,
-        nombre: `${profesor.nombre} ${profesor.apellido}`
+        nombre: `${profesor.name} ${profesor.last_name}`
     }));
 
     const handleSelectChange = (event) => {

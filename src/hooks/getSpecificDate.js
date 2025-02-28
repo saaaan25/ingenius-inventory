@@ -6,6 +6,8 @@ const getSpecificDate = ( date ) => {
 
     if(typeof date === "string") {
         formatDate = new Date(date)
+    } else {
+        formatDate = new Date(date)
     }
 
     const diaMes = formatDate.getDate()

@@ -1,21 +1,21 @@
-import solicitudes from "../data-test/solicitud.js";
+import requests_nuevo from "@/data-test/solicitud_nuevo.js";
 import getSuppliesByRequest from "./getSuppliesByRequest.js";
 
 const getStatsForRequest = () => {
-    const total_solicitudes = solicitudes.length
-    const solicitudes_aceptadas = solicitudes.filter(solicitud => solicitud.estado === "aceptado").length
-    const solicitudes_rechazadas = solicitudes.filter(solicitud => solicitud.estado === "rechazado").length
+    const total_solicitudes = requests_nuevo.length
+    const solicitudes_aceptadas = requests_nuevo.filter(solicitud => solicitud.status === "aceptado").length
+    const solicitudes_rechazadas = requests_nuevo.filter(solicitud => solicitud.status === "rechazado").length
 
     const getMaterialsByRequest = () => {
         let materiales_solicitados = 0
         let materiales_aceptados = 0
     
-        solicitudes.map((solicitud) => {
-            if(solicitud.estado != "pendiente") {
-                const materiales = getSuppliesByRequest(solicitud.id)
+        requests_nuevo.map((solicitud) => {
+            if(solicitud.status != "pendiente") {
+                const materiales = getSuppliesByRequest(solicitud.request_id)
                 materiales.map((material) => {
                     materiales_solicitados = materiales_solicitados + material.cantidad
-                    if(solicitud.estado === "aceptado") {
+                    if(solicitud.status === "aceptado") {
                         materiales_aceptados = materiales_aceptados + material.cantidad
                     }
                 })

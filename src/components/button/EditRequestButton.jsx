@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 const EditRequestButton = ({ solicitud, solicitudes, setSolicitudes }) => {
     const [open, setOpen] = useState(false);
+    console.log(solicitudes, setSolicitudes)
 
     return (
         <div>
