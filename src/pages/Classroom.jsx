@@ -12,6 +12,7 @@ const Classroom = () => {
     const params = useParams();
     const classroom = classes.find((item) => item.classroom_id === Number(params.id));
 
+    
     const [suppliesClassroom, setSuppliesClassroom] = useState(getSuppliesByClassroom(classroom.utils_list));
     console.log(suppliesClassroom)
     const [studentsList, setStudentsList] = useState(students.filter(student => student.classroom_id === classroom.classroom_id));
@@ -28,6 +29,7 @@ const Classroom = () => {
         { id: "Lista de útiles", component: <SuppliesList supplies={suppliesClassroom} /> },
         { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} listId={classroom.utils_list} /> }
     ], [suppliesClassroom, studentsList]);
+    
 
     const [activeTab, setActiveTab] = useState(options[0].id);
 
