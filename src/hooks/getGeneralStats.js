@@ -4,7 +4,7 @@ import requests_nuevo from "@/data-test/solicitud_nuevo"
 import request_details_nuevo from "@/data-test/detalle_solicitud_nuevo"
 import { entrega_dinero } from "@/data-test/entregaDinero"
 import { getPurchases, getUtils } from "@/api"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getRequestDetails } from "@/api/requestDetailApi"
 import { getRequests } from "@/api/requestApi"
 
@@ -34,6 +34,10 @@ const useGeneralStats = () => {
             setLoading(false); 
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const getUtilesDisponibles = () => {
         let total = 0
@@ -73,4 +77,4 @@ const useGeneralStats = () => {
     }
 }
 
-export default getGeneralStats;
+export default useGeneralStats;
