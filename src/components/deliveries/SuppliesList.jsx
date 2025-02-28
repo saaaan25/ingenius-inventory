@@ -3,7 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card.jsx";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import util_nuevo from "@/data-test/util_nuevo"; // Asegúrate de que esta importación es correcta
+import util_nuevo from "@/data-test/util_nuevo";
 import PropTypes from "prop-types";
 import { Plus, X } from "lucide-react";
 
@@ -48,7 +48,18 @@ const SuppliesList = ({ supplies, setSupplies }) => {
     };
 
     const handleDeleteMaterial = (util_id) => {
-        setSupplies((prevSupplies) => prevSupplies.filter(item => item.util_id !== util_id));
+        console.log("Intentando eliminar material con ID:", util_id);
+
+        if (!util_id) {
+            console.warn("ID inválido:", util_id);
+            return;
+        }
+
+        setSupplies((prevSupplies) => {
+            const updatedSupplies = prevSupplies.filter(item => item.util_id !== util_id);
+            console.log("Lista después de eliminar:", updatedSupplies);
+            return updatedSupplies;
+        });
     };
 
     return (
@@ -78,7 +89,7 @@ const SuppliesList = ({ supplies, setSupplies }) => {
                             {filteredMaterials.length > 0 ? (
                                 filteredMaterials.map((material) => (
                                     <div
-                                        key={material.util_id}
+                                        key={material.util_id || material.name} // Asegurar clave única
                                         className={`p-3 cursor-pointer rounded-lg transition ${selectedMaterial?.util_id === material.util_id ? "bg-blue-100" : "hover:bg-gray-100"}`}
                                         onClick={() => setSelectedMaterial(material)}
                                     >
@@ -115,23 +126,16 @@ const SuppliesList = ({ supplies, setSupplies }) => {
             <ScrollArea className="h-150 w-full rounded-md">
                 <div className="flex flex-col gap-y-2">
                     {supplies.map((supply, index) => (
-                    <Card
-                        key={supply.util_id || index}
-                        className="w-full flex justify-between items-center bg-button text-button py-4 px-6"
-                    >
-                        <span className="font-normal text-base flex-1 text-start">{supply.name}</span>
-                        <span className="text-sm text-routes flex-1 text-center">
-                        {supply.quantity} {supply.quantity === 1 ? "unidad" : "unidades"}
-                        </span>
-                        <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => handleDeleteMaterial(supply.util_id)}
-                        className="shrink-0 p-1 ml-50"
+                        <Card 
+                            key={supply.util_id || `${supply.name}-${index}`} // Clave única con fallback
+                            className="w-full flex justify-between items-center bg-button text-button py-4 px-6"
                         >
-                        <X size={18} className="text-red-500 w-auto h-auto" />
-                        </Button>
-                    </Card>
+                            <span className="font-normal text-base flex-1 text-start">{supply.name}</span>
+                            <span className="text-sm text-routes flex-1 text-center">{supply.quantity} unidades</span>
+                            <Button size="icon" variant="ghost" onClick={() => handleDeleteMaterial(supply.util_id)}>
+                                <X size={18} className="text-red-500 w-auto h-auto" />
+                            </Button>
+                        </Card>
                     ))}
                 </div>
             </ScrollArea>
@@ -141,7 +145,7 @@ const SuppliesList = ({ supplies, setSupplies }) => {
 
 SuppliesList.propTypes = {
     supplies: PropTypes.array.isRequired,
-    setSupplies: PropTypes.func.isRequired
+    setSupplies: PropTypes.func.isRequired,
 };
 
 export default SuppliesList;
