@@ -13,7 +13,7 @@ export const createMoneyDelivery = async (moneyDelivery) => {
 }
 
 export const updateMoneyDelivery = async (moneyDelivery) => {
-  const {data}= await api.patch(moneyDeliveryEndpoint, moneyDelivery);
+  const {data}= await api.patch(`${moneyDeliveryEndpoint}/${moneyDelivery.money_delivery_id}`, moneyDelivery);
   return data;
 }
 

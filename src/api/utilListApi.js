@@ -13,7 +13,7 @@ export const createUtilList = async (utilList) => {
 }
 
 export const updateUtilList = async (utilList) => {
-  const {data}= await api.patch(utilListEndpoint, utilList);
+  const {data}= await api.patch(`${utilListEndpoint}/${utilList.util_list_id}`, utilList);
   return data;
 }
 
