@@ -10,7 +10,7 @@ export const SupplyRequestFormCard = ({ index, fieldItem, form }) => {
     const updatedDetalleSolicitud = form
       .getValues("request_details")
       .map((item, i) =>
-        i === index ? { ...item, cantidad: newCantidad } : item
+        i === index ? { ...item, quantity: newCantidad } : item
       );
     form.setValue("request_details", updatedDetalleSolicitud);
   };

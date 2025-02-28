@@ -6,6 +6,7 @@ import PageRoute from "@/components/PageRoute.jsx";
 import { AcceptButton } from "@/components/button/AcceptButton.jsx";
 import { CancelButton } from "@/components/button/index.js";
 import { getUsers } from "@/api/userApi.js";
+import { createUtilList } from "@/api/utilListApi.js";
 
 const pastelColors = ["#FFD1DC", "#FFECB3", "#C8E6C9", "#BBDEFB", "#D1C4E9", "#FFCCBC"];
 
@@ -19,6 +20,7 @@ const Deliveries = () => {
     const [showModal, setShowModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [newClassName, setNewClassName] = useState("");
+    const [classroom, setClassroom] = useState();
     const [selectedTeacher, setSelectedTeacher] = useState("");
     const [editingClassId, setEditingClassId] = useState(null);
 
@@ -53,14 +55,24 @@ const Deliveries = () => {
         }
 
         try {
+            // Crear un nuevo utils_list
+            const newUtilList = {
+                name: "Lista de útiles " + newClassName,
+                total: 0,
+            };
+            const createdUtilList = await createUtilList(newUtilList);
+            const utilListId = createdUtilList.id;
+
             const newClass = {
                 name: newClassName,
                 user: selectedTeacher,
-                utils_list: null,
+                utils_list: utilListId,
             };
 
             const createdClassroom = await createClassroom(newClass);
+            setClassroom(createdClassroom)
             console.log(createdClassroom);
+
             setClassrooms(prevClassrooms => [
                 ...prevClassrooms,
                 {
@@ -68,7 +80,6 @@ const Deliveries = () => {
                     color: pastelColors[prevClassrooms.length % pastelColors.length],
                 },
             ]);
-            console.log(classrooms);
 
             resetModal();
         } catch (err) {
@@ -80,7 +91,6 @@ const Deliveries = () => {
     const handleDeleteClassroom = async (id) => {
         try {
             await deleteClassroom(id);
-            // Actualiza la lista de aulas eliminando el aula con el ID correspondiente
             setClassrooms(prevClassrooms => prevClassrooms.filter(c => c.classroom_id !== id));
         } catch (err) {
             console.error("Error al eliminar el salón:", err);
@@ -92,7 +102,7 @@ const Deliveries = () => {
         console.log("Editando aula con ID:", id);
         setIsEdit(true);
         setShowModal(true);
-        const classroomToEdit = classrooms.find(c => c.classroom_id === id);
+        const classroomToEdit = classrooms.find(c => c.classroom_id == id);
         if (classroomToEdit) {
             setEditingClassId(id);
             setNewClassName(classroomToEdit.name);
@@ -105,25 +115,32 @@ const Deliveries = () => {
             alert("Por favor, ingresa un nombre de aula y selecciona un profesor.");
             return;
         }
-
+    
         try {
+            // Obtener el aula actual que se está editando
+            const existingClassroom = classrooms.find(c => c.classroom_id === editingClassId);
+            if (!existingClassroom) {
+                throw new Error("No se encontró el aula que se está editando.");
+            }
+    
+            // Mantener el mismo util_list del aula actual
             const updatedClassroom = {
-                classroom_id: editingClassId, // Usamos el ID del aula que se está editando
+                classroom_id: editingClassId,
                 name: newClassName,
                 user: selectedTeacher,
-                utils_list: null,
+                utils_list: existingClassroom.utils_list, // Mantener el mismo util_list
             };
-
+    
             // Llama a la API para actualizar el aula
             const updatedData = await updateClassroom(updatedClassroom);
-
+    
             // Actualiza la lista de aulas en el estado
             setClassrooms(prevClassrooms =>
                 prevClassrooms.map(c =>
                     c.classroom_id === editingClassId ? { ...c, ...updatedData } : c
                 )
             );
-
+    
             resetModal();
         } catch (err) {
             console.error("Error al editar el salón:", err);
@@ -155,8 +172,8 @@ const Deliveries = () => {
                 <div className="grid grid-cols-3 gap-6">
                     {classrooms.map(classroom => (
                         <ClassRoom
-                            key={classroom.classroom_id}
-                            id={classroom.classroom_id}
+                            key={classroom.id}
+                            id={classroom.id}
                             nombre={classroom.name}
                             profesorId={classroom.user}
                             classRoom={classroom}

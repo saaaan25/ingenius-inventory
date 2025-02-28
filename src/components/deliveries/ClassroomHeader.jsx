@@ -10,9 +10,8 @@ const ClassroomHeader = ({ classroom, options, activeTab, setActiveTab }) => {
         { name: classroom.name, route: `/${classroom.classroom_id}` }
     ];
 
-    // Buscar el profesor en la lista de usuarios
-    const teacher = users.find(user => user.id === classroom.teacher);
-    const teacherName = teacher ? `${teacher.nombre} ${teacher.apellido}` : "No asignado";
+    const teacher = classroom.user;
+    const teacherName = teacher ? `${teacher.name} ${teacher.last_name}` : "No asignado";
 
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">

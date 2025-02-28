@@ -1,15 +1,36 @@
-import getStatsForRequest from "@/hooks/getStatsForRequests";
 import Container from "../ui/Container";
 import RequestStats from "./RequestStats";
 import StatItem from "./StatItem";
 import getRequestsStatsByTeacher from "@/hooks/getRequestsStatsByTeacher";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "../ui/Dropdown";
-import { usersData } from "@/data-test/users";
+import useStatsForRequest from "@/hooks/getStatsForRequests";
+import { getUsers } from "@/api";
 
 const RequestsSection = () => {
     const title = "Resumen de solicitudes"
-    const { total_solicitudes, solicitudes_aceptadas, solicitudes_rechazadas, materiales_solicitados, materiales_aceptados } = getStatsForRequest()
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const usersData = await getUsers();
+            setUsers(usersData);
+        } catch (err) {
+            setError(err); 
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const { total_solicitudes, solicitudes_aceptadas, solicitudes_rechazadas, materiales_solicitados, materiales_aceptados } = useStatsForRequest()
     const defaultResume = [
         { description: "Total de solicitudes", value: total_solicitudes },
         { description: "Solicitudes aceptadas", value: solicitudes_aceptadas },
@@ -20,7 +41,7 @@ const RequestsSection = () => {
     const [resume, setResume] = useState(defaultResume);
     const [selectedTeacher, setSelectedTeacher] = useState("default");
 
-    let profesores = usersData.filter(user => user.role === "profesor").map(profesor => ({
+    let profesores = users.filter(user => user.role === "profesor").map(profesor => ({
         id: profesor.id,
         nombre: `${profesor.name} ${profesor.last_name}`
     }));

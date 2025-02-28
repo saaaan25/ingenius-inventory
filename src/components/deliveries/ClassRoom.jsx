@@ -11,7 +11,7 @@ const ClassRoom = ({ id, nombre, profesorId, classRoom, color, onDelete, onEdit 
     console.log(classRoom.user_id)
     console.log(id)
     console.log(profesorId)
-    console.log
+    console.log(classRoom)
 
     useEffect(() => {
         const fetchProfesor = async () => {
@@ -39,7 +39,7 @@ const ClassRoom = ({ id, nombre, profesorId, classRoom, color, onDelete, onEdit 
     }, [profesorId]);
 
     const goToClassroom = () => {
-        navigate(`/classrooms/${classRoom.classroom_id}`);
+        navigate(`/classrooms/${id}`);
     };
 
     return (

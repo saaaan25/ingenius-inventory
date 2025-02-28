@@ -6,8 +6,9 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } 
 import util_nuevo from "@/data-test/util_nuevo";
 import PropTypes from "prop-types";
 import { Plus, X } from "lucide-react";
+import { createListDetail, deleteListDetail } from "@/api/listDetailApi"; // Importa las funciones de la API
 
-const SuppliesList = ({ supplies, setSupplies }) => {
+const SuppliesList = ({ supplies, setSupplies, utilsListId }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedMaterial, setSelectedMaterial] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -19,47 +20,61 @@ const SuppliesList = ({ supplies, setSupplies }) => {
         )
         : [];
 
-    const handleAddMaterial = () => {
-        if (!setSupplies) return;
+    const handleAddMaterial = async () => {
+        if (!setSupplies || !selectedMaterial || !utilsListId) return;
+        try {
+            const newDetail = {
+                utils_list: utilsListId, // ID de la lista de útiles
+                util: selectedMaterial.util_id, // ID del útil seleccionado
+                quantity: quantity, // Cantidad del útil
+            };
+            console.log(newDetail)
 
-        if (selectedMaterial && quantity > 0) {
-            setSupplies((prevSupplies) => {
-                const existingIndex = prevSupplies.findIndex(item => item.util_id === selectedMaterial.util_id);
-                let updatedSupplies;
+            // Enviar la solicitud al backend para crear el detalle
+            const createdDetail = await createListDetail(newDetail);
 
-                if (existingIndex !== -1) {
-                    updatedSupplies = [...prevSupplies];
-                    updatedSupplies[existingIndex] = {
-                        ...updatedSupplies[existingIndex],
-                        quantity: updatedSupplies[existingIndex].quantity + quantity
-                    };
-                } else {
-                    updatedSupplies = [...prevSupplies, { ...selectedMaterial, quantity }];
-                }
+            // Actualizar el estado local con el nuevo detalle
+            setSupplies((prevSupplies) => [
+                ...prevSupplies,
+                {
+                    list_detail_id: createdDetail.list_detail_id,
+                    util_id: selectedMaterial.util_id,
+                    name: selectedMaterial.name,
+                    quantity: quantity,
+                },
+            ]);
+            console.log(supplies)
 
-                return updatedSupplies;
-            });
-
+            // Limpiar el formulario
             setSelectedMaterial(null);
             setSearchTerm("");
             setQuantity(1);
             setTimeout(() => setOpen(false), 100);
+            
+        } catch (err) {
+            console.error("Error al agregar el material:", err);
+            alert("Ocurrió un error al agregar el material. Por favor, inténtalo de nuevo.");
         }
     };
 
-    const handleDeleteMaterial = (util_id) => {
-        console.log("Intentando eliminar material con ID:", util_id);
-
-        if (!util_id) {
-            console.warn("ID inválido:", util_id);
+    const handleDeleteMaterial = async (listDetailId) => {
+        if (!listDetailId) {
+            console.warn("ID inválido:", listDetailId);
             return;
         }
 
-        setSupplies((prevSupplies) => {
-            const updatedSupplies = prevSupplies.filter(item => item.util_id !== util_id);
-            console.log("Lista después de eliminar:", updatedSupplies);
-            return updatedSupplies;
-        });
+        try {
+            // Enviar la solicitud al backend para eliminar el detalle
+            await deleteListDetail(listDetailId);
+
+            // Actualizar el estado local eliminando el detalle
+            setSupplies((prevSupplies) =>
+                prevSupplies.filter((item) => item.list_detail_id !== listDetailId)
+            );
+        } catch (err) {
+            console.error("Error al eliminar el material:", err);
+            alert("Ocurrió un error al eliminar el material. Por favor, inténtalo de nuevo.");
+        }
     };
 
     return (
@@ -76,7 +91,7 @@ const SuppliesList = ({ supplies, setSupplies }) => {
                     <DialogContent className="p-6 w-[600px] rounded-xl shadow-lg bg-white">
                         <DialogTitle className="text-lg font-semibold text-gray-900">Seleccionar Material</DialogTitle>
                         <DialogDescription className="text-sm text-gray-600">Elige un material y define la cantidad.</DialogDescription>
-
+                        <form>
                         <input
                             type="text"
                             placeholder="Buscar material..."
@@ -119,6 +134,7 @@ const SuppliesList = ({ supplies, setSupplies }) => {
                         >
                             Agregar a la lista
                         </Button>
+                        </form>
                     </DialogContent>
                 </Dialog>
             </div>
@@ -127,12 +143,12 @@ const SuppliesList = ({ supplies, setSupplies }) => {
                 <div className="flex flex-col gap-y-2">
                     {supplies.map((supply, index) => (
                         <Card 
-                            key={supply.util_id || `${supply.name}-${index}`} // Clave única con fallback
+                            key={supply.list_detail_id || `${supply.name}-${index}`} // Clave única con fallback
                             className="w-full flex justify-between items-center bg-button text-button py-4 px-6"
                         >
                             <span className="font-normal text-base flex-1 text-start">{supply.name}</span>
                             <span className="text-sm text-routes flex-1 text-center">{supply.quantity} unidades</span>
-                            <Button size="icon" variant="ghost" onClick={() => handleDeleteMaterial(supply.util_id)}>
+                            <Button size="icon" variant="ghost" onClick={() => handleDeleteMaterial(supply.list_detail_id)}>
                                 <X size={18} className="text-red-500 w-auto h-auto" />
                             </Button>
                         </Card>
@@ -146,6 +162,7 @@ const SuppliesList = ({ supplies, setSupplies }) => {
 SuppliesList.propTypes = {
     supplies: PropTypes.array.isRequired,
     setSupplies: PropTypes.func.isRequired,
+    utilsListId: PropTypes.string.isRequired, // ID de la lista de útiles
 };
 
 export default SuppliesList;

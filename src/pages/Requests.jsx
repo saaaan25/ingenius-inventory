@@ -2,10 +2,11 @@ import solicitudesData from "../data-test/solicitud_nuevo";
 import NavBar from "@/components/ui/NavBar";
 import RequestsSection from "@/components/request/RequestsSection";
 import useActiveTab from "@/hooks/setActiveTab";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageRoute from "@/components/PageRoute";
 import AddRequestButton from "@/components/button/AddRequestButton";
 import RoleBasedAccess from "@/components/RoleBasedAccess";
+import { getRequests } from "@/api/requestApi";
 
 const Requests = () => {
     const page = {
@@ -13,7 +14,23 @@ const Requests = () => {
         route: "/requests"
     }
 
-    const [solicitudes, setSolicitudes] = useState(solicitudesData);
+    const [solicitudes, setSolicitudes] = useState([]);
+
+    const fetchData = async() => {
+        try {
+            const solicitudesDatos = await getRequests();
+            setSolicitudes(solicitudesDatos);
+        } catch (error) {
+            console.error("Error al obtener solicitudes:", error);
+            if (error.response) {
+                console.error("Respuesta del servidor:", error.response.data);
+            }
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, []);
 
     const options = useMemo(() => [
         {

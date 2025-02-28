@@ -6,95 +6,156 @@ import TextInputFormItem from "./TextInputFormItem";
 import { DateFormRequestItem } from "./DateFormRequestItem";
 import SuppliesRequestItem from "./SuppliesRequestItem";
 import Dropdown from "../ui/Dropdown";
-import { classes } from "@/data-test/class";
+import { useEffect, useState } from "react";
+import { getClassrooms } from "@/api/classroomApi";
+import { createRequest, updateRequest } from "@/api/requestApi";
+import { createRequestDetail, updateRequestDetail } from "@/api/requestDetailApi";
+import { useAuth } from "@/hooks";
+import { date } from "zod";
 
-const RequestForm = ({ 
-    setSolicitudes, 
-    solicitudes = [], 
-    setDetalleSolicitud, 
-    detalleSolicitud = [], 
-    handleCloseDialog, 
-    initialData = null 
+const RequestForm = ({
+    setSolicitudes,
+    solicitudes = [],
+    setDetalleSolicitud,
+    detalleSolicitud = [],
+    handleCloseDialog,
+    initialData = null,
 }) => {
-    const classroomOptions = classes.map(item => ({
-        id: item.classroom_id,
-        nombre: item.name 
+    const [classrooms, setClassrooms] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const { user } = useAuth();
+
+    // Obtener la lista de salones
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const classroomsData = await getClassrooms();
+            setClassrooms(classroomsData);
+        } catch (err) {
+            setError(err);
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    console.log(classrooms)
+
+    // Opciones para el dropdown de salones
+    const classroomOptions = classrooms.map((item) => ({
+        id: item.id, // Usar classroom_id como valor
+        nombre: item.name, // Mostrar el nombre en el dropdown
     }));
 
-    console.log(solicitudes, setSolicitudes)
+    console.log(classroomOptions)
 
+    // Configuración del formulario
     const form = useForm({
         defaultValues: initialData || {
-            user: 103,
-            classroom: "",
-            date: new Date().toISOString().split("T")[0], 
+            user: user.id, // Usar el ID del usuario autenticado
+            classroom: "", // Usar classroom en lugar de classroom_id
+            date: new Date().toISOString(),
             justification: "",
+            status: "pendiente",
             request_details: [],
         },
     });
 
-    const onSubmit = (data) => {
-        console.log("Form submitted with data:", data);
-    
-        if (initialData) {
-            const updatedRequests = solicitudes.map((req) => 
-                req.request_id === initialData.request_id ? { ...req, ...data } : req
-            );
-            setSolicitudes(updatedRequests);
-    
-            const currentDetails = detalleSolicitud.filter(
-                (detail) => detail.request_id === initialData.request_id
-            );
-    
-            const newDetails = data.request_details.map((detail) => ({
-                request_detail_id: detail.request_detail_id || null, 
-                request_id: initialData.request_id,
-                util_id: detail.util?.id ?? detail.util, 
-                quantity: detail.quantity,
-            }));
-    
-            const newIds = newDetails.map((d) => d.request_detail_id).filter(Boolean);
-            const filteredDetails = currentDetails.filter(
-                (detail) => newIds.includes(detail.request_detail_id)
-            );
-    
-            const newDetailsWithID = newDetails.map((detail, index) => ({
-                ...detail,
-                request_detail_id: detail.request_detail_id ?? detalleSolicitud.length + index + 1, 
-            }));
-    
-            setDetalleSolicitud([...filteredDetails, ...newDetailsWithID]);
-    
-            console.log("Updated request details:", [...filteredDetails, ...newDetailsWithID]);
-        } else {
-            const newRequestId = (solicitudes?.length || 0) + 1;
-    
-            const newRequest = {
-                request_id: newRequestId,
-                user: data.user,
-                classroom: data.classroom,
-                date: data.date,
-                justification: data.justification,
-                status: "pendiente",
-            };
-    
-            setSolicitudes((prev) => [...prev, newRequest]);
-    
-            const newRequestDetails = data.request_details.map((detail, index) => ({
-                request_detail_id: detalleSolicitud.length + index + 1,
-                request_id: newRequestId,
-                util_id: detail.util?.id ?? detail.util,
-                quantity: detail.quantity,
-            }));
-    
-            setDetalleSolicitud((prev) => [...prev, ...newRequestDetails]);
+    // Función para manejar el envío del formulario
+    const onSubmit = async (data) => {
+        try {
+            console.log(data.request_details)
+            console.log(data.classroom)
+            // Verificar que el valor de classroom sea un UUID válido
+            if (!data.classroom || typeof data.classroom !== "string" || !isValidUUID(data.classroom)) {
+                throw new Error("El valor de classroom no es un UUID válido.");
+            }
 
-            console.log("New request added:", newRequest);
-            console.log("New request details added:", newRequestDetails);
+            if (initialData) {
+                // Editar una solicitud existente
+                const updatedRequest = await updateRequest({
+                    request_id: initialData.request_id,
+                    ...data,
+                });
+
+                // Actualizar los detalles de la solicitud
+                const updatedDetails = await Promise.all(
+                    data.request_details.map(async (detail) => {
+                        console.log(detail)
+                        if (detail.request_detail_id) {
+                            // Si el detalle ya existe, actualízalo
+                            return await updateRequestDetail({
+                                request_detail_id: detail.request_detail_id,
+                                util: detail.util.id,
+                                ...detail,
+                            });
+                        } else {
+                            // Si el detalle es nuevo, créalo
+                            return await createRequestDetail({
+                                ...detail,
+                                request_id: initialData.request_id,
+                            });
+                        }
+                    })
+                );
+
+                // Actualizar el estado local
+                setSolicitudes((prev) =>
+                    prev.map((req) =>
+                        req.request_id === initialData.request_id ? updatedRequest : req
+                    )
+                );
+                setDetalleSolicitud((prev) => [
+                    ...prev.filter((detail) =>
+                        updatedDetails.some((d) => d.request_detail_id === detail.request_detail_id)
+                    ),
+                    ...updatedDetails,
+                ]);
+            } else {
+                const req = {
+                    justification: data.justification,
+                    date: data.date,
+                    status: data.status,
+                    user: data.user,
+                    classroom: data.classroom
+                }
+                const newRequest = await createRequest(req);
+                console.log(newRequest)
+
+                // Crear los detalles de la solicitud
+                const newDetails = await Promise.all(
+                    data.request_details.map(async (detail) => {
+                        return await createRequestDetail({
+                            quantity: detail.quantity,
+                            util: detail.util.id,
+                            request: newRequest.id,
+                        });
+                    })
+                );
+
+                // Actualizar el estado local
+                setSolicitudes((prev) => [...prev, newRequest]);
+                setDetalleSolicitud((prev) => [...prev, ...newDetails]);
+            }
+
+            // Cerrar el diálogo
+            handleCloseDialog();
+        } catch (err) {
+            console.error("Error al guardar la solicitud:", err);
+            alert("Ocurrió un error al guardar la solicitud. Por favor, inténtalo de nuevo.");
         }
-    
-        handleCloseDialog();
-    };    
+    };
+
+    // Función para validar UUID
+    const isValidUUID = (uuid) => {
+        const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+        return uuidRegex.test(uuid);
+    };
 
     return (
         <Form {...form}>
@@ -104,13 +165,13 @@ const RequestForm = ({
             >
                 <FormField
                     control={form.control}
-                    name="classroom"
+                    name="classroom" // Usar classroom
                     render={({ field }) => (
-                        <Dropdown 
-                            options={classroomOptions} 
-                            onChange={(e) => field.onChange(e.target.value)} 
-                            selectedValue={field.value} 
-                            defaultLabel="Elige un salón" 
+                        <Dropdown
+                            options={classroomOptions}
+                            onChange={(e) => field.onChange(e.target.value)} // Pasar el ID seleccionado
+                            selectedValue={field.value}
+                            defaultLabel="Elige un salón"
                         />
                     )}
                 />
@@ -132,7 +193,9 @@ const RequestForm = ({
                     render={({ field }) => <SuppliesRequestItem field={field} form={form} />}
                 />
                 <div className="flex justify-center gap-x-10 mt-auto">
-                    <AcceptButton type="submit">{initialData ? "Save Changes" : "Accept"}</AcceptButton>
+                    <AcceptButton type="submit">
+                        {initialData ? "Save Changes" : "Accept"}
+                    </AcceptButton>
                     <CancelButton onClick={handleCloseDialog}>Cancel</CancelButton>
                 </div>
             </form>

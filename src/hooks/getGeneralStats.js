@@ -1,16 +1,13 @@
 import getStatsForPurchases from "./getStatsForPurchases"
-import util_nuevo from "@/data-test/util_nuevo"
-import requests_nuevo from "@/data-test/solicitud_nuevo"
-import request_details_nuevo from "@/data-test/detalle_solicitud_nuevo"
-import { entrega_dinero } from "@/data-test/entregaDinero"
-import { getPurchases, getUtils } from "@/api"
+import { getUtils } from "@/api"
 import { useEffect, useState } from "react"
 import { getRequestDetails } from "@/api/requestDetailApi"
 import { getRequests } from "@/api/requestApi"
+import { getMoneyDeliveries } from "@/api/moneyDeliveryApi"
 
 const useGeneralStats = () => {
     const [utils, setUtils] = useState([])
-    const [purchases, setPurchases] = useState([])
+    const [moneyDeliveries, setMoneyDeliveries] = useState([])
     const [requests, setRequests] = useState([])
     const [requestsDetails, setRequestsDetails] = useState([])
     const [loading, setLoading] = useState(false);
@@ -20,11 +17,11 @@ const useGeneralStats = () => {
         setLoading(true)
         try {
             const utilsData = await getUtils();
-            const purchasesData = await getPurchases();
+            const moneyDeliveriesData = await getMoneyDeliveries();
             const requestsData = await getRequests();
             const requestsDetailsData = await getRequestDetails();
             setUtils(utilsData);
-            setPurchases(purchasesData);
+            setMoneyDeliveries(moneyDeliveriesData);
             setRequests(requestsData);
             setRequestsDetails(requestsDetailsData);
         } catch (err) {
@@ -41,15 +38,15 @@ const useGeneralStats = () => {
 
     const getUtilesDisponibles = () => {
         let total = 0
-        util_nuevo.map((supply) => total = total + supply.stock)
+        utils.map((supply) => total = total + supply.stock)
         return total
     }
 
     const getUtilesUtilizados = () => {
         let total = 0
-        requests_nuevo.map((solicitud) => {
+        requests.map((solicitud) => {
             if(solicitud.status === "aceptado") {
-                request_details_nuevo.map((detalle) => {
+                requestsDetails.map((detalle) => {
                     if (detalle.request_id === solicitud.request_id) {
                         total = total + detalle.quantity
                     }
@@ -62,7 +59,7 @@ const useGeneralStats = () => {
     const getDineroDisponible = () => {
         const { gastos_compras } = getStatsForPurchases()
         let total = 0
-        entrega_dinero.map((detalle) => total = total + detalle.amount)
+        moneyDeliveries.map((detalle) => total = total + detalle.amount)
         return total - gastos_compras
     }
 

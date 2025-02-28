@@ -1,16 +1,38 @@
+import { getRequests } from "@/api/requestApi";
 import getSuppliesByRequest from "./getSuppliesByRequest";
-import requests_nuevo from "@/data-test/solicitud_nuevo";
+import { useEffect, useState } from "react";
 
-const getRequestsStatsByTeacher = (id) => {
-    const solicitudes_profesor = requests_nuevo.filter((solicitud) => solicitud.user === id).length
-    const solicitudes_aceptadas_profesor = requests_nuevo.filter((solicitud) => solicitud.status === "aceptado" && solicitud.user == id).length
-    const solicitudes_rechazadas_profesor = requests_nuevo.filter((solicitud) => solicitud.status === "rechazado" && solicitud.user == id).length
+const useRequestsStatsByTeacher = (id) => {
+    const [requests, setRequests] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const requestsData = await getRequests();
+            setRequests(requestsData);
+        } catch (err) {
+            setError(err); 
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const solicitudes_profesor = requests.filter((solicitud) => solicitud.user === id).length
+    const solicitudes_aceptadas_profesor = requests.filter((solicitud) => solicitud.status === "aceptado" && solicitud.user == id).length
+    const solicitudes_rechazadas_profesor = requests.filter((solicitud) => solicitud.status === "rechazado" && solicitud.user == id).length
 
     const getMaterialsByTeacher = () => {
         let materiales_solicitados_profesor = 0
         let materiales_aceptados_profesor = 0
     
-        requests_nuevo.map((solicitud) => {
+        requests.map((solicitud) => {
             if(solicitud.status != "pendiente" && solicitud.user === id) {
                 const materiales = getSuppliesByRequest(solicitud.request_id)
                 materiales.map((material) => {
@@ -39,4 +61,4 @@ const getRequestsStatsByTeacher = (id) => {
     }
 };
 
-export default getRequestsStatsByTeacher;
+export default useRequestsStatsByTeacher;
