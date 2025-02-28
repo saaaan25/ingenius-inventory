@@ -26,7 +26,7 @@ const Classroom = () => {
 
     const options = useMemo(() => [
         { id: "Lista de útiles", component: <SuppliesList supplies={suppliesClassroom} /> },
-        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} /> }
+        { id: "Alumnos", component: <StudentList studentsList={studentsList} onDeleteStudent={handleDeleteStudent} onAddStudent={handleAddStudent} listId={classroom.utils_list} /> }
     ], [suppliesClassroom, studentsList]);
 
     const [activeTab, setActiveTab] = useState(options[0].id);

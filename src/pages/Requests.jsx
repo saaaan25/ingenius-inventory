@@ -1,4 +1,4 @@
-import solicitudesData from "../data-test/solicitud";
+import solicitudesData from "../data-test/solicitud_nuevo";
 import NavBar from "@/components/ui/NavBar";
 import RequestsSection from "@/components/request/RequestsSection";
 import useActiveTab from "@/hooks/setActiveTab";
@@ -18,16 +18,17 @@ const Requests = () => {
         {
             id: "Pendientes",
             estado: "pendiente",
-            lista: solicitudes.filter(request => request.estado === "pendiente")
+            lista: solicitudes.filter(request => request.status === "pendiente")
         },
         {
             id: "Terminados",
             estado: "terminado",
-            lista: solicitudes.filter(request => request.estado != "pendiente")
+            lista: solicitudes.filter(request => request.status != "pendiente")
         }
     ], [solicitudes])
 
     const { activeTab, setActiveTab, filteredShowList } = useActiveTab(options);
+    console.log(solicitudes, setSolicitudes)
 
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">

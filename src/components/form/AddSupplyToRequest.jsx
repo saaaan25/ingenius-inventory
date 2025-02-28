@@ -10,14 +10,14 @@ import {
   import { Check } from "lucide-react";
   import { cn } from "@/lib/utils";
   import { useEffect, useState } from "react";
-import supplies from "@/data-test/supplies";
+import util_nuevo from "@/data-test/util_nuevo";
   
   export const AddSupplyToRequest = ({ field, form }) => {
     const [suppliesList, setSuppliesList] = useState([]);
   
     useEffect(() => {
       try {
-        const suppliesResponse = supplies
+        const suppliesResponse = util_nuevo
         setSuppliesList(suppliesResponse);
       } catch (e) {
         console.error("Error fetching supplies:", e);
@@ -37,28 +37,28 @@ import supplies from "@/data-test/supplies";
                 {suppliesList.map((supply) => {
                   const currentValue = field.value || []; 
                   const alreadySelected = currentValue.some(
-                    (elem) => elem.util.id === supply.id
+                    (elem) => elem.util.id === supply.util_id
                   );
   
                   return (
                     <CommandItem
-                      key={supply.id}
+                      key={supply.util_id}
                       onSelect={() => {
                         const updatedDetalleSolicitud = alreadySelected
                           ? currentValue.filter(
-                              (elem) => elem.util.id !== supply.id
+                              (elem) => elem.util.id !== supply.util_id
                             )
                           : [
                               ...currentValue,
                               {
-                                util: { id: supply.id, nombre: supply.nombre },
+                                util: { util_id: supply.util_id, name: supply.name },
                                 cantidad: 1, 
                               },
                             ];
-                        form.setValue("detalle_solicitud", updatedDetalleSolicitud);
+                        form.setValue("request_details", updatedDetalleSolicitud);
                       }}
                     >
-                      {supply.nombre}
+                      {supply.name}
                       <Check
                         className={cn(
                           "ml-auto",

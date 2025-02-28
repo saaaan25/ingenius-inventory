@@ -5,82 +5,92 @@ import { AcceptButton, CancelButton } from "../button";
 import TextInputFormItem from "./TextInputFormItem";
 import { DateFormRequestItem } from "./DateFormRequestItem";
 import SuppliesRequestItem from "./SuppliesRequestItem";
+import Dropdown from "../ui/Dropdown";
+import { classes } from "@/data-test/class";
 
 const RequestForm = ({ 
     setSolicitudes, 
-    solicitudes, 
+    solicitudes = [], 
     setDetalleSolicitud, 
-    detalleSolicitud, 
+    detalleSolicitud = [], 
     handleCloseDialog, 
     initialData = null 
 }) => {
+    const classroomOptions = classes.map(item => ({
+        id: item.classroom_id,
+        nombre: item.name 
+    }));
+
+    console.log(solicitudes, setSolicitudes)
+
     const form = useForm({
         defaultValues: initialData || {
-            usuario: 103,
-            aula: "",
-            fecha: new Date().toISOString().split("T")[0], 
-            justificacion: "",
-            detalle_solicitud: [],
+            user: 103,
+            classroom: "",
+            date: new Date().toISOString().split("T")[0], 
+            justification: "",
+            request_details: [],
         },
     });
 
     const onSubmit = (data) => {
-        console.log("Formulario enviado con los siguientes datos:", data);
+        console.log("Form submitted with data:", data);
     
         if (initialData) {
-            const updatedSolicitudes = solicitudes.map((req) => 
-                req.id === initialData.id ? { ...req, ...data } : req
+            const updatedRequests = solicitudes.map((req) => 
+                req.request_id === initialData.request_id ? { ...req, ...data } : req
             );
-            setSolicitudes(updatedSolicitudes);
+            setSolicitudes(updatedRequests);
     
-            const currentDetalles = detalleSolicitud.filter(
-                (detalle) => detalle.solicitud === initialData.id
+            const currentDetails = detalleSolicitud.filter(
+                (detail) => detail.request_id === initialData.request_id
             );
     
-            const nuevosDetalles = data.detalle_solicitud.map((detalle) => ({
-                id: detalle.id || null, 
-                solicitud: initialData.id,
-                util: detalle.util?.id ?? detalle.util, 
-                cantidad: detalle.cantidad,
+            const newDetails = data.request_details.map((detail) => ({
+                request_detail_id: detail.request_detail_id || null, 
+                request_id: initialData.request_id,
+                util_id: detail.util?.id ?? detail.util, 
+                quantity: detail.quantity,
             }));
     
-            const idsNuevos = nuevosDetalles.map((d) => d.id).filter(Boolean);
-            const detallesFiltrados = currentDetalles.filter(
-                (detalle) => idsNuevos.includes(detalle.id)
+            const newIds = newDetails.map((d) => d.request_detail_id).filter(Boolean);
+            const filteredDetails = currentDetails.filter(
+                (detail) => newIds.includes(detail.request_detail_id)
             );
     
-            const nuevosDetallesConID = nuevosDetalles.map((detalle, index) => ({
-                ...detalle,
-                id: detalle.id ?? detalleSolicitud.length + index + 1, 
+            const newDetailsWithID = newDetails.map((detail, index) => ({
+                ...detail,
+                request_detail_id: detail.request_detail_id ?? detalleSolicitud.length + index + 1, 
             }));
     
-            setDetalleSolicitud([...detallesFiltrados, ...nuevosDetallesConID]);
+            setDetalleSolicitud([...filteredDetails, ...newDetailsWithID]);
     
-            console.log("Detalle de solicitud actualizado:", [...detallesFiltrados, ...nuevosDetallesConID]);
+            console.log("Updated request details:", [...filteredDetails, ...newDetailsWithID]);
         } else {
-            const newRequestId = solicitudes.length + 1;
+            const newRequestId = (solicitudes?.length || 0) + 1;
     
             const newRequest = {
-                usuario: data.usuario,
-                aula: data.aula,
-                fecha: data.fecha,
-                justificacion: data.justificacion,
-                estado: "pendiente",
+                request_id: newRequestId,
+                user: data.user,
+                classroom: data.classroom,
+                date: data.date,
+                justification: data.justification,
+                status: "pending",
             };
     
             setSolicitudes((prev) => [...prev, newRequest]);
     
-            const newDetalleSolicitud = data.detalle_solicitud.map((detalle, index) => ({
-                id: detalleSolicitud.length + index + 1,
-                solicitud: newRequestId,
-                util: detalle.util?.id ?? detalle.util,
-                cantidad: detalle.cantidad,
+            const newRequestDetails = data.request_details.map((detail, index) => ({
+                request_detail_id: detalleSolicitud.length + index + 1,
+                request_id: newRequestId,
+                util_id: detail.util?.id ?? detail.util,
+                quantity: detail.quantity,
             }));
     
-            setDetalleSolicitud((prev) => [...prev, ...newDetalleSolicitud]);
+            setDetalleSolicitud((prev) => [...prev, ...newRequestDetails]);
 
-            console.log("Nueva solicitud añadida:", newRequest);
-            console.log("Nuevo detalle de solicitud añadido:", newDetalleSolicitud);
+            console.log("New request added:", newRequest);
+            console.log("New request details added:", newRequestDetails);
         }
     
         handleCloseDialog();
@@ -94,29 +104,36 @@ const RequestForm = ({
             >
                 <FormField
                     control={form.control}
-                    name="aula"
-                    render={({ field }) => <TextInputFormItem label="Aula" field={field} />}
-                />
-                <FormField
-                    control={form.control}
-                    name="fecha"
-                    render={({ field }) => <DateFormRequestItem label="Fecha" field={field} />}
-                />
-                <FormField
-                    control={form.control}
-                    name="justificacion"
+                    name="classroom"
                     render={({ field }) => (
-                        <TextInputFormItem label="Actividad" field={field} />
+                        <Dropdown 
+                            options={classroomOptions} 
+                            onChange={(e) => field.onChange(e.target.value)} 
+                            selectedValue={field.value} 
+                            defaultLabel="Select a classroom" 
+                        />
                     )}
                 />
                 <FormField
                     control={form.control}
-                    name="detalle_solicitud"
+                    name="date"
+                    render={({ field }) => <DateFormRequestItem label="Date" field={field} />}
+                />
+                <FormField
+                    control={form.control}
+                    name="justification"
+                    render={({ field }) => (
+                        <TextInputFormItem label="Activity" field={field} />
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="request_details"
                     render={({ field }) => <SuppliesRequestItem field={field} form={form} />}
                 />
                 <div className="flex justify-center gap-x-10 mt-auto">
-                    <AcceptButton type="submit">{initialData ? "Guardar cambios" : "Aceptar"}</AcceptButton>
-                    <CancelButton onClick={handleCloseDialog}>Cancelar</CancelButton>
+                    <AcceptButton type="submit">{initialData ? "Save Changes" : "Accept"}</AcceptButton>
+                    <CancelButton onClick={handleCloseDialog}>Cancel</CancelButton>
                 </div>
             </form>
         </Form>
