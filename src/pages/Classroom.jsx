@@ -41,6 +41,7 @@ const Classroom = () => {
                 studentsList={studentsList} 
                 onDeleteStudent={handleDeleteStudent} 
                 onAddStudent={handleAddStudent} 
+                listId={classroom.utils_list}
             /> 
         }
     ], [suppliesClassroom, studentsList]);
