@@ -13,7 +13,7 @@ export const createUtilsDeliveryDetail = async (utilsDeliveryDetail) => {
 }
 
 export const updateUtilsDeliveryDetail = async (utilsDeliveryDetail) => {
-  const {data}= await api.patch(utilsDeliveryDetailEndpoint, utilsDeliveryDetail);
+  const {data}= await api.patch(`${utilsDeliveryDetailEndpoint}/${utilsDeliveryDetail.detail_id}`, utilsDeliveryDetail);
   return data;
 }
 

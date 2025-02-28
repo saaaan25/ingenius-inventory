@@ -13,7 +13,7 @@ export const createRequestDetail = async (requestDetail) => {
 }
 
 export const updateRequestDetail = async (requestDetail) => {
-  const {data}= await api.patch(requestDetailEndpoint, requestDetail);
+  const {data}= await api.patch(`${requestDetailEndpoint}/${requestDetail.request_detail_id}`, requestDetail);
   return data;
 }
 
