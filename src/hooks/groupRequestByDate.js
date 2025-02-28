@@ -1,10 +1,11 @@
 const groupRequestsByDate = (requests) => {
     const requestsGroups = requests.reduce((acc, request) => {
+        const fecha = new Date(request.date).toISOString().split("T")[0]
 
-        console.log(request.date)
-        if (!request.date) return acc; 
+        console.log(fecha)
+        if (!fecha) return acc; 
 
-        let sublist = acc.find(sub => sub.length > 0 && sub[0].date === request.date);
+        let sublist = acc.find(sub => sub.length > 0 && new Date(sub[0].date).toISOString().split("T")[0] === fecha);
 
         if (sublist) {
             sublist.push(request);
@@ -14,6 +15,8 @@ const groupRequestsByDate = (requests) => {
 
         return acc;
     }, []);
+    
+    requestsGroups.sort((a, b) => new Date(a[0].date) - new Date(b[0].date));
 
     return requestsGroups;
 };

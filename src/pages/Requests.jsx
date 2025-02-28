@@ -1,4 +1,3 @@
-import solicitudesData from "../data-test/solicitud_nuevo";
 import NavBar from "@/components/ui/NavBar";
 import RequestsSection from "@/components/request/RequestsSection";
 import useActiveTab from "@/hooks/setActiveTab";
