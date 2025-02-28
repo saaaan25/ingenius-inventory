@@ -9,14 +9,14 @@ import { PopoverContent } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getSuppliesApiMock} from "@/utils";
 import { useEffect, useState } from "react";
+import { getUtils } from "@/api";
 export const AddSupplyPopover = ({ field, form }) => {
   const [supplies, setSupplies] = useState([]);
   useEffect(() => {
     async function fetchSupplies() {
       try {
-        const suppliesResponse = await getSuppliesApiMock();
+        const suppliesResponse = await getUtils();
         setSupplies(suppliesResponse);
       } catch (e) {
         console.log(e);

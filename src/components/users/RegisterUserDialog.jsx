@@ -12,9 +12,9 @@ import { useUsers } from "@/hooks";
 export const RegisterUserDialog = ({ open, setOpen }) => {
   const { createUser } = useUsers();
 
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values);
-    createUser(values);
+    await createUser(values);
     handleCloseDialog();
   }
   const handleCloseDialog = () => {

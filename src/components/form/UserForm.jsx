@@ -20,19 +20,19 @@ import { userSchema } from "@/utils";
 import { AcceptButton, CancelButton } from "../button";
 
 export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
+  const schema = userSchema(defaultUser);
   const form = useForm({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       id: defaultUser?.id || undefined,
       name: defaultUser?.name || "",
       last_name: defaultUser?.last_name || "",
       email: defaultUser?.email || "",
-      password: defaultUser?.password || "",
+      password: "",
       photo_url: defaultUser?.photo_url || "",
       role: defaultUser?.role || "administrador",
     },
   });
-
   return (
     <Form {...form}>
       <form
@@ -78,7 +78,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
             </FormItem>
           )}
         />
-        <FormField
+        {!defaultUser&&<FormField
           name="password"
           control={form.control}
           render={({ field }) => (
@@ -90,7 +90,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        />}
         <FormField
           name="photo_url"
           control={form.control}
@@ -119,7 +119,7 @@ export const UserForm = ({ defaultUser, onSubmit, handleCloseDialog }) => {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="administrador">Administrador</SelectItem>
-                  <SelectItem value="docente">Docente</SelectItem>
+                  <SelectItem value="profesor">Profesor</SelectItem>
                   <SelectItem value="encargado">Encargado</SelectItem>
                 </SelectContent>
               </Select>

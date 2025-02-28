@@ -13,7 +13,7 @@ export const createUser = async (user) => {
 }
 
 export const updateUser = async (user) => {
-  const {data}= await api.patch(userEndpoint, user);
+  const {data}= await api.patch(`${userEndpoint}/${user.id}`, user);
   return data;
 }
 

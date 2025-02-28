@@ -15,11 +15,11 @@ export const PurchaseForm = ({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
       id: defaultPurchase?.id || undefined,
-      date: defaultPurchase?.date ? new Date(defaultPurchase.date): new Date(),
+      date: defaultPurchase?.date ? String((new Date(defaultPurchase.date)).toISOString()): String((new Date()).toISOString()),
       purchase_detail: defaultPurchase?.purchase_detail || [],
     },
   });
-
+  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form
