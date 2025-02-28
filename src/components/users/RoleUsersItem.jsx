@@ -2,7 +2,7 @@ import React from 'react'
 import { UserCard } from '.'
 
 const roleMap = {
-  docente: 'Docentes',
+  profesor: 'Profesores',
   encargado: 'Encargados',
   administrador: 'Administradores',
 };

@@ -6,9 +6,9 @@ import { UserForm } from "@/components/form";
 export const EditUserDialog = ({ open, setOpen }) => {
   const {updateUser, selectedUser} = useUsers();
 
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values);
-    updateUser(values);
+    await updateUser(values);
     handleCloseDialog();
   }
   const handleCloseDialog = () => {
@@ -25,7 +25,7 @@ export const EditUserDialog = ({ open, setOpen }) => {
             </DialogDescription>
           </DialogTitle>
         </DialogHeader>
-        <UserForm defaultUser={selectedUser} onSubmit={onSubmit} handleCloseDialog={handleCloseDialog} />
+        <UserForm defaultUser={selectedUser} onSubmit={onSubmit} handleCloseDialog={handleCloseDialog}  />
       </DialogContent>
     </Dialog>
   );
