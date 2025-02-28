@@ -14,6 +14,8 @@ const StudentList = ({ studentsList, onDeleteStudent, onAddStudent, listId }) =>
         setIsOpen(false);
     };
 
+    console.log("listId en StudentList:", listId); // Depuración
+
     return (
         <div className="w-full">
             <div className="flex justify-between items-center mb-4">
