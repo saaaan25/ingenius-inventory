@@ -1,23 +1,54 @@
-import detalle_solicitud from "@/data-test/detalle_solicitud"
-import solicitudes from "@/data-test/solicitud"
-import supplies from "@/data-test/supplies"
 import getStatsForPurchases from "./getStatsForPurchases"
-import detalle_entrega from "@/data-test/detalle_entrega"
+import { getUtils } from "@/api"
+import { useEffect, useState } from "react"
+import { getRequestDetails } from "@/api/requestDetailApi"
+import { getRequests } from "@/api/requestApi"
+import { getMoneyDeliveries } from "@/api/moneyDeliveryApi"
 
-const getGeneralStats = () => {
+const useGeneralStats = () => {
+    const [utils, setUtils] = useState([])
+    const [moneyDeliveries, setMoneyDeliveries] = useState([])
+    const [requests, setRequests] = useState([])
+    const [requestsDetails, setRequestsDetails] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const utilsData = await getUtils();
+            const moneyDeliveriesData = await getMoneyDeliveries();
+            const requestsData = await getRequests();
+            const requestsDetailsData = await getRequestDetails();
+            setUtils(utilsData);
+            setMoneyDeliveries(moneyDeliveriesData);
+            setRequests(requestsData);
+            setRequestsDetails(requestsDetailsData);
+        } catch (err) {
+            setError(err); 
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const getUtilesDisponibles = () => {
         let total = 0
-        supplies.map((supply) => total = total + supply.stock)
+        utils.map((supply) => total = total + supply.stock)
         return total
     }
 
     const getUtilesUtilizados = () => {
         let total = 0
-        solicitudes.map((solicitud) => {
-            if(solicitud.estado === "aceptado") {
-                detalle_solicitud.map((detalle) => {
-                    if (detalle.solicitud === solicitud.id) {
-                        total = total + detalle.cantidad
+        requests.map((solicitud) => {
+            if(solicitud.status === "aceptado") {
+                requestsDetails.map((detalle) => {
+                    if (detalle.request_id === solicitud.request_id) {
+                        total = total + detalle.quantity
                     }
                 })
             }
@@ -28,7 +59,7 @@ const getGeneralStats = () => {
     const getDineroDisponible = () => {
         const { gastos_compras } = getStatsForPurchases()
         let total = 0
-        detalle_entrega.map((detalle) => total = total + detalle.monto)
+        moneyDeliveries.map((detalle) => total = total + detalle.amount)
         return total - gastos_compras
     }
 
@@ -43,4 +74,4 @@ const getGeneralStats = () => {
     }
 }
 
-export default getGeneralStats;
+export default useGeneralStats;

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 const AddRequestButton = ({ setSolicitudes, solicitudes }) => {
     const [open, setOpen] = useState(false);
+    console.log(solicitudes, setSolicitudes)
     return (
         <div>
             <AddButton onClick={()=>setOpen(true)}>Solicitar material</AddButton>

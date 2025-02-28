@@ -2,30 +2,28 @@ import NavBar from "@/components/ui/NavBar";
 import PageRoute from "../PageRoute";
 import BackButton from "../button/BackButton";
 import PropTypes from "prop-types";
+import users from "@/data-test/users.js"; // Asegúrate de importar los datos de usuarios
 
 const ClassroomHeader = ({ classroom, options, activeTab, setActiveTab }) => {
     const page = [
-        {
-            name: "Salones",
-            route: "/deliveries"
-        },
-        {
-            name: classroom.name,
-            route: `/${classroom.classroom_id}`
-        }
-    ]
+        { name: "Salones", route: "/deliveries" },
+        { name: classroom.name, route: `/${classroom.classroom_id}` }
+    ];
+
+    const teacher = classroom.user;
+    const teacherName = teacher ? `${teacher.name} ${teacher.last_name}` : "No asignado";
 
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">
             <PageRoute page1={page[0]} page2={page[1]} />
 
             <div className="pl-5 mt-2 mb-4">
-                <BackButton/>
+                <BackButton />
             </div>
 
             <div className="pl-5 flex flex-col w-full h-full items-start justify-start gap-y-3">
                 <h1 className="font-semibold text-xl">{classroom.name}</h1>
-                <h2 className="text-routes mt-2">Docente: ola</h2>
+                <h2 className="text-routes mt-2">Docente: {teacherName}</h2>
 
                 <NavBar options={options} active={activeTab} setActive={setActiveTab} />
             </div>

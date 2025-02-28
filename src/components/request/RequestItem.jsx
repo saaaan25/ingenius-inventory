@@ -1,16 +1,29 @@
 import PropTypes from "prop-types";
 import { RiFileTransferLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import users from "../../data-test/users";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { usersData } from "@/data-test/users";
+import { getUser } from "@/api";
+import { set } from "date-fns";
+import { useEffect, useState } from "react";
 
 const RequestItem = ({ request }) => {
     const navigate = useNavigate()
-    const author = users.find((user) => user.id === Number(request.usuario))
-    const estado_solicitud = request.estado.charAt(0).toUpperCase() + request.estado.slice(1).toLowerCase();
+    console.log(request)
+    const [author, setAuthor] = useState()
+    
+    useEffect(() => {
+        const fetchData = () => {
+            const user = getUser(request.user)
+            setAuthor(user)
+        }
+        fetchData()
+    }, [request.user]);
+    
+    const estado_solicitud = request.status.charAt(0).toUpperCase() + request.status.slice(1).toLowerCase();
 
     const goToRequest = () => {
-        navigate(`${request.id}`)
+        navigate(`${request.request_id}`)
     }
 
     return (
@@ -19,8 +32,8 @@ const RequestItem = ({ request }) => {
                 <RiFileTransferLine size={35} color="text-primary"/>
             </div>
             <CardHeader className="flex text-start pl-0">
-                <CardTitle>Solicitud N°{request.id}</CardTitle>
-                <CardDescription>{ request.estado != "pendiente" ? estado_solicitud : author.nombre + " " + author.apellido }</CardDescription>
+                <CardTitle>Solicitud N°{request.request_id}</CardTitle>
+                <CardDescription>{ request.status != "pendiente" ? estado_solicitud : author?.name + " " + author?.last_name }</CardDescription>
             </CardHeader>
         </Card>
     );

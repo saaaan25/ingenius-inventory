@@ -1,45 +1,80 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa'; 
-import initialSupplies from '../data-test/supplies.js';
 import { AddButton } from './button/AddButton.jsx';
 import { SearchSupplies } from './ui/SearchSupplies.jsx';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { InventoryForm } from "@/components/form/InventoryForm";
+
+import { createUtil, getUtils, updateUtil } from '@/api/utilApi.js';
+import InventoryForm from './form/InventoryForm.jsx';
 
 const InventoryTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [supplies, setSupplies] = useState(initialSupplies);
+    const [supplies, setSupplies] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchUtils = async () => {
+            setLoading(true)
+          try {
+            const data = await getUtils();
+            setSupplies(data);
+          } catch (err) {
+            setError(err);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchUtils();
+      }, []);
+
     const [open, setOpen] = useState(false);
     const [editingSupply, setEditingSupply] = useState(null);
+    const [type, setType] = useState("agregar")
 
     const filteredSupplies = supplies.filter(supply =>
-        supply.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        supply.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    function onSubmit(values) {
-        if (editingSupply) {
-            setSupplies(supplies.map(supply => 
-                supply.id === editingSupply.id ? { ...supply, nombre: values.name, stock: values.quantity } : supply
-            ));
-        } else {
-            const newSupply = {
-                id: supplies.length,
-                nombre: values.name,
-                stock: values.quantity,
+    async function onSubmit(values) {
+        try {
+          if (editingSupply) {
+            setType("editar");
+            const updatedUtil = {
+              util_id: editingSupply.id, 
+              name: values.name,
+              stock: values.quantity,
             };
-            setSupplies([...supplies, newSupply]);
+            console.log(updatedUtil)
+      
+            await updateUtil(updatedUtil);
+            const data = await getUtils();
+            setSupplies(data);
+          } else {
+            setType("agregar");
+            const newUtil = {
+              name: values.name,
+              stock: values.quantity,
+            };
+      
+            const createdUtil = await createUtil(newUtil);
+            setSupplies((prevSupplies) => [...prevSupplies, createdUtil]);
+          }
+          handleCloseDialog();
+        } catch (err) {
+          console.error("Error al procesar la utilidad:", err);
+          alert("Ocurrió un error al procesar la utilidad. Por favor, inténtalo de nuevo.");
         }
-        handleCloseDialog();
-    }
+    }    
 
     const handleCloseDialog = () => {
         setOpen(false);
         setEditingSupply(null);
     };
 
-    const handleEdit = (supply) => {
-        setEditingSupply(supply);
+    const handleEdit = async(supply) => {
         setOpen(true);
+        setEditingSupply(supply);
     };
 
     return (
@@ -60,10 +95,10 @@ const InventoryTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredSupplies.map((supply) => (
-                        <tr key={supply.id} style={{ borderBottom: '1px solid #ddd' }}>
-                            <td style={{ padding: '10px', textAlign: 'left' }}>{supply.id}</td>
-                            <td style={{ padding: '10px', textAlign: 'left' }}>{supply.nombre}</td>
+                    {filteredSupplies.map((supply, index) => (
+                        <tr key={supply.util_id} style={{ borderBottom: '1px solid #ddd' }}>
+                            <td style={{ padding: '10px', textAlign: 'left' }}>{index + 1}</td>
+                            <td style={{ padding: '10px', textAlign: 'left' }}>{supply.name}</td>
                             <td style={{ padding: '10px', textAlign: 'left' }}>{supply.stock}</td>
                             <td style={{ padding: '10px', textAlign: 'left' }}>
                                 <button 
@@ -92,6 +127,7 @@ const InventoryTable = () => {
                         onSubmit={onSubmit} 
                         handleCloseDialog={handleCloseDialog} 
                         initialData={editingSupply}
+                        type={type}
                     />
                 </DialogContent>
             </Dialog>

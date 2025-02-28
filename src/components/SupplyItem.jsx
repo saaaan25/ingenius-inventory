@@ -9,7 +9,7 @@ const SupplyItem = ({ supply }) => {
                 <RiFileTransferLine size={35} color="text-primary"/>
             </div>
             <CardHeader className="flex text-start pl-0">
-                <CardTitle>{supply.nombre}</CardTitle>
+                <CardTitle>{supply.name}</CardTitle>
                 <CardDescription>{supply.cantidad} unidades</CardDescription>
             </CardHeader>
         </Card>

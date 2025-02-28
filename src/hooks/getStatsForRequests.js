@@ -1,21 +1,43 @@
-import solicitudes from "../data-test/solicitud.js";
 import getSuppliesByRequest from "./getSuppliesByRequest.js";
+import { useEffect, useState } from "react";
+import { getRequests } from "@/api/requestApi.js";
 
-const getStatsForRequest = () => {
-    const total_solicitudes = solicitudes.length
-    const solicitudes_aceptadas = solicitudes.filter(solicitud => solicitud.estado === "aceptado").length
-    const solicitudes_rechazadas = solicitudes.filter(solicitud => solicitud.estado === "rechazado").length
+const useStatsForRequest = () => {
+    const [requests, setRequests] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const requestsData = await getRequests();
+            setRequests(requestsData);
+        } catch (err) {
+            setError(err); 
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const total_solicitudes = requests.length
+    const solicitudes_aceptadas = requests.filter(solicitud => solicitud.status === "aceptado").length
+    const solicitudes_rechazadas = requests.filter(solicitud => solicitud.status === "rechazado").length
 
     const getMaterialsByRequest = () => {
         let materiales_solicitados = 0
         let materiales_aceptados = 0
     
-        solicitudes.map((solicitud) => {
-            if(solicitud.estado != "pendiente") {
-                const materiales = getSuppliesByRequest(solicitud.id)
+        requests.map((solicitud) => {
+            if(solicitud.status != "pendiente") {
+                const materiales = getSuppliesByRequest(solicitud.request_id)
                 materiales.map((material) => {
                     materiales_solicitados = materiales_solicitados + material.cantidad
-                    if(solicitud.estado === "aceptado") {
+                    if(solicitud.status === "aceptado") {
                         materiales_aceptados = materiales_aceptados + material.cantidad
                     }
                 })
@@ -39,4 +61,4 @@ const getStatsForRequest = () => {
     }
 }
 
-export default getStatsForRequest;
+export default useStatsForRequest;

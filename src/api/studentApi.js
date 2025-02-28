@@ -13,7 +13,7 @@ export const createStudent = async (student) => {
 }
 
 export const updateStudent = async (student) => {
-  const {data}= await api.patch(studentEndpoint, student);
+  const {data}= await api.patch(`${studentEndpoint}/${student.student_id}`, student);
   return data;
 }
 

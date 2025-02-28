@@ -1,10 +1,10 @@
-import getGeneralStats from "@/hooks/getGeneralStats";
 import SummaryItem from "./SummaryItem";
 import { FaEraser, FaDollarSign } from "react-icons/fa";
 import { GiOpenBook } from "react-icons/gi";
+import useGeneralStats from "@/hooks/getGeneralStats";
 
 const GeneralSection = () => {
-    const { utiles_disponibles, utiles_utilizados, dinero_disponible } = getGeneralStats()
+    const { utiles_disponibles, utiles_utilizados, dinero_disponible } = useGeneralStats()
     
     const resumen_general = [
         {

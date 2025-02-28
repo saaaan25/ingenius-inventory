@@ -1,10 +1,10 @@
-import getStatsForPurchases from "@/hooks/getStatsForPurchases";
 import { FaDollarSign, FaShoppingBag } from "react-icons/fa";
 import { GiOpenBook } from "react-icons/gi";
 import SummaryItem from "./SummaryItem";
+import useStatsForPurchases from "@/hooks/getStatsForPurchases";
 
 const PurchasesSection = () => {
-    const { total_compras, utiles_comprados, gastos_compras } = getStatsForPurchases()
+    const { total_compras, utiles_comprados, gastos_compras } = useStatsForPurchases()
     const resumen_compras = [
         {
             Icon: FaShoppingBag,

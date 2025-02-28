@@ -1,18 +1,43 @@
-import compras from "@/data-test/compra"
-import detalle_compras from "@/data-test/detalle_compra"
+import { getPurchaseDetails, getPurchases } from "@/api"
+import { useEffect, useState } from "react"
 
-const getStatsForPurchases = () => {
-    const total_compras = compras.length
+const useStatsForPurchases = () => {
+    const [purchases, setPurchases] = useState([])
+    const [purchasesDetails, setPurchasesDetails] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const purchasesData = await getPurchases();
+            const purchasesDetailsData = await getPurchaseDetails();
+            setPurchases(purchasesData);
+            setPurchasesDetails(purchasesDetailsData);
+        } catch (err) {
+            setError(err); 
+            console.error("Error al obtener los salones:", err);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const total_compras = purchases.length
+    console.log(purchases)
 
     const getUtilesComprados = () => {
         let total = 0
-        detalle_compras.map((detalle) => total = total + detalle.cantidad)
+        purchasesDetails.map((detalle) => total = total + detalle.unit_price * detalle.quantity)
         return total
     }
 
     const getGastosCompras = () => {
         let total = 0
-        compras.map((compra) => total = total + compra.total_gastado)
+        purchases.map((compra) => total = total + Number(compra.total_spent))
         return total
     }
 
@@ -26,4 +51,4 @@ const getStatsForPurchases = () => {
     }
 }
 
-export default getStatsForPurchases;
+export default useStatsForPurchases;
