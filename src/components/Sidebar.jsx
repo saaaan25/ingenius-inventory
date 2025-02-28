@@ -2,9 +2,9 @@ import { Outlet } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import { FaBoxOpen } from "react-icons/fa";
 import { RiFileTransferLine } from "react-icons/ri";
-import { BiLineChart, BiUser } from "react-icons/bi";
+import { BiLineChart } from "react-icons/bi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { MdOutlineCheckBox, MdOutlineNotifications } from "react-icons/md";
+import { MdOutlineCheckBox } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks';
@@ -63,8 +63,6 @@ const SideBar = () => {
                     <SidebarItem key={index} title={page.title} route={page.route} Icon={page.icon} />
                 ))}
                 <div className='w-full h-full p-6 flex items-end justify-end gap-x-3 text-white'>
-                    <BiUser size={25}/>
-                    <MdOutlineNotifications size={25}/> 
                     <LogOut size={25} className='cursor-pointer' onClick={()=>handleLogout()}/>
                 </div>
             </aside>

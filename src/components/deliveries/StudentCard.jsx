@@ -3,29 +3,25 @@ import { HiX } from "react-icons/hi"; // Icono de eliminación
 import PropTypes from "prop-types";
 import { useStudentDeliveries } from "@/hooks/getStudentDeliveries";
 import { useState } from "react";
-import util_nuevo from "@/data-test/util_nuevo";
+import DeliveryByStudentDialog from "./DeliveryByStudent";
 import { lista_detalles } from "@/data-test/detalleLista";
-import EditSuppliesDeliveryDialog from "./EditStudentListDialog";
+import entregas from "@/data-test/entrega";
+import DeliveryModal from "./DeliveryByStudent";
 
 const StudentCard = ({ student, index, onDelete, listId }) => {
     const { tipoEntrega, totalEntregado, porcentajeEntregado } = useStudentDeliveries(student.student_id);
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleClick = () => {
         console.log(`El estudiante entregó: ${tipoEntrega}`);
         console.log(`Total entregado: ${totalEntregado}`);
         console.log(`Porcentaje completado: ${porcentajeEntregado}%`);
-        setOpen(true)
+        setIsOpen(true)
     }
 
-    const detalles_de_lista = lista_detalles.filter(detail => detail.utils_list === listId)
-    const utiles_info = util_nuevo.filter(util => {
-        detalles_de_lista.map(detail => {
-            if(detail.util === util.util_id) {
-                return true
-            }
-        })
-    })
+    const utilsList = lista_detalles.filter(detail => detail.utils_list === listId)
+
+    const delivery = entregas.filter(entrega => entrega.student_id === student.student_id)
     
     return (
         <Card className="w-full flex justify-between items-center bg-button text-button py-4 px-6" onClick={handleClick}>
@@ -39,16 +35,10 @@ const StudentCard = ({ student, index, onDelete, listId }) => {
             <button onClick={() => onDelete(student.student_id)} className="text-black hover:text-red-700">
                 <HiX />
             </button>
-            {open && ( 
-                <EditSuppliesDeliveryDialog
-                    open={open} 
-                    setOpen={setOpen}
-                    studentId={student.student_id}
-                    listaId={listId}
-                    listaDetalles={detalles_de_lista}
-                    listaUtiles={utiles_info}
-                />
-            )}
+            {isOpen && <DeliveryModal onClose={() => setIsOpen(false)} 
+                utils={utilsList}
+                deliveryId={delivery}
+                studentId={student.student_id} />}
         </Card>
     );
 };

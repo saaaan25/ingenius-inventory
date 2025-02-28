@@ -28,7 +28,7 @@ const Requests = () => {
     ], [solicitudes])
 
     const { activeTab, setActiveTab, filteredShowList } = useActiveTab(options);
-    console.log(solicitudes, setSolicitudes)
+    console.log(solicitudes, setSolicitudes, filteredShowList)
 
     return (
         <div className="flex flex-col w-full h-full items-start justify-start gap-y-3">

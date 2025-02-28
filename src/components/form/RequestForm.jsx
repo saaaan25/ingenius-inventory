@@ -75,7 +75,7 @@ const RequestForm = ({
                 classroom: data.classroom,
                 date: data.date,
                 justification: data.justification,
-                status: "pending",
+                status: "pendiente",
             };
     
             setSolicitudes((prev) => [...prev, newRequest]);
@@ -110,7 +110,7 @@ const RequestForm = ({
                             options={classroomOptions} 
                             onChange={(e) => field.onChange(e.target.value)} 
                             selectedValue={field.value} 
-                            defaultLabel="Select a classroom" 
+                            defaultLabel="Elige un salón" 
                         />
                     )}
                 />

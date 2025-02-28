@@ -6,7 +6,7 @@ import SupplyItem from "@/components/SupplyItem";
 import { AcceptButton, CancelButton } from "@/components/button";
 import PageRoute from "@/components/PageRoute";
 import EditRequestButton from "@/components/button/EditRequestButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoleBasedAccess from "@/components/RoleBasedAccess";
 import requests_nuevo from "@/data-test/solicitud_nuevo";
 
@@ -18,6 +18,12 @@ const Request = () => {
     const [request, setRequest] = useState(
         solicitudesList.find((item) => item.request_id == params.id)
     );
+
+    useEffect(() => {
+        const updatedRequest = solicitudesList.find((item) => item.request_id == params.id);
+        setRequest(updatedRequest);
+    }, [solicitudesList, params.id]);
+
     console.log(solicitudesList, setSolicitudesList)
 
     const supplies = getSuppliesByRequest(params.id)
@@ -86,7 +92,7 @@ const Request = () => {
                     
                 </div>
                 <div className="h-full w-full flex items-end justify-center">
-                    <RoleBasedAccess allowedRoles={["profesor", "administrador"]}>
+                    <RoleBasedAccess allowedRoles={["profesor"]}>
                         <EditRequestButton solicitud={request} solicitudes={solicitudesList} setSolicitudes={setSolicitudesList}/>
                     </RoleBasedAccess>   
                 </div>
