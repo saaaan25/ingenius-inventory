@@ -20,3 +20,18 @@ export const getBimestre = (purchase) => {
     return 4;
   }
 };
+
+export const getTotalSpent=(purchase_detail) => {
+  if(!purchase_detail) return 0;
+  return purchase_detail.reduce(
+    (total, item) => total + item.unit_price * item.quantity,
+    0
+  );
+};
+
+export const formatPurchaseDetail = (array) => {
+  return array.map(item => ({
+    ...item,
+    unit_price: parseFloat(item.unit_price)
+  }));
+};

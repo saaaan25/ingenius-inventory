@@ -31,9 +31,3 @@ export const groupUsersByRole = (users) => {
     return acc;
   }, []);
 }
-
-export const formatFecha = (fecha) => {
-  return (
-    format(new Date(fecha), "yyyy-MM-dd")
-  );
-}

@@ -18,7 +18,6 @@ export const AddSupplyPopover = ({ field, form }) => {
       try {
         const suppliesResponse = await getUtils();
         setSupplies(suppliesResponse);
-        console.log(suppliesResponse);
       } catch (e) {
         console.log(e);
       }

@@ -1,21 +1,21 @@
 import { z } from "zod";
 
 const utilSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
 });
 
 const detalleCompraSchema = z.object({
-  id: z.number().optional(),
+  id: z.string().optional(),
   util: utilSchema,
   quantity: z.number().min(1, "La cantidad debe ser al menos 1."),
   unit_price: z.number().min(0, "El precio unitario debe ser al menos 0."),
 });
 
 export const purchaseSchema = z.object({
-  id: z.number().optional(),
-  date: z.date({
-    required_error: "La fecha de compra es requerida.",
+  id: z.string().optional(),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "La fecha de compra debe ser una fecha y hora válida en formato ISO.",
   }),
   purchase_detail: z.array(detalleCompraSchema).min(1, {
     message: "La compra debe comprender por lo menos 1 útil.",
