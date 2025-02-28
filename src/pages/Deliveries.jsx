@@ -27,7 +27,7 @@ const Deliveries = () => {
             setLoading(true);
             try {
                 const classroomsData = await getClassrooms();
-                console.log(classroomsData)
+                console.log(classroomsData);
                 setClassrooms(classroomsData.map((c, index) => ({
                     ...c,
                     color: pastelColors[index % pastelColors.length],
@@ -60,7 +60,7 @@ const Deliveries = () => {
             };
 
             const createdClassroom = await createClassroom(newClass);
-            console.log(createdClassroom)
+            console.log(createdClassroom);
             setClassrooms(prevClassrooms => [
                 ...prevClassrooms,
                 {
@@ -68,7 +68,7 @@ const Deliveries = () => {
                     color: pastelColors[prevClassrooms.length % pastelColors.length],
                 },
             ]);
-            console.log(classrooms)
+            console.log(classrooms);
 
             resetModal();
         } catch (err) {
@@ -77,9 +77,10 @@ const Deliveries = () => {
         }
     };
 
-    const handleDeleteClassroom = async id => {
+    const handleDeleteClassroom = async (id) => {
         try {
             await deleteClassroom(id);
+            // Actualiza la lista de aulas eliminando el aula con el ID correspondiente
             setClassrooms(prevClassrooms => prevClassrooms.filter(c => c.classroom_id !== id));
         } catch (err) {
             console.error("Error al eliminar el salón:", err);
@@ -88,7 +89,7 @@ const Deliveries = () => {
     };
 
     const handleEditClassroom = (id) => {
-        console.log(id)
+        console.log("Editando aula con ID:", id);
         setIsEdit(true);
         setShowModal(true);
         const classroomToEdit = classrooms.find(c => c.classroom_id === id);
@@ -100,8 +101,6 @@ const Deliveries = () => {
     };
 
     const handleSaveEdit = async () => {
-        const existingClassroom = classrooms.find(c => c.classroom_id === editingClassId);
-        console.log(existingClassroom)
         if (!newClassName || !selectedTeacher) {
             alert("Por favor, ingresa un nombre de aula y selecciona un profesor.");
             return;
@@ -109,15 +108,20 @@ const Deliveries = () => {
 
         try {
             const updatedClassroom = {
-                
+                classroom_id: editingClassId, // Usamos el ID del aula que se está editando
                 name: newClassName,
                 user: selectedTeacher,
                 utils_list: null,
             };
 
+            // Llama a la API para actualizar el aula
             const updatedData = await updateClassroom(updatedClassroom);
+
+            // Actualiza la lista de aulas en el estado
             setClassrooms(prevClassrooms =>
-                prevClassrooms.map(c => (c.classroom_id === editingClassId ? { ...c, ...updatedData } : c))
+                prevClassrooms.map(c =>
+                    c.classroom_id === editingClassId ? { ...c, ...updatedData } : c
+                )
             );
 
             resetModal();
@@ -132,6 +136,7 @@ const Deliveries = () => {
         setIsEdit(false);
         setNewClassName("");
         setSelectedTeacher("");
+        setEditingClassId(null); // Limpia el ID de edición
     };
 
     return (
@@ -154,7 +159,7 @@ const Deliveries = () => {
                             id={classroom.classroom_id}
                             nombre={classroom.name}
                             profesorId={classroom.user}
-                            classRoom={classroom} 
+                            classRoom={classroom}
                             color={classroom.color}
                             onDelete={handleDeleteClassroom}
                             onEdit={handleEditClassroom}
